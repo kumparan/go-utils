@@ -8,13 +8,13 @@ const (
 	_IOSAttachment = "ios_attahcment"
 )
 
-// GenerateMediaURL :nodoc:
-func GenerateMediaURL(cdnURL, externalURL, imageType string) string {
+// GeneratePushNotificationMediaURL :nodoc:
+func GeneratePushNotificationMediaURL(cdnURL, externalURL, imageType string) string {
 	if externalURL == "" {
 		return ""
 	}
-	splittedMediaExternalURL := strings.Split(externalURL, "/")
-	coverMediaFile := splittedMediaExternalURL[len(splittedMediaExternalURL)-2] + "/" + splittedMediaExternalURL[len(splittedMediaExternalURL)-1]
+	splitMediaExternalURL := strings.Split(externalURL, "/")
+	coverMediaFile := splitMediaExternalURL[len(splitMediaExternalURL)-2] + "/" + splitMediaExternalURL[len(splitMediaExternalURL)-1]
 	var param string
 	switch imageType {
 
