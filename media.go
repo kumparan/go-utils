@@ -1,34 +1,41 @@
 package utils
 
-import "strings"
+import (
+	"strings"
+)
 
 const (
-	_BigPicture    = "big_picture"
-	_LargeIcon     = "large_icon"
-	_IOSAttachment = "ios_attahcment"
+	// BigPicture :nodoc:
+	BigPicture = "big_picture"
+	// LargeIcon :nodoc:
+	LargeIcon = "large_icon"
+	// IOSAttachment :nodoc:
+	IOSAttachment = "ios_attahcment"
 )
 
 // GeneratePushNotificationMediaURL :nodoc:
-func GeneratePushNotificationMediaURL(cdnURL, externalURL, imageType string) string {
-	if externalURL == "" {
+func GeneratePushNotificationMediaURL(baseImageURL, srcImageURL, imageType string) string {
+	if srcImageURL == "" || baseImageURL == "" {
 		return ""
 	}
-	splitMediaExternalURL := strings.Split(externalURL, "/")
-	coverMediaFile := splitMediaExternalURL[len(splitMediaExternalURL)-2] + "/" + splitMediaExternalURL[len(splitMediaExternalURL)-1]
+
+	splitMediasrcImageURL := strings.Split(srcImageURL, "/")
+	coverMediaFile := splitMediasrcImageURL[len(splitMediasrcImageURL)-2] + "/" + splitMediasrcImageURL[len(splitMediasrcImageURL)-1]
+
 	var param string
 	switch imageType {
 
-	case _LargeIcon:
-		param = "fl_progressive,fl_lossy,c_fill,g_face,q_auto:best,w_256,ar_1:1"
+	case LargeIcon:
+		param = "image/upload/fl_progressive,fl_lossy,c_fill,g_face,q_auto:best,w_256,ar_1:1"
 
-	case _BigPicture:
-		param = "fl_progressive,fl_lossy,c_fill,g_face,q_auto:best,w_1440,h_720"
+	case BigPicture:
+		param = "image/upload/fl_progressive,fl_lossy,c_fill,g_face,q_auto:best,w_1440,h_720"
 
-	case _IOSAttachment:
-		param = "fl_progressive,fl_lossy,c_fill,g_face,q_auto:best,w_1024,h_1024"
+	case IOSAttachment:
+		param = "image/upload/fl_progressive,fl_lossy,c_fill,g_face,q_auto:best,w_1024,h_1024"
 	}
 
-	mediaURL := cdnURL + "/image/upload/" + param + "/" + coverMediaFile
+	mediaURL := baseImageURL + "/" + param + "/" + coverMediaFile
 
 	return mediaURL
 }
