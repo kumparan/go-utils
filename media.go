@@ -13,14 +13,15 @@ const (
 	IOSAttachment = "ios_attahcment"
 )
 
-// GeneratePushNotificationMediaURL :nodoc:
-func GeneratePushNotificationMediaURL(baseImageURL, srcImageURL, imageType string) string {
-	if srcImageURL == "" || baseImageURL == "" {
+// GeneratePushNotificationMediaURL Generates manipulated media URL for push notification purpose
+// e.g. GeneratePushNotificationMediaURL("http://mycdn.com", "http://my.image.com/image/upload/v123/image.jpg", LargeIcon) => http://mycdn.com/image/upload/v123/image.jpg
+func GeneratePushNotificationMediaURL(cdnURL, mediaSrcURL, imageType string) string {
+	if mediaSrcURL == "" || cdnURL == "" {
 		return ""
 	}
 
-	splitMediasrcImageURL := strings.Split(srcImageURL, "/")
-	coverMediaFile := splitMediasrcImageURL[len(splitMediasrcImageURL)-2] + "/" + splitMediasrcImageURL[len(splitMediasrcImageURL)-1]
+	splitMediaSrcImageURL := strings.Split(mediaSrcURL, "/")
+	coverMediaFile := splitMediaSrcImageURL[len(splitMediaSrcImageURL)-2] + "/" + splitMediaSrcImageURL[len(splitMediaSrcImageURL)-1]
 
 	var param string
 	switch imageType {
@@ -35,7 +36,7 @@ func GeneratePushNotificationMediaURL(baseImageURL, srcImageURL, imageType strin
 		param = "image/upload/fl_progressive,fl_lossy,c_fill,g_face,q_auto:best,w_1024,h_1024"
 	}
 
-	mediaURL := baseImageURL + "/" + param + "/" + coverMediaFile
+	mediaURL := cdnURL + "/" + param + "/" + coverMediaFile
 
 	return mediaURL
 }
