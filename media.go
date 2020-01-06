@@ -5,12 +5,12 @@ import (
 )
 
 const (
-	// _BigPicture :nodoc:
-	_BigPicture = "big_picture"
-	// _LargeIcon :nodoc:
-	_LargeIcon = "large_icon"
-	// _IOSAttachment :nodoc:
-	_IOSAttachment = "ios_attahcment"
+	// BigPicture :nodoc:
+	BigPicture = "big_picture"
+	// LargeIcon :nodoc:
+	LargeIcon = "large_icon"
+	// IOSAttachment :nodoc:
+	IOSAttachment = "ios_attahcment"
 )
 
 // GeneratePushNotificationMediaURL Generates manipulated media URL for push notification purpose
@@ -26,13 +26,13 @@ func GeneratePushNotificationMediaURL(cdnURL, mediaSrcURL, imageType string) str
 	var param string
 	switch imageType {
 
-	case _LargeIcon:
+	case LargeIcon:
 		param = "image/upload/fl_progressive,fl_lossy,c_fill,g_face,q_auto:best,w_256,ar_1:1"
 
-	case _BigPicture:
+	case BigPicture:
 		param = "image/upload/fl_progressive,fl_lossy,c_fill,g_face,q_auto:best,w_1440,h_720"
 
-	case _IOSAttachment:
+	case IOSAttachment:
 		param = "image/upload/fl_progressive,fl_lossy,c_fill,g_face,q_auto:best,w_1024,h_1024"
 	}
 
