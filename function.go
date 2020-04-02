@@ -27,6 +27,11 @@ func Retry(attempts int, sleep time.Duration, fn func() error) error {
 	return nil
 }
 
+// NewRetryStopper :nodoc:
+func NewRetryStopper(err error) RetryStopper {
+	return RetryStopper{err}
+}
+
 // MyCaller will return the method caller. skip value defines how many steps to be skipped.
 // skip=0 will always return the MyCaller
 // skip=1 returns the caller of the MyCaller
