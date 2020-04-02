@@ -1,5 +1,11 @@
 # go-utils
 
+<a name="v1.3.1"></a>
+## [v1.3.1] - 2020-04-02
+### Fixes
+- missing RetryStopper constructor
+
+
 <a name="v1.3.0"></a>
 ## [v1.3.0] - 2020-03-06
 ### New Features
@@ -27,7 +33,8 @@
 - init go-utils
 
 
-[Unreleased]: https://github.com/kumparan/kumnats/compare/v1.3.0...HEAD
+[Unreleased]: https://github.com/kumparan/kumnats/compare/v1.3.1...HEAD
+[v1.3.1]: https://github.com/kumparan/kumnats/compare/v1.3.0...v1.3.1
 [v1.3.0]: https://github.com/kumparan/kumnats/compare/v1.2.0...v1.3.0
 [v1.2.0]: https://github.com/kumparan/kumnats/compare/v1.1.1...v1.2.0
 [v1.1.1]: https://github.com/kumparan/kumnats/compare/v1.1.0...v1.1.1
