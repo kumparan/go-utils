@@ -18,7 +18,7 @@ func DumpIncomingContext(c context.Context) string {
 	return Dump(md)
 }
 
-// GetContextValueByKey :nodoc:
+// GetContextValueByKey get value from context by key. metadata will return string
 func GetContextValueByKey(c context.Context, k string) string {
 	md, _ := metadata.FromIncomingContext(c)
 	s := md.Get(k)
