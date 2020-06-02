@@ -17,3 +17,14 @@ func DumpIncomingContext(c context.Context) string {
 	md, _ := metadata.FromIncomingContext(c)
 	return Dump(md)
 }
+
+// GetContextValueByKey :nodoc:
+func GetContextValueByKey(c context.Context, k string) string {
+	md, _ := metadata.FromIncomingContext(c)
+	s := md.Get(k)
+	if len(s) > 0 {
+		return s[0]
+	}
+
+	return ""
+}
