@@ -6,108 +6,64 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_UrlJoin(t *testing.T) {
+func Test_JoinURL(t *testing.T) {
 	baseURL := "https://kumparan.com/trending"
-	emptyString := ""
 
-	t.Run("url empty", func(t *testing.T) {
-		url := ""
-		resURL, err := JoinURL(baseURL, url)
+	t.Run("path elements empty", func(t *testing.T) {
+		resURL, err := JoinURL(baseURL)
 		assert.Equal(t, baseURL, resURL)
 		assert.NoError(t, err)
 	})
 
 	t.Run("base empty", func(t *testing.T) {
 		url := "trending"
-		resURL, err := JoinURL(emptyString, url)
+		resURL, err := JoinURL("", url)
 		assert.Equal(t, url, resURL)
 		assert.NoError(t, err)
 	})
 
-	t.Run("if url have a scheme", func(t *testing.T) {
-		url := "https://magneto.com/feed"
-		resURL, err := JoinURL(baseURL, url)
-		assert.Equal(t, url, resURL)
+	t.Run("multiple path elements", func(t *testing.T) {
+		resURL, err := JoinURL(baseURL, "category", "news")
+		assert.Equal(t, "https://kumparan.com/trending/category/news", resURL)
 		assert.NoError(t, err)
 	})
 
-	t.Run("if url is a directory", func(t *testing.T) {
-		url := "/category/news"
-		resURL, err := JoinURL(baseURL, url)
-		assert.Equal(t, "https://kumparan.com/category/news", resURL)
+	t.Run("multiple path elements in single string", func(t *testing.T) {
+		resURL, err := JoinURL(baseURL, "category/news")
+		assert.Equal(t, "https://kumparan.com/trending/category/news", resURL)
 		assert.NoError(t, err)
 	})
 
-	t.Run("if url is not a directory", func(t *testing.T) {
-		baseURL := "https://kumparan.com/feed/category/news"
-		url := "kumparan.com/feed"
-		resURL, err := JoinURL(baseURL, url)
-		assert.Equal(t, "https://kumparan.com/feed/category/kumparan.com/feed", resURL)
-		assert.NoError(t, err)
-	})
-
-	t.Run("if url is a directory and base have no scheme", func(t *testing.T) {
-		baseURL := "kumparan.com/trending"
-		url := "/category/news"
-		resURL, err := JoinURL(baseURL, url)
-		assert.Equal(t, url, resURL)
-		assert.NoError(t, err)
-	})
-
-	t.Run("if base have no scheme", func(t *testing.T) {
-		baseURL := "kumparan.com/trending"
-		url := "category/news"
-		resURL, err := JoinURL(baseURL, url)
-		assert.Equal(t, "kumparan.com/category/news", resURL)
-		assert.NoError(t, err)
-	})
-
-	t.Run("if url have \"..\"", func(t *testing.T) {
+	t.Run("if path elements have \"..\"", func(t *testing.T) {
 		baseURL := "https://kumparan.com/trending/feed"
-		url := "../indo.nesia/news"
+		url := "../indonesia/news"
 		resURL, err := JoinURL(baseURL, url)
-		assert.Equal(t, "https://kumparan.com/indo.nesia/news", resURL)
+		assert.Equal(t, "https://kumparan.com/trending/indonesia/news", resURL)
 		assert.NoError(t, err)
 
-		t.Run("if url have \"..\" on the last element", func(t *testing.T) {
+		t.Run("if path elements have \"..\" on the last element", func(t *testing.T) {
 			baseURL := "https://kumparan.com/trending/feed"
 			url := "sepakbola/.."
 			resURL, err := JoinURL(baseURL, url)
 
-			assert.Equal(t, "https://kumparan.com/trending/", resURL)
+			assert.Equal(t, "https://kumparan.com/trending/feed", resURL)
 			assert.NoError(t, err)
 
 		})
 	})
 
-	t.Run("if url have \".\"", func(t *testing.T) {
+	t.Run("if path elements have \".\"", func(t *testing.T) {
 		baseURL := "https://kumparan.com/trending/feed"
-		url := "./indo.nesia/news"
+		url := "./indonesia/news"
 		resURL, err := JoinURL(baseURL, url)
-		assert.Equal(t, "https://kumparan.com/trending/indo.nesia/news", resURL)
-		assert.NoError(t, err)
-	})
-
-	t.Run("if url have a different scheme than baseURL", func(t *testing.T) {
-		baseURL := "https://kumparan.com/trending/feed"
-		url := "http://kumparan.com/trending"
-		resURL, err := JoinURL(baseURL, url)
-		assert.Equal(t, url, resURL)
-		assert.NoError(t, err)
-	})
-
-	t.Run("if url have no path", func(t *testing.T) {
-		baseURL := "https://kumparan.com/trending/feed"
-		url := "https://"
-		resURL, err := JoinURL(baseURL, url)
-		assert.Equal(t, baseURL, resURL)
+		assert.Equal(t, "https://kumparan.com/trending/feed/indonesia/news", resURL)
 		assert.NoError(t, err)
 	})
 
 	t.Run("if url have port", func(t *testing.T) {
 		baseURL := "https://192.168.1:3000/trending/feed"
 		url := "/story"
-		expectedURL := "https://192.168.1:3000/story"
+		expectedURL := "https://192.168.1:3000/trending/feed/story"
 		resURL, err := JoinURL(baseURL, url)
 		assert.Equal(t, expectedURL, resURL)
 		assert.NoError(t, err)
