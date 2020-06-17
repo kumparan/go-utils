@@ -1,5 +1,11 @@
 # go-utils
 
+<a name="v1.5.0"></a>
+## [v1.5.0] - 2020-06-17
+### Code Improvements
+- JoinURL to be more versatile and should be able to accept variadic variables
+
+
 <a name="v1.4.0"></a>
 ## [v1.4.0] - 2020-06-11
 ### New Features
@@ -9,7 +15,7 @@
 <a name="v1.3.1"></a>
 ## [v1.3.1] - 2020-04-02
 ### Fixes
-- missing RetryStopper constructor
+- missing RetryStopper constructor ([#6](https://github.com/kumparan/kumnats/issues/6))
 
 
 <a name="v1.3.0"></a>
@@ -39,7 +45,8 @@
 - init go-utils
 
 
-[Unreleased]: https://github.com/kumparan/kumnats/compare/v1.4.0...HEAD
+[Unreleased]: https://github.com/kumparan/kumnats/compare/v1.5.0...HEAD
+[v1.5.0]: https://github.com/kumparan/kumnats/compare/v1.4.0...v1.5.0
 [v1.4.0]: https://github.com/kumparan/kumnats/compare/v1.3.1...v1.4.0
 [v1.3.1]: https://github.com/kumparan/kumnats/compare/v1.3.0...v1.3.1
 [v1.3.0]: https://github.com/kumparan/kumnats/compare/v1.2.0...v1.3.0
