@@ -1,9 +1,24 @@
 # go-utils
 
+<a name="v1.7.0"></a>
+## [v1.7.0] - 2020-11-19
+### New Features
+- add function to truncate string by length
+
+
+<a name="v1.6.0"></a>
+## [v1.6.0] - 2020-06-30
+### Code Improvements
+- rename func from GetStoryIDFromStorySlug to GetIDFromSlug
+
+### New Features
+- get story id from story slug
+
+
 <a name="v1.5.0"></a>
 ## [v1.5.0] - 2020-06-17
 ### Code Improvements
-- JoinURL to be more versatile and should be able to accept variadic variables
+- JoinURL to be more versatile and should be able to accept variadic variables ([#9](https://github.com/kumparan/kumnats/issues/9))
 
 
 <a name="v1.4.0"></a>
@@ -45,7 +60,9 @@
 - init go-utils
 
 
-[Unreleased]: https://github.com/kumparan/kumnats/compare/v1.5.0...HEAD
+[Unreleased]: https://github.com/kumparan/kumnats/compare/v1.7.0...HEAD
+[v1.7.0]: https://github.com/kumparan/kumnats/compare/v1.6.0...v1.7.0
+[v1.6.0]: https://github.com/kumparan/kumnats/compare/v1.5.0...v1.6.0
 [v1.5.0]: https://github.com/kumparan/kumnats/compare/v1.4.0...v1.5.0
 [v1.4.0]: https://github.com/kumparan/kumnats/compare/v1.3.1...v1.4.0
 [v1.3.1]: https://github.com/kumparan/kumnats/compare/v1.3.0...v1.3.1

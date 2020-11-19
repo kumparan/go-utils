@@ -87,3 +87,17 @@ func ArrayStringPointerToArrayInt64(s *[]*string) []int64 {
 	}
 	return nil
 }
+
+// TruncateString by length, and add ellipsis at the end
+func TruncateString(str string, num int) string {
+	bnoden := str
+	if len(str) > num {
+		if num > 3 {
+			num -= 3
+			bnoden = str[0:num] + "..."
+		} else {
+			bnoden = str[0:num]
+		}
+	}
+	return bnoden
+}
