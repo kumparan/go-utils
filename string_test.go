@@ -77,5 +77,17 @@ func Test_ArrayStringPointerToArrayInt64(t *testing.T) {
 
 	assert.Contains(t, as, int64(123))
 	assert.Contains(t, as, int64(321))
+}
 
+func Test_TruncateString(t *testing.T) {
+	str1 := "A-tisket a-tasket A green and yellow basket"
+	str2 := "Peter Piper picked a peck of pickled peppers"
+
+	assert.Equal(t, "A-tisket...", TruncateString(str1, 11))
+	assert.Equal(t, "Peter Piper...", TruncateString(str2, 14))
+	assert.Equal(t, "A-tisket a-tasket A green and yellow basket", TruncateString(str1, len(str1)))
+	assert.Equal(t, "A-tisket a-tasket A green and yellow basket", TruncateString(str1, len(str1)+2))
+	assert.Equal(t, "A", TruncateString("A-", 1))
+	assert.Equal(t, "Ab", TruncateString("Absolutely Longer", 2))
+	assert.Equal(t, "A...", TruncateString("Absolutely Longer", 4))
 }
