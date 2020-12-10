@@ -22,10 +22,19 @@ func Test_FormatTimeRFC3339(t *testing.T) {
 }
 
 func Test_FormatToWesternIndonesianTime(t *testing.T)  {
-	t.Run("Success", func(t *testing.T) {
+	t.Run("Success with 3 digit month name", func(t *testing.T) {
+		layout := "02 Jan 2006 15:04 WIB"
 		now, err := time.Parse(time.RFC3339Nano, "2016-12-07T03:55:00Z")
 		assert.NoError(t, err)
-		s := FormatToWesternIndonesianTime(&now)
+		s := FormatToWesternIndonesianTime(layout, &now)
 		assert.EqualValues(t, "07 Des 2016 10:55 WIB", s)
+	})
+
+	t.Run("Success with full month name", func(t *testing.T) {
+		layout := "02 January 2006 15:04 WIB"
+		now, err := time.Parse(time.RFC3339Nano, "2016-12-07T03:55:00Z")
+		assert.NoError(t, err)
+		s := FormatToWesternIndonesianTime(layout, &now)
+		assert.EqualValues(t, "07 Desember 2016 10:55 WIB", s)
 	})
 }
