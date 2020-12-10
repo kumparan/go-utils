@@ -1,9 +1,15 @@
 # go-utils
 
+<a name="v1.8.0"></a>
+## [v1.8.0] - 2020-12-10
+### New Features
+- add formatter for indonesian money and date
+
+
 <a name="v1.7.0"></a>
 ## [v1.7.0] - 2020-11-19
 ### New Features
-- add function to truncate string by length
+- add function to truncate string by length ([#11](https://github.com/kumparan/kumnats/issues/11))
 
 
 <a name="v1.6.0"></a>
@@ -60,7 +66,8 @@
 - init go-utils
 
 
-[Unreleased]: https://github.com/kumparan/kumnats/compare/v1.7.0...HEAD
+[Unreleased]: https://github.com/kumparan/kumnats/compare/v1.8.0...HEAD
+[v1.8.0]: https://github.com/kumparan/kumnats/compare/v1.7.0...v1.8.0
 [v1.7.0]: https://github.com/kumparan/kumnats/compare/v1.6.0...v1.7.0
 [v1.6.0]: https://github.com/kumparan/kumnats/compare/v1.5.0...v1.6.0
 [v1.5.0]: https://github.com/kumparan/kumnats/compare/v1.4.0...v1.5.0
