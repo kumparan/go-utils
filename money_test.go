@@ -6,9 +6,9 @@ import (
 	"testing"
 )
 
-func Test_FormatMoney(t *testing.T)  {
+func Test_FormatToIndonesianMoney(t *testing.T)  {
 	t.Run("Success", func(t *testing.T) {
 		price := decimal.NewFromFloat(10000000.88)
-		assert.Equal(t, "Rp10.000.001", FormatIntoIndonesianMoney(price))
+		assert.Equal(t, "Rp10.000.001", FormatToIndonesianMoney(price))
 	})
 }

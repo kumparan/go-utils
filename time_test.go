@@ -21,11 +21,11 @@ func Test_FormatTimeRFC3339(t *testing.T) {
 	})
 }
 
-func Test_FormatIntoWesternIndonesianTime(t *testing.T)  {
+func Test_FormatToWesternIndonesianTime(t *testing.T)  {
 	t.Run("Success", func(t *testing.T) {
 		now, err := time.Parse(time.RFC3339Nano, "2016-12-07T03:55:00Z")
 		assert.NoError(t, err)
-		s := FormatIntoWesternIndonesianTime(&now)
+		s := FormatToWesternIndonesianTime(&now)
 		assert.EqualValues(t, "07 Des 2016 10:55 WIB", s)
 	})
 }

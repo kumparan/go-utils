@@ -13,9 +13,9 @@ func FormatTimeRFC3339(t *time.Time) (s string) {
 	return
 }
 
-// FormatIntoWesternIndonesianTime format to western indonesian time
+// FormatToWesternIndonesianTime format to western indonesian time
 // expected format: 12 April 2020 14:30 WIB
-func FormatIntoWesternIndonesianTime(t *time.Time) string {
+func FormatToWesternIndonesianTime(t *time.Time) string {
 	location, err := time.LoadLocation("Asia/Jakarta")
 	if err != nil {
 		log.Fatal(err)

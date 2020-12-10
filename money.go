@@ -5,8 +5,8 @@ import (
 	"github.com/shopspring/decimal"
 )
 
-// FormatIntoIndonesianMoney format money into Indonesian
+// FormatToIndonesianMoney format money into Indonesian
 // example: Rp10.000.000,00
-func FormatIntoIndonesianMoney(dec decimal.Decimal) string {
+func FormatToIndonesianMoney(dec decimal.Decimal) string {
 	return "Rp" + accounting.FormatNumberDecimal(dec, 0, ".", ",")
 }
