@@ -17,8 +17,8 @@ func FormatToIndonesianMoney(dec decimal.Decimal) string {
 
 // FormatMoney format money by currency code (ISO 4217)
 func FormatMoney(value decimal.Decimal, currencyCode string) string {
-	cur := currency.MustParseISO(currencyCode)
-	scale, _ := currency.Cash.Rounding(cur) // fractional digits
+	cur, _ := currency.ParseISO(currencyCode) // ignore error, unknown currencyCode will be formatted as {{currencyCode}}{{value}}, ex ZXX200
+	scale, _ := currency.Cash.Rounding(cur)   // fractional digits
 
 	unit, _ := value.Float64()
 	dec := number.Decimal(unit, number.Scale(scale))
