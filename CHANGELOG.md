@@ -1,7 +1,16 @@
 # go-utils
 
+<a name="v1.9.0"></a>
+## [v1.9.0] - 2021-03-10
+### New Features
+- add money formatter for multiple currencies
+
+
 <a name="v1.8.0"></a>
 ## [v1.8.0] - 2020-12-10
+
+<a name="v1.7.1"></a>
+## [v1.7.1] - 2020-12-10
 ### New Features
 - add formatter for indonesian money and date
 
@@ -66,8 +75,10 @@
 - init go-utils
 
 
-[Unreleased]: https://github.com/kumparan/kumnats/compare/v1.8.0...HEAD
-[v1.8.0]: https://github.com/kumparan/kumnats/compare/v1.7.0...v1.8.0
+[Unreleased]: https://github.com/kumparan/kumnats/compare/v1.9.0...HEAD
+[v1.9.0]: https://github.com/kumparan/kumnats/compare/v1.8.0...v1.9.0
+[v1.8.0]: https://github.com/kumparan/kumnats/compare/v1.7.1...v1.8.0
+[v1.7.1]: https://github.com/kumparan/kumnats/compare/v1.7.0...v1.7.1
 [v1.7.0]: https://github.com/kumparan/kumnats/compare/v1.6.0...v1.7.0
 [v1.6.0]: https://github.com/kumparan/kumnats/compare/v1.5.0...v1.6.0
 [v1.5.0]: https://github.com/kumparan/kumnats/compare/v1.4.0...v1.5.0
