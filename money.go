@@ -1,6 +1,8 @@
 package utils
 
 import (
+	"fmt"
+
 	"github.com/leekchan/accounting"
 	"github.com/shopspring/decimal"
 	"golang.org/x/text/currency"
@@ -17,9 +19,12 @@ func FormatToIndonesianMoney(dec decimal.Decimal) string {
 
 // FormatMoney format money by currency code (ISO 4217)
 func FormatMoney(value decimal.Decimal, currencyCode string) string {
-	cur, _ := currency.ParseISO(currencyCode) // ignore error, unknown currencyCode will be formatted as {{currencyCode}}{{value}}, ex ZXX200
-	scale, _ := currency.Cash.Rounding(cur)   // fractional digits
+	cur, err := currency.ParseISO(currencyCode)
+	if err != nil {
+		return fmt.Sprintf("%s%s", currencyCode, accounting.FormatNumberDecimal(value, 2, ",", "."))
+	}
 
+	scale, _ := currency.Cash.Rounding(cur) // fractional digits
 	unit, _ := value.Float64()
 	dec := number.Decimal(unit, number.Scale(scale))
 

@@ -30,4 +30,8 @@ func TestFormatMoney(t *testing.T) {
 	assert.Equal(t, "A$1.49", FormatMoney(decimal.NewFromFloat(1.4889), "AUD"))
 	assert.Equal(t, "CA$1.49", FormatMoney(decimal.NewFromFloat(1.49), "CAD"))
 	assert.Equal(t, "CA$1.49", FormatMoney(decimal.NewFromFloat(1.4889), "CAD"))
+
+	// handle unknown currency code
+	assert.Equal(t, "ASU1.49", FormatMoney(decimal.NewFromFloat(1.4889), "ASU"))
+	assert.Equal(t, "ZZZ1.49", FormatMoney(decimal.NewFromFloat(1.4889), "ZZZ"))
 }
