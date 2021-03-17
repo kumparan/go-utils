@@ -60,3 +60,27 @@ func Test_StringMillisToPointerTime(t *testing.T) {
 		assert.Nil(t, StringMillisToPointerTime(millis))
 	})
 }
+
+func Test_Int64MillisToTime(t *testing.T) {
+	millis := int64(1615963569481)
+	expected := "2021-03-17T06:46:09.481Z"
+
+	assert.Equal(t, expected, Int64MillisToTime(millis).Format(time.RFC3339Nano))
+}
+
+func Test_Int64MillisToPointerTime(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		millis := int64(1615963569481)
+		expected := "2021-03-17T06:46:09.481Z"
+
+		assert.Nil(t, nil)
+		assert.EqualValues(t, expected, Int64MillisToPointerTime(millis).Format(time.RFC3339Nano))
+	})
+
+	t.Run("0 millis", func(t *testing.T) {
+		millis := int64(0)
+		expected := "1970-01-01T00:00:00Z"
+
+		assert.EqualValues(t, expected, Int64MillisToPointerTime(millis).Format(time.RFC3339Nano))
+	})
+}

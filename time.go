@@ -36,6 +36,17 @@ func StringMillisToPointerTime(millis string) *time.Time {
 		return nil
 	}
 
-	t := time.Unix(0, StringToInt64(millis)*int64(time.Millisecond)).UTC()
+	t := StringMillisToTime(millis)
+	return &t
+}
+
+// Int64MillisToTime convert millis to time in UTC
+func Int64MillisToTime(millis int64) time.Time {
+	return time.Unix(0, millis*int64(time.Millisecond)).UTC()
+}
+
+// Int64MillisToPointerTime convert millis to pointer time in UTC
+func Int64MillisToPointerTime(millis int64) *time.Time {
+	t := Int64MillisToTime(millis)
 	return &t
 }
