@@ -21,7 +21,7 @@ func Test_FormatTimeRFC3339(t *testing.T) {
 	})
 }
 
-func Test_FormatToWesternIndonesianTime(t *testing.T)  {
+func Test_FormatToWesternIndonesianTime(t *testing.T) {
 	t.Run("Success with 3 digit month name", func(t *testing.T) {
 		layout := "02 Jan 2006 15:04 WIB"
 		now, err := time.Parse(time.RFC3339Nano, "2016-12-07T03:55:00Z")
@@ -36,5 +36,27 @@ func Test_FormatToWesternIndonesianTime(t *testing.T)  {
 		assert.NoError(t, err)
 		s := FormatToWesternIndonesianTime(layout, &now)
 		assert.EqualValues(t, "07 Desember 2016 10:55 WIB", s)
+	})
+}
+
+func Test_StringMillisToTime(t *testing.T) {
+	millis := "1615963569481"
+	expected := "2021-03-17T06:46:09.481Z"
+
+	assert.Equal(t, expected, StringMillisToTime(millis).Format(time.RFC3339Nano))
+}
+
+func Test_StringMillisToPointerTime(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		millis := "1615963569481"
+		expected := "2021-03-17T06:46:09.481Z"
+
+		assert.Nil(t, nil)
+		assert.EqualValues(t, expected, StringMillisToPointerTime(millis).Format(time.RFC3339Nano))
+	})
+
+	t.Run("success", func(t *testing.T) {
+		millis := ""
+		assert.Nil(t, StringMillisToPointerTime(millis))
 	})
 }
