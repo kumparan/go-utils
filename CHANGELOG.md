@@ -1,5 +1,11 @@
 # go-utils
 
+<a name="v1.10.0"></a>
+## [v1.10.0] - 2021-03-17
+### New Features
+- add string millis to time converter
+
+
 <a name="v1.9.0"></a>
 ## [v1.9.0] - 2021-03-10
 ### New Features
@@ -75,10 +81,11 @@
 - init go-utils
 
 
-[Unreleased]: https://github.com/kumparan/kumnats/compare/v1.9.0...HEAD
-[v1.9.0]: https://github.com/kumparan/kumnats/compare/v1.8.0...v1.9.0
-[v1.8.0]: https://github.com/kumparan/kumnats/compare/v1.7.1...v1.8.0
-[v1.7.1]: https://github.com/kumparan/kumnats/compare/v1.7.0...v1.7.1
+[Unreleased]: https://github.com/kumparan/kumnats/compare/v1.10.0...HEAD
+[v1.10.0]: https://github.com/kumparan/kumnats/compare/v1.9.0...v1.10.0
+[v1.9.0]: https://github.com/kumparan/kumnats/compare/v1.7.1...v1.9.0
+[v1.7.1]: https://github.com/kumparan/kumnats/compare/v1.8.0...v1.7.1
+[v1.8.0]: https://github.com/kumparan/kumnats/compare/v1.7.0...v1.8.0
 [v1.7.0]: https://github.com/kumparan/kumnats/compare/v1.6.0...v1.7.0
 [v1.6.0]: https://github.com/kumparan/kumnats/compare/v1.5.0...v1.6.0
 [v1.5.0]: https://github.com/kumparan/kumnats/compare/v1.4.0...v1.5.0
