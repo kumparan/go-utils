@@ -14,9 +14,7 @@ var (
 // StripHTML strips all HTML from a string, duh
 func StripHTML(s string) string {
 	once.Do(func() {
-		if bmStrict == nil {
-			bmStrict = bluemonday.StrictPolicy()
-		}
+		bmStrict = bluemonday.StrictPolicy()
 	})
 	return bmStrict.Sanitize(s)
 }
