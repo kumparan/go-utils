@@ -84,3 +84,47 @@ func Test_Int64MillisToPointerTime(t *testing.T) {
 		assert.EqualValues(t, expected, Int64MillisToPointerTime(millis).Format(time.RFC3339Nano))
 	})
 }
+
+func TestTimeDurationFromNowForHuman(t *testing.T) {
+	assert := assert.New(t)
+
+	tests := []struct {
+		input    time.Time
+		expected string
+	}{
+		{time.Now(), "baru saja"},
+		{time.Now().AddDate(1, 0, 0), "1 tahun lagi"},
+		{time.Now().AddDate(-1, 0, 0), "1 tahun yang lalu"},
+		{time.Now().AddDate(10, 0, 0), "10 tahun lagi"},
+		{time.Now().AddDate(-10, 0, 0), "10 tahun yang lalu"},
+
+		{time.Now().AddDate(0, 1, 0), "1 bulan lagi"},
+		{time.Now().AddDate(0, -1, 0), "1 bulan yang lalu"},
+		{time.Now().AddDate(0, 10, 0), "10 bulan lagi"},
+		{time.Now().AddDate(0, -10, 0), "10 bulan yang lalu"},
+
+		{time.Now().AddDate(0, 0, 1), "1 hari lagi"},
+		{time.Now().AddDate(0, 0, -1), "1 hari yang lalu"},
+		{time.Now().AddDate(0, 0, 7), "1 minggu lagi"},
+		{time.Now().AddDate(0, 0, -7), "1 minggu yang lalu"},
+
+		{time.Now().Add(time.Hour), "1 jam lagi"},
+		{time.Now().Add(-1 * time.Hour), "1 jam yang lalu"},
+		{time.Now().Add(10 * time.Hour), "10 jam lagi"},
+		{time.Now().Add(-10 * time.Hour), "10 jam yang lalu"},
+
+		{time.Now().Add(time.Minute), "1 menit lagi"},
+		{time.Now().Add(-1 * time.Minute), "1 menit yang lalu"},
+		{time.Now().Add(10 * time.Minute), "10 menit lagi"},
+		{time.Now().Add(-10 * time.Minute), "10 menit yang lalu"},
+
+		{time.Now().Add(time.Second), "1 detik lagi"},
+		{time.Now().Add(-1 * time.Second), "1 detik yang lalu"},
+		{time.Now().Add(10 * time.Second), "10 detik lagi"},
+		{time.Now().Add(-10 * time.Second), "10 detik yang lalu"},
+	}
+
+	for _, test := range tests {
+		assert.Equal(test.expected, TimeDurationFromNowForHuman(test.input))
+	}
+}

@@ -4,6 +4,7 @@ import (
 	"log"
 	"time"
 
+	"github.com/golang-module/carbon"
 	"github.com/goodsign/monday"
 )
 
@@ -49,4 +50,34 @@ func Int64MillisToTime(millis int64) time.Time {
 func Int64MillisToPointerTime(millis int64) *time.Time {
 	t := Int64MillisToTime(millis)
 	return &t
+}
+
+// TimeDurationFromNowForHuman get the time difference relative to now in human-friendly readable format
+func TimeDurationFromNowForHuman(t time.Time) string {
+	lang := carbon.NewLanguage()
+	lang.SetResources(map[string]string{
+		"seasons":        "Semi|Panas|Gugur|Dingin",
+		"months":         "Januari|Pebruari|Maret|April|Mei|Juni|Juli|Agustus|September|Oktober|November|Desember",
+		"months_short":   "Jan|Peb|Mar|Apr|Mei|Jun|Jul|Agu|Sep|Okt|Nov|Des",
+		"weeks":          "Minggu|Senin|Selasa|Rabu|Kamis|Jumat|Sabtu",
+		"weeks_short":    "Min|Sen|Sel|Rab|Kam|Jum|Sab",
+		"constellations": "Aries|Taurus|Gemini|Cancer|Leo|Virgo|Libra|Scorpio|Sagittarius|Capricorn|Aquarius|Pisces",
+		"year":           "1 tahun|%d tahun",
+		"month":          "1 bulan|%d bulan",
+		"week":           "1 minggu|%d minggu",
+		"day":            "1 hari|%d hari",
+		"hour":           "1 jam|%d jam",
+		"minute":         "1 menit|%d menit",
+		"second":         "1 detik|%d detik",
+		"now":            "baru saja",
+		"ago":            "%s yang lalu",
+		"from_now":       "%s lagi",
+		"before":         "%s sebelum",
+		"after":          "%s setelah",
+	})
+	c := carbon.NewCarbon()
+	c = c.SetLanguage(lang)
+	c.Time = t
+
+	return c.DiffForHumans()
 }
