@@ -93,33 +93,33 @@ func TestTimeDurationFromNowForHuman(t *testing.T) {
 		expected string
 	}{
 		{time.Now(), "baru saja"},
-		{time.Now().AddDate(1, 0, 0), "1 tahun lagi"},
-		{time.Now().AddDate(-1, 0, 0), "1 tahun yang lalu"},
+		{time.Now().AddDate(1, 0, 0), "setahun lagi"},
+		{time.Now().AddDate(-1, 0, 0), "setahun yang lalu"},
 		{time.Now().AddDate(10, 0, 0), "10 tahun lagi"},
 		{time.Now().AddDate(-10, 0, 0), "10 tahun yang lalu"},
 
-		{time.Now().AddDate(0, 1, 0), "1 bulan lagi"},
-		{time.Now().AddDate(0, -1, 0), "1 bulan yang lalu"},
+		{time.Now().AddDate(0, 1, 0), "sebulan lagi"},
+		{time.Now().AddDate(0, -1, 0), "sebulan yang lalu"},
 		{time.Now().AddDate(0, 10, 0), "10 bulan lagi"},
 		{time.Now().AddDate(0, -10, 0), "10 bulan yang lalu"},
 
-		{time.Now().AddDate(0, 0, 1), "1 hari lagi"},
-		{time.Now().AddDate(0, 0, -1), "1 hari yang lalu"},
-		{time.Now().AddDate(0, 0, 7), "1 minggu lagi"},
-		{time.Now().AddDate(0, 0, -7), "1 minggu yang lalu"},
+		{time.Now().AddDate(0, 0, 1), "sehari lagi"},
+		{time.Now().AddDate(0, 0, -1), "sehari yang lalu"},
+		{time.Now().AddDate(0, 0, 7), "seminggu lagi"},
+		{time.Now().AddDate(0, 0, -7), "seminggu yang lalu"},
 
-		{time.Now().Add(time.Hour), "1 jam lagi"},
-		{time.Now().Add(-1 * time.Hour), "1 jam yang lalu"},
+		{time.Now().Add(time.Hour), "sejam lagi"},
+		{time.Now().Add(-1 * time.Hour), "sejam yang lalu"},
 		{time.Now().Add(10 * time.Hour), "10 jam lagi"},
 		{time.Now().Add(-10 * time.Hour), "10 jam yang lalu"},
 
-		{time.Now().Add(time.Minute), "1 menit lagi"},
-		{time.Now().Add(-1 * time.Minute), "1 menit yang lalu"},
+		{time.Now().Add(time.Minute), "semenit lagi"},
+		{time.Now().Add(-1 * time.Minute), "semenit yang lalu"},
 		{time.Now().Add(10 * time.Minute), "10 menit lagi"},
 		{time.Now().Add(-10 * time.Minute), "10 menit yang lalu"},
 
-		{time.Now().Add(time.Second), "1 detik lagi"},
-		{time.Now().Add(-1 * time.Second), "1 detik yang lalu"},
+		{time.Now().Add(time.Second), "sedetik lagi"},
+		{time.Now().Add(-1 * time.Second), "sedetik yang lalu"},
 		{time.Now().Add(10 * time.Second), "10 detik lagi"},
 		{time.Now().Add(-10 * time.Second), "10 detik yang lalu"},
 	}
