@@ -20,8 +20,7 @@ var (
 	}
 )
 
-type Options sentry.ClientOptions
-
+// Hook "the hook"
 type Hook struct {
 	client       *sentry.Client
 	levels       []logrus.Level
@@ -32,10 +31,32 @@ type Hook struct {
 	flushTimeout time.Duration
 }
 
+// NewHook Initiate new hook
+func NewHook(options sentry.ClientOptions, levels ...logrus.Level) (*Hook, error) {
+	client, err := sentry.NewClient(options)
+	if err != nil {
+		return nil, err
+	}
+
+	hook := Hook{
+		client:       client,
+		levels:       levels,
+		tags:         map[string]string{},
+		flushTimeout: 10 * time.Second,
+	}
+	if len(hook.levels) == 0 {
+		hook.levels = logrus.AllLevels
+	}
+
+	return &hook, nil
+}
+
+// Levels implements Levels
 func (hook *Hook) Levels() []logrus.Level {
 	return hook.levels
 }
 
+// Fire implements Fire
 func (hook *Hook) Fire(entry *logrus.Entry) error {
 	var exceptions []sentry.Exception
 
@@ -71,52 +92,39 @@ func (hook *Hook) Fire(entry *logrus.Entry) error {
 	return nil
 }
 
+// SetPrefix implements SetPrefix
 func (hook *Hook) SetPrefix(prefix string) {
 	hook.prefix = prefix
 }
 
+// SetTags implements SetTags
 func (hook *Hook) SetTags(tags map[string]string) {
 	hook.tags = tags
 }
 
+// AddTag implements AddTag
 func (hook *Hook) AddTag(key, value string) {
 	hook.tags[key] = value
 }
 
+// SetRelease implements SetRelease
 func (hook *Hook) SetRelease(release string) {
 	hook.release = release
 }
 
+// SetEnvironment implements SetEnvironment
 func (hook *Hook) SetEnvironment(environment string) {
 	hook.environment = environment
 }
 
+// SetFlushTimeout implements SetFlushTimeout
 func (hook *Hook) SetFlushTimeout(timeout time.Duration) {
 	hook.flushTimeout = timeout
 }
 
+// Flush implements Flush
 func (hook *Hook) Flush() {
 	hook.client.Flush(hook.flushTimeout)
-}
-
-// NewHook Initiate new hook
-func NewHook(options Options, levels ...logrus.Level) (*Hook, error) {
-	client, err := sentry.NewClient(sentry.ClientOptions(options))
-	if err != nil {
-		return nil, err
-	}
-
-	hook := Hook{
-		client:       client,
-		levels:       levels,
-		tags:         map[string]string{},
-		flushTimeout: 10 * time.Second,
-	}
-	if len(hook.levels) == 0 {
-		hook.levels = logrus.AllLevels
-	}
-
-	return &hook, nil
 }
 
 // USAGE EXAMPLE
