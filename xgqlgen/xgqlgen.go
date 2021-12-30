@@ -1,4 +1,4 @@
-package utils
+package xgqlgen
 
 import (
 	"encoding/json"
@@ -6,6 +6,7 @@ import (
 	"io"
 
 	"github.com/99designs/gqlgen/graphql"
+	"github.com/kumparan/go-utils"
 )
 
 // MarshalInt64ID marshal int64 to string ID
@@ -19,9 +20,9 @@ func MarshalInt64ID(i int64) graphql.Marshaler {
 func UnmarshalInt64ID(v interface{}) (int64, error) {
 	switch v := v.(type) {
 	case string:
-		return StringToInt64(v), nil
+		return utils.StringToInt64(v), nil
 	case json.Number:
-		return StringToInt64(string(v)), nil
+		return utils.StringToInt64(string(v)), nil
 	case int:
 		return int64(v), nil
 	case int64:
