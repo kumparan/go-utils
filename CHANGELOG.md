@@ -1,5 +1,23 @@
 # go-utils
 
+<a name="v1.14.0"></a>
+## [v1.14.0] - 2021-12-30
+### New Features
+- add custom scalara gqlgen Int64ID
+
+
+<a name="v1.13.0"></a>
+## [v1.13.0] - 2021-12-30
+### New Features
+- add GetDifferenceDaysForHumans ([#19](https://github.com/kumparan/kumnats/issues/19))
+
+
+<a name="v1.12.0"></a>
+## [v1.12.0] - 2021-04-12
+### New Features
+- strip HTML ([#16](https://github.com/kumparan/kumnats/issues/16))
+
+
 <a name="v1.11.0"></a>
 ## [v1.11.0] - 2021-03-17
 ### New Features
@@ -15,14 +33,14 @@
 <a name="v1.9.0"></a>
 ## [v1.9.0] - 2021-03-10
 ### New Features
-- add money formatter for multiple currencies
+- add money formatter for multiple currencies ([#13](https://github.com/kumparan/kumnats/issues/13))
 
-
-<a name="v1.8.0"></a>
-## [v1.8.0] - 2020-12-10
 
 <a name="v1.7.1"></a>
 ## [v1.7.1] - 2020-12-10
+
+<a name="v1.8.0"></a>
+## [v1.8.0] - 2020-12-10
 ### New Features
 - add formatter for indonesian money and date
 
@@ -87,7 +105,10 @@
 - init go-utils
 
 
-[Unreleased]: https://github.com/kumparan/kumnats/compare/v1.11.0...HEAD
+[Unreleased]: https://github.com/kumparan/kumnats/compare/v1.14.0...HEAD
+[v1.14.0]: https://github.com/kumparan/kumnats/compare/v1.13.0...v1.14.0
+[v1.13.0]: https://github.com/kumparan/kumnats/compare/v1.12.0...v1.13.0
+[v1.12.0]: https://github.com/kumparan/kumnats/compare/v1.11.0...v1.12.0
 [v1.11.0]: https://github.com/kumparan/kumnats/compare/v1.10.0...v1.11.0
 [v1.10.0]: https://github.com/kumparan/kumnats/compare/v1.9.0...v1.10.0
 [v1.9.0]: https://github.com/kumparan/kumnats/compare/v1.7.1...v1.9.0
