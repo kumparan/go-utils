@@ -8,11 +8,10 @@ import (
 )
 
 func TestDifferenceTime_GetDifferenceDaysForHumans(t *testing.T) {
-
 	now := time.Now()
 	testCases := []struct {
 		input    time.Time
-		expected string // 期望值
+		expected string
 	}{
 		{now.Add(72 * time.Hour), "3 hari lagi"},
 		{now.Add(48 * time.Hour), "2 hari lagi"},
