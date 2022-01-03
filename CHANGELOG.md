@@ -1,9 +1,27 @@
 # go-utils
 
+<a name="v1.16.0"></a>
+## [v1.16.0] - 2022-01-03
+### New Features
+- add AESCryptor
+
+
+<a name="v1.15.0"></a>
+## [v1.15.0] - 2022-01-03
+### New Features
+- logrus sentry hook using sentry-go ([#18](https://github.com/kumparan/kumnats/issues/18))
+
+
+<a name="v1.14.1"></a>
+## [v1.14.1] - 2021-12-30
+### Fixes
+- gqlgen cannot resolve the package ([#21](https://github.com/kumparan/kumnats/issues/21))
+
+
 <a name="v1.14.0"></a>
 ## [v1.14.0] - 2021-12-30
 ### New Features
-- add custom scalara gqlgen Int64ID
+- add custom scalara gqlgen Int64ID ([#20](https://github.com/kumparan/kumnats/issues/20))
 
 
 <a name="v1.13.0"></a>
@@ -105,7 +123,10 @@
 - init go-utils
 
 
-[Unreleased]: https://github.com/kumparan/kumnats/compare/v1.14.0...HEAD
+[Unreleased]: https://github.com/kumparan/kumnats/compare/v1.16.0...HEAD
+[v1.16.0]: https://github.com/kumparan/kumnats/compare/v1.15.0...v1.16.0
+[v1.15.0]: https://github.com/kumparan/kumnats/compare/v1.14.1...v1.15.0
+[v1.14.1]: https://github.com/kumparan/kumnats/compare/v1.14.0...v1.14.1
 [v1.14.0]: https://github.com/kumparan/kumnats/compare/v1.13.0...v1.14.0
 [v1.13.0]: https://github.com/kumparan/kumnats/compare/v1.12.0...v1.13.0
 [v1.12.0]: https://github.com/kumparan/kumnats/compare/v1.11.0...v1.12.0
