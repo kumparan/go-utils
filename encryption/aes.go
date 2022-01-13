@@ -13,24 +13,23 @@ import (
 
 // AESCryptor aes cryptor
 type AESCryptor struct {
-	key       string
-	iv        string
-	blockSize int
+	encryptionKey []byte
+	iv            string
+	blockSize     int
 }
 
-// NewAESCryptor AESCryptor constructor
+// NewAESCryptor create new AESCryptor.
+// The key will be hashed using sha256 and will be used as the private key
 func NewAESCryptor(key string, iv string, blockSize int) *AESCryptor {
 	return &AESCryptor{
-		key:       key,
-		iv:        iv,
-		blockSize: blockSize,
+		encryptionKey: generateEncryptionKey(key),
+		iv:            iv,
+		blockSize:     blockSize,
 	}
 }
 
 // Encrypt encrypt plain text using CBC
-func (c AESCryptor) Encrypt(plainText string) (encryptedText string, err error) {
-	encryptionKey := c.generateEncryptionKey(c.key)
-
+func (c *AESCryptor) Encrypt(plainText string) (encryptedText string, err error) {
 	ivKey, err := hex.DecodeString(c.iv)
 	if err != nil {
 		logrus.Error(err)
@@ -38,7 +37,7 @@ func (c AESCryptor) Encrypt(plainText string) (encryptedText string, err error) 
 	}
 
 	bPlaintext := c.pkcs5Padding([]byte(plainText), c.blockSize, len(plainText))
-	block, err := aes.NewCipher(encryptionKey)
+	block, err := aes.NewCipher(c.encryptionKey)
 	if err != nil {
 		logrus.Error(err)
 		return
@@ -53,8 +52,7 @@ func (c AESCryptor) Encrypt(plainText string) (encryptedText string, err error) 
 }
 
 // Decrypt decrypt cipherText using CBC
-func (c AESCryptor) Decrypt(cipherText string) (plainText string, err error) {
-	encryptionKey := c.generateEncryptionKey(c.key)
+func (c *AESCryptor) Decrypt(cipherText string) (plainText string, err error) {
 	ivKey, err := c.generateIVKey(c.iv)
 	if err != nil {
 		return
@@ -65,7 +63,7 @@ func (c AESCryptor) Decrypt(cipherText string) (plainText string, err error) {
 		return
 	}
 
-	block, err := aes.NewCipher(encryptionKey)
+	block, err := aes.NewCipher(c.encryptionKey)
 	if err != nil {
 		return
 	}
@@ -76,17 +74,7 @@ func (c AESCryptor) Decrypt(cipherText string) (plainText string, err error) {
 	return string(c.pkcs5Unpadding(cipherTextDecoded)), nil
 }
 
-func (AESCryptor) generateEncryptionKey(key string) []byte {
-	hash := sha256.New()
-	hash.Write([]byte(key))
-	encryptionKey := hash.Sum(nil)
-
-	bKey := []byte(encryptionKey)
-
-	return bKey
-}
-
-func (c AESCryptor) generateIVKey(iv string) (bIv []byte, err error) {
+func (c *AESCryptor) generateIVKey(iv string) (bIv []byte, err error) {
 	if len(iv) > 0 {
 		ivKey, err := hex.DecodeString(iv)
 		if err != nil {
@@ -103,15 +91,21 @@ func (c AESCryptor) generateIVKey(iv string) (bIv []byte, err error) {
 	return hex.DecodeString(ivKey)
 }
 
-func (AESCryptor) pkcs5Padding(ciphertext []byte, blockSize int, after int) []byte {
+func (c *AESCryptor) pkcs5Padding(ciphertext []byte, blockSize int, after int) []byte {
 	padding := (blockSize - len(ciphertext)%blockSize)
 	padtext := bytes.Repeat([]byte{byte(padding)}, padding)
 
 	return append(ciphertext, padtext...)
 }
 
-func (AESCryptor) pkcs5Unpadding(src []byte) []byte {
+func (c *AESCryptor) pkcs5Unpadding(src []byte) []byte {
 	length := len(src)
 	unpadding := int(src[length-1])
 	return src[:(length - unpadding)]
+}
+
+func generateEncryptionKey(key string) []byte {
+	hash := sha256.New()
+	hash.Write([]byte(key))
+	return []byte(hash.Sum(nil))
 }
