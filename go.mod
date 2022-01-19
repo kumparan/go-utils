@@ -16,5 +16,6 @@ require (
 	golang.org/x/net v0.0.0-20210410081132-afb366fc7cd1 // indirect
 	golang.org/x/text v0.3.6
 	google.golang.org/grpc v1.17.0
+	gopkg.in/guregu/null.v4 v4.0.0
 	gorm.io/gorm v1.22.4
 )
