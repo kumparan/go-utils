@@ -1,9 +1,15 @@
 # go-utils
 
+<a name="v1.19.0"></a>
+## [v1.19.0] - 2022-01-19
+### New Features
+- add gqlgen null int64 & time
+
+
 <a name="v1.18.1"></a>
 ## [v1.18.1] - 2022-01-13
 ### Code Improvements
-- generate the private key only once
+- generate the private key only once ([#25](https://github.com/kumparan/kumnats/issues/25))
 
 
 <a name="v1.18.0"></a>
@@ -138,7 +144,8 @@
 - init go-utils
 
 
-[Unreleased]: https://github.com/kumparan/kumnats/compare/v1.18.1...HEAD
+[Unreleased]: https://github.com/kumparan/kumnats/compare/v1.19.0...HEAD
+[v1.19.0]: https://github.com/kumparan/kumnats/compare/v1.18.1...v1.19.0
 [v1.18.1]: https://github.com/kumparan/kumnats/compare/v1.18.0...v1.18.1
 [v1.18.0]: https://github.com/kumparan/kumnats/compare/v1.17.0...v1.18.0
 [v1.17.0]: https://github.com/kumparan/kumnats/compare/v1.16.0...v1.17.0
