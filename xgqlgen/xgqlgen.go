@@ -33,8 +33,10 @@ func UnmarshalInt64ID(v interface{}) (int64, error) {
 		return v, nil
 	case int32:
 		return int64(v), nil
+	case nil:
+		return 0, nil
 	default:
-		return 0, fmt.Errorf("%T is not a int64", v)
+		return 0, fmt.Errorf("%T is not a number", v)
 	}
 }
 
@@ -59,8 +61,10 @@ func UnmarshalNullInt64ID(v interface{}) (null.Int, error) {
 		valInt = v
 	case int32:
 		valInt = int64(v)
+	case nil:
+		return null.Int{}, nil
 	default:
-		return null.Int{}, fmt.Errorf("%T is not a int64", v)
+		return null.Int{}, fmt.Errorf("%T is not a number", v)
 	}
 	return null.NewInt(valInt, true), nil
 }
@@ -86,6 +90,8 @@ func UnmarshalNullInt64(v interface{}) (null.Int, error) {
 		valInt = v
 	case int32:
 		valInt = int64(v)
+	case nil:
+		return null.Int{}, nil
 	default:
 		return null.Int{}, fmt.Errorf("%T is not a int64", v)
 	}
@@ -155,7 +161,28 @@ func UnmarshalNullTimeRFC3339Nano(v interface{}) (null.Time, error) {
 			return null.Time{}, err
 		}
 		return null.NewTime(tt, true), nil
+	case nil:
+		return null.Time{}, nil
 	default:
 		return null.Time{}, fmt.Errorf("%T is not a valid RFC3339Nano time", v)
 	}
+}
+
+// UnmarshalNullString unmarshal string into null.String
+func UnmarshalNullString(v interface{}) (null.String, error) {
+	switch v := v.(type) {
+	case string:
+		return null.StringFrom(v), nil
+	case nil:
+		return null.String{}, nil
+	default:
+		return null.String{}, fmt.Errorf("%T is not a string", v)
+	}
+}
+
+// MarshalNullString marshal int64 to string ID
+func MarshalNullString(i null.String) graphql.Marshaler {
+	return graphql.WriterFunc(func(w io.Writer) {
+		w.Write([]byte(fmt.Sprintf(`"%s"`, i.String)))
+	})
 }
