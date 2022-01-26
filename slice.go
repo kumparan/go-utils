@@ -100,34 +100,32 @@ func DifferenceInt64(slice1 []int64, slice2 []int64) []int64 {
 // UniqueString :nodoc:
 func UniqueString(elements []string) []string {
 	encountered := map[string]bool{}
-
-	// Create a map of all unique elements.
-	for v := range elements {
-		encountered[elements[v]] = true
-	}
-
-	// Place all keys from the map into a slice.
 	result := []string{}
-	for key := range encountered {
-		result = append(result, key)
+
+	for idx := range elements {
+		if _, ok := encountered[elements[idx]]; ok {
+			continue
+		}
+		encountered[elements[idx]] = true
+		result = append(result, elements[idx])
 	}
+
 	return result
 }
 
 // UniqueInt64 :nodoc:
 func UniqueInt64(elements []int64) []int64 {
 	encountered := map[int64]bool{}
-
-	// Create a map of all unique elements.
-	for v := range elements {
-		encountered[elements[v]] = true
-	}
-
-	// Place all keys from the map into a slice.
 	result := []int64{}
-	for key := range encountered {
-		result = append(result, key)
+
+	for idx := range elements {
+		if encountered[elements[idx]] {
+			continue
+		}
+		encountered[elements[idx]] = true
+		result = append(result, elements[idx])
 	}
+
 	return result
 }
 
