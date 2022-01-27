@@ -1,9 +1,15 @@
 # go-utils
 
+<a name="v1.19.1"></a>
+## [v1.19.1] - 2022-01-26
+### New Features
+- add null string & handle nil value
+
+
 <a name="v1.19.0"></a>
 ## [v1.19.0] - 2022-01-19
 ### New Features
-- add gqlgen null int64 & time
+- add gqlgen NullInt64, NullInt64ID & NullTime ([#26](https://github.com/kumparan/kumnats/issues/26))
 
 
 <a name="v1.18.1"></a>
@@ -144,7 +150,8 @@
 - init go-utils
 
 
-[Unreleased]: https://github.com/kumparan/kumnats/compare/v1.19.0...HEAD
+[Unreleased]: https://github.com/kumparan/kumnats/compare/v1.19.1...HEAD
+[v1.19.1]: https://github.com/kumparan/kumnats/compare/v1.19.0...v1.19.1
 [v1.19.0]: https://github.com/kumparan/kumnats/compare/v1.18.1...v1.19.0
 [v1.18.1]: https://github.com/kumparan/kumnats/compare/v1.18.0...v1.18.1
 [v1.18.0]: https://github.com/kumparan/kumnats/compare/v1.17.0...v1.18.0
