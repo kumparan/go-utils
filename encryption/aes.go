@@ -99,9 +99,19 @@ func (c *AESCryptor) pkcs5Padding(ciphertext []byte, blockSize int, after int) [
 }
 
 func (c *AESCryptor) pkcs5Unpadding(src []byte) []byte {
+	if len(src) == 0 {
+		return nil
+	}
+
 	length := len(src)
 	unpadding := int(src[length-1])
-	return src[:(length - unpadding)]
+	cutLen := (length - unpadding)
+	// check boundaries
+	if cutLen < 0 || cutLen > length {
+		return src
+	}
+
+	return src[:cutLen]
 }
 
 func generateEncryptionKey(key string) []byte {

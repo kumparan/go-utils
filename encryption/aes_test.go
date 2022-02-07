@@ -26,3 +26,31 @@ func TestAESCryptor_Encrypt(t *testing.T) {
 	require.NoError(t, err)
 	require.Equal(t, plain, dec)
 }
+
+func TestAESCryptor_PKCSUnpadding(t *testing.T) {
+	t.Run("empty", func(t *testing.T) {
+		cryptor := &AESCryptor{}
+		res := cryptor.pkcs5Unpadding(nil)
+		require.Nil(t, res)
+	})
+
+	emails := []string{
+		`kumkum@email.com`,
+		`kumkum@email.com   `,
+		"",
+	}
+
+	iv, err := GenerateRandomIVKey(aes.BlockSize)
+	require.NoError(t, err)
+
+	for _, email := range emails {
+		cryptor := NewAESCryptor("foobar", iv, aes.BlockSize)
+		enc, err := cryptor.Encrypt(email)
+		require.NoError(t, err)
+		require.NotEqual(t, email, enc)
+
+		decEmail, err := cryptor.Decrypt(enc)
+		require.NoError(t, err)
+		require.Equal(t, email, decEmail)
+	}
+}
