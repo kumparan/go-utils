@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"strconv"
 	"time"
 
 	"github.com/99designs/gqlgen/graphql"
@@ -16,7 +17,7 @@ import (
 // MarshalInt64ID marshal int64 to string ID
 func MarshalInt64ID(i int64) graphql.Marshaler {
 	return graphql.WriterFunc(func(w io.Writer) {
-		w.Write([]byte(fmt.Sprintf(`"%d"`, i)))
+		_, _ = w.Write([]byte(fmt.Sprintf(`"%d"`, i)))
 	})
 }
 
@@ -24,9 +25,9 @@ func MarshalInt64ID(i int64) graphql.Marshaler {
 func UnmarshalInt64ID(v interface{}) (int64, error) {
 	switch v := v.(type) {
 	case string:
-		return utils.StringToInt64(v), nil
+		return strconv.ParseInt(v, 10, 64)
 	case json.Number:
-		return utils.StringToInt64(string(v)), nil
+		return strconv.ParseInt(string(v), 10, 64)
 	case int:
 		return int64(v), nil
 	case int64:
@@ -40,69 +41,81 @@ func UnmarshalInt64ID(v interface{}) (int64, error) {
 	}
 }
 
-// MarshalNullInt64 marshal int64 to string ID
+// MarshalNullInt64ID marshal int64 to string ID
 func MarshalNullInt64ID(i null.Int) graphql.Marshaler {
 	return graphql.WriterFunc(func(w io.Writer) {
-		w.Write([]byte(fmt.Sprintf(`"%d"`, i.Int64)))
+		_, _ = w.Write([]byte(fmt.Sprintf(`"%d"`, i.Int64)))
 	})
 }
 
-// UnmarshalNullInt64 unmarshal ID into int64
+// UnmarshalNullInt64ID unmarshal ID into int64
 func UnmarshalNullInt64ID(v interface{}) (null.Int, error) {
-	var valInt int64
 	switch v := v.(type) {
 	case string:
-		valInt = utils.StringToInt64(v)
+		valInt, err := strconv.ParseInt(v, 10, 64)
+		if err != nil {
+			return null.Int{}, err
+		}
+		return null.IntFrom(valInt), nil
 	case json.Number:
-		valInt = utils.StringToInt64(string(v))
+		valInt, err := strconv.ParseInt(string(v), 10, 64)
+		if err != nil {
+			return null.Int{}, err
+		}
+		return null.IntFrom(valInt), nil
 	case int:
-		valInt = int64(v)
+		return null.IntFrom(int64(v)), nil
 	case int64:
-		valInt = v
+		return null.IntFrom(v), nil
 	case int32:
-		valInt = int64(v)
+		return null.IntFrom(int64(v)), nil
 	case nil:
 		return null.Int{}, nil
 	default:
 		return null.Int{}, fmt.Errorf("%T is not a number", v)
 	}
-	return null.NewInt(valInt, true), nil
 }
 
 // MarshalNullInt64 marshal int64 to string ID
 func MarshalNullInt64(i null.Int) graphql.Marshaler {
 	return graphql.WriterFunc(func(w io.Writer) {
-		w.Write([]byte(fmt.Sprintf(`%d`, i.Int64)))
+		_, _ = w.Write([]byte(fmt.Sprintf(`%d`, i.Int64)))
 	})
 }
 
 // UnmarshalNullInt64 unmarshal ID into int64
 func UnmarshalNullInt64(v interface{}) (null.Int, error) {
-	var valInt int64
 	switch v := v.(type) {
 	case string:
-		valInt = utils.StringToInt64(v)
+		valInt, err := strconv.ParseInt(v, 10, 64)
+		if err != nil {
+			return null.Int{}, err
+		}
+		return null.IntFrom(valInt), nil
 	case json.Number:
-		valInt = utils.StringToInt64(string(v))
+		valInt, err := strconv.ParseInt(string(v), 10, 64)
+		if err != nil {
+			return null.Int{}, err
+		}
+		return null.IntFrom(valInt), nil
 	case int:
-		valInt = int64(v)
+		return null.IntFrom(int64(v)), nil
 	case int64:
-		valInt = v
+		return null.IntFrom(v), nil
 	case int32:
-		valInt = int64(v)
+		return null.IntFrom(int64(v)), nil
 	case nil:
 		return null.Int{}, nil
 	default:
-		return null.Int{}, fmt.Errorf("%T is not a int64", v)
+		return null.Int{}, fmt.Errorf("%T is not a number", v)
 	}
-	return null.NewInt(valInt, true), nil
 }
 
 // MarshalGormDeletedAt marshal gorm.DeletedAt to string
 func MarshalGormDeletedAt(gd gorm.DeletedAt) graphql.Marshaler {
 	return graphql.WriterFunc(func(w io.Writer) {
 		ts := utils.FormatTimeRFC3339(&gd.Time)
-		w.Write([]byte(fmt.Sprintf(`"%s"`, ts)))
+		_, _ = w.Write([]byte(fmt.Sprintf(`"%s"`, ts)))
 	})
 }
 
@@ -126,7 +139,7 @@ func UnmarshalGormDeletedAt(v interface{}) (gorm.DeletedAt, error) {
 func MarshalTimeRFC3339Nano(tt time.Time) graphql.Marshaler {
 	return graphql.WriterFunc(func(w io.Writer) {
 		ts := utils.FormatTimeRFC3339(&tt)
-		w.Write([]byte(fmt.Sprintf(`"%s"`, ts)))
+		_, _ = w.Write([]byte(fmt.Sprintf(`"%s"`, ts)))
 	})
 }
 
@@ -144,15 +157,15 @@ func UnmarshalTimeRFC3339Nano(v interface{}) (time.Time, error) {
 func MarshalNullTimeRFC3339Nano(nt null.Time) graphql.Marshaler {
 	return graphql.WriterFunc(func(w io.Writer) {
 		if !nt.Valid {
-			w.Write([]byte(`null`))
+			_, _ = w.Write([]byte(`null`))
 			return
 		}
 		ts := utils.FormatTimeRFC3339(&nt.Time)
-		w.Write([]byte(fmt.Sprintf(`"%s"`, ts)))
+		_, _ = w.Write([]byte(fmt.Sprintf(`"%s"`, ts)))
 	})
 }
 
-// UnmarshalTimeRFC3339Nano unmarshal v into time.Time
+// UnmarshalNullTimeRFC3339Nano unmarshal v into time.Time
 func UnmarshalNullTimeRFC3339Nano(v interface{}) (null.Time, error) {
 	switch v := v.(type) {
 	case string:
@@ -183,6 +196,6 @@ func UnmarshalNullString(v interface{}) (null.String, error) {
 // MarshalNullString marshal int64 to string ID
 func MarshalNullString(i null.String) graphql.Marshaler {
 	return graphql.WriterFunc(func(w io.Writer) {
-		w.Write([]byte(fmt.Sprintf(`"%s"`, i.String)))
+		_, _ = w.Write([]byte(fmt.Sprintf(`"%s"`, i.String)))
 	})
 }
