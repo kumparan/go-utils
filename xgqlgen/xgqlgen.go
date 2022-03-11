@@ -208,12 +208,12 @@ func ConstraintSize(ctx context.Context, obj interface{}, next graphql.Resolver,
 		return next(ctx) // skip if invalid
 	}
 
-	f := "size"
+	fieldName := "size"
 	if field != nil {
-		f = *field
+		fieldName = *field
 	}
 
-	valInt, ok := val[f].(int64) // safe check is valid int64
+	valInt, ok := val[fieldName].(int64) // safe check is valid int64
 	if !ok {
 		return next(ctx) // skip if invalid
 	}
