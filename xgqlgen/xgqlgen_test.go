@@ -2,6 +2,7 @@ package xgqlgen
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
 	"testing"
@@ -105,6 +106,47 @@ func TestNullTime(t *testing.T) {
 		tt, err := UnmarshalNullTimeRFC3339Nano(ts)
 		assert.NoError(t, err)
 		assert.EqualValues(t, now.Format(time.RFC3339Nano), tt.Time.Format(time.RFC3339Nano))
+	})
+}
+
+func TestConstraintSize(t *testing.T) {
+	var (
+		min        int64           = 1
+		max        int64           = 25
+		a          int64           = 5
+		b          int64           = 0
+		c          int64           = 26
+		sizeField  string          = "size"
+		otherField string          = "other"
+		ctx        context.Context = context.TODO()
+	)
+
+	t.Run("within constraint", func(t *testing.T) {
+		obj := map[string]interface{}{sizeField: a}
+		res, err := ConstraintSize(ctx, obj, nil, min, max, nil)
+		assert.NoError(t, err)
+		assert.EqualValues(t, a, res)
+	})
+
+	t.Run("below min constraint", func(t *testing.T) {
+		obj := map[string]interface{}{sizeField: b}
+		res, err := ConstraintSize(ctx, obj, nil, min, max, nil)
+		assert.NoError(t, err)
+		assert.EqualValues(t, min, res)
+	})
+
+	t.Run("above max constraint", func(t *testing.T) {
+		obj := map[string]interface{}{sizeField: c}
+		res, err := ConstraintSize(ctx, obj, nil, min, max, nil)
+		assert.NoError(t, err)
+		assert.EqualValues(t, max, res)
+	})
+
+	t.Run("non-default field", func(t *testing.T) {
+		obj := map[string]interface{}{otherField: c}
+		res, err := ConstraintSize(ctx, obj, nil, min, max, &otherField)
+		assert.NoError(t, err)
+		assert.EqualValues(t, max, res)
 	})
 }
 
