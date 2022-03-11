@@ -69,3 +69,16 @@ func Int64WithLimit(input int64, limit int64) int64 {
 
 	return input
 }
+
+// Int64WithMinAndMaxLimit check input value. if bigger than max, then return max. if smaller than min, then return min. else return input.
+func Int64WithMinAndMaxLimit(input, min, max int64) int64 {
+	if input < min {
+		return min
+	}
+
+	if input > max {
+		return max
+	}
+
+	return input
+}

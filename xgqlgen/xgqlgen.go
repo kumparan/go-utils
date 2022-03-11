@@ -1,6 +1,7 @@
 package xgqlgen
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -198,4 +199,24 @@ func MarshalNullString(i null.String) graphql.Marshaler {
 	return graphql.WriterFunc(func(w io.Writer) {
 		_, _ = w.Write([]byte(fmt.Sprintf(`"%s"`, i.String)))
 	})
+}
+
+// ConstraintSize directive to constrain field between min and max values. if field is above max, then directive returns max. if field is below min, then directive returns min. else return field.
+func ConstraintSize(ctx context.Context, obj interface{}, next graphql.Resolver, min int64, max int64, field *string) (interface{}, error) {
+	val, ok := obj.(map[string]interface{}) // safe check is valid map
+	if !ok {
+		return next(ctx) // skip if invalid
+	}
+
+	f := "size"
+	if field != nil {
+		f = *field
+	}
+
+	valInt, ok := val[f].(int64) // safe check is valid int64
+	if !ok {
+		return next(ctx) // skip if invalid
+	}
+
+	return utils.Int64WithMinAndMaxLimit(valInt, min, max), nil
 }
