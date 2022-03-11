@@ -1,5 +1,18 @@
 # go-utils
 
+
+<a name="v1.20.0"></a>
+## [v1.20.0] - 2022-03-11
+### New Features
+- add constraint size graphql directive
+
+
+<a name="v1.19.3"></a>
+## [v1.19.3] - 2022-02-25
+### Fixes
+- fix 0 return on overflow int64
+
+
 <a name="v1.19.2"></a>
 ## [v1.19.2] - 2022-02-07
 ### Fixes
