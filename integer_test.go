@@ -53,3 +53,17 @@ func Test_Int64WithLimit(t *testing.T) {
 	assert.NotEqual(t, c, Int64WithLimit(c, a))
 
 }
+
+func Test_Int64WithMinAndMaxLimit(t *testing.T) {
+	var (
+		min int64 = 1
+		max int64 = 25
+		a   int64 = 5
+		b   int64 = 0
+		c   int64 = 26
+	)
+
+	assert.Equal(t, a, Int64WithMinAndMaxLimit(a, min, max))
+	assert.Equal(t, min, Int64WithMinAndMaxLimit(b, min, max))
+	assert.Equal(t, max, Int64WithMinAndMaxLimit(c, min, max))
+}
