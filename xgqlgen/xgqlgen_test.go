@@ -64,9 +64,13 @@ func TestGormDeletedAt(t *testing.T) {
 	err := deletedAt.Scan(now)
 	require.NoError(t, err)
 
-	t.Run("marshal", func(t *testing.T) {
+	t.Run("marshal no null", func(t *testing.T) {
 		ts := fmt.Sprintf(`"%s"`, now.Format(time.RFC3339Nano))
 		assert.Equal(t, ts, marshalerToString(MarshalGormDeletedAt(deletedAt)))
+	})
+
+	t.Run("marshal null", func(t *testing.T) {
+		assert.Equal(t, "null", marshalerToString(MarshalGormDeletedAt(gorm.DeletedAt{})))
 	})
 
 	t.Run("unmarshal", func(t *testing.T) {
