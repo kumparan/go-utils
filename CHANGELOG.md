@@ -1,22 +1,31 @@
 # go-utils
 
+<a name="v1.20.1"></a>
+## [v1.20.1] - 2022-03-15
+### Fixes
+- fix test name
+- fix marshal issue on gorm.DeletedAt empty value
+
 
 <a name="v1.20.0"></a>
 ## [v1.20.0] - 2022-03-11
+
+<a name="v.1.20.0"></a>
+## [v.1.20.0] - 2022-03-11
 ### New Features
-- add constraint size graphql directive
+- add constraint size gql directive ([#30](https://github.com/kumparan/kumnats/issues/30))
 
 
 <a name="v1.19.3"></a>
 ## [v1.19.3] - 2022-02-25
 ### Fixes
-- fix 0 return on overflow int64
+- should handle error when marshal/unmarshal from gqlgen ([#29](https://github.com/kumparan/kumnats/issues/29))
 
 
 <a name="v1.19.2"></a>
 ## [v1.19.2] - 2022-02-07
 ### Fixes
-- handle index out of bound
+- handle index out of bound ([#28](https://github.com/kumparan/kumnats/issues/28))
 
 
 <a name="v1.19.1"></a>
@@ -169,7 +178,11 @@
 - init go-utils
 
 
-[Unreleased]: https://github.com/kumparan/kumnats/compare/v1.19.2...HEAD
+[Unreleased]: https://github.com/kumparan/kumnats/compare/v1.20.1...HEAD
+[v1.20.1]: https://github.com/kumparan/kumnats/compare/v1.20.0...v1.20.1
+[v1.20.0]: https://github.com/kumparan/kumnats/compare/v.1.20.0...v1.20.0
+[v.1.20.0]: https://github.com/kumparan/kumnats/compare/v1.19.3...v.1.20.0
+[v1.19.3]: https://github.com/kumparan/kumnats/compare/v1.19.2...v1.19.3
 [v1.19.2]: https://github.com/kumparan/kumnats/compare/v1.19.1...v1.19.2
 [v1.19.1]: https://github.com/kumparan/kumnats/compare/v1.19.0...v1.19.1
 [v1.19.0]: https://github.com/kumparan/kumnats/compare/v1.18.1...v1.19.0
