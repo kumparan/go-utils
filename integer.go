@@ -42,6 +42,14 @@ func Int32PointerToInt32(i *int32) int32 {
 	return 0
 }
 
+// Int64PointerToInt64 :nodoc:
+func Int64PointerToInt64(i *int64) int64 {
+	if i == nil {
+		return 0
+	}
+	return *i
+}
+
 // IsSameSliceIgnoreOrder to compare slice without order
 func IsSameSliceIgnoreOrder(a, b []int64) bool {
 	if len(a) != len(b) {
