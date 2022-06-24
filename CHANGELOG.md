@@ -1,9 +1,15 @@
 # go-utils
 
+<a name="v1.22.0"></a>
+## [v1.22.0] - 2022-06-24
+### New Features
+- generate ULID from time
+
+
 <a name="v1.21.0"></a>
 ## [v1.21.0] - 2022-06-23
 ### New Features
-- add some functions using go generic
+- add some functions using go generic 
 
 
 <a name="v1.20.1"></a>
@@ -183,7 +189,8 @@
 - init go-utils
 
 
-[Unreleased]: https://github.com/kumparan/kumnats/compare/v1.21.0...HEAD
+[Unreleased]: https://github.com/kumparan/kumnats/compare/v1.22.0...HEAD
+[v1.22.0]: https://github.com/kumparan/kumnats/compare/v1.21.0...v1.22.0
 [v1.21.0]: https://github.com/kumparan/kumnats/compare/v1.20.1...v1.21.0
 [v1.20.1]: https://github.com/kumparan/kumnats/compare/v1.20.0...v1.20.1
 [v1.20.0]: https://github.com/kumparan/kumnats/compare/v.1.20.0...v1.20.0

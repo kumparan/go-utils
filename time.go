@@ -2,9 +2,12 @@ package utils
 
 import (
 	"log"
+	"math/rand"
+	"strings"
 	"time"
 
 	"github.com/goodsign/monday"
+	"github.com/oklog/ulid"
 )
 
 // FormatTimeRFC3339 Format time according to RFC3339Nano
@@ -49,4 +52,9 @@ func Int64MillisToTime(millis int64) time.Time {
 func Int64MillisToPointerTime(millis int64) *time.Time {
 	t := Int64MillisToTime(millis)
 	return &t
+}
+
+func GenerateULIDFromTime(t time.Time) string {
+	entropy := ulid.Monotonic(rand.New(rand.NewSource(t.UnixNano())), 0)
+	return strings.ToLower(ulid.MustNew(ulid.Timestamp(t), entropy).String())
 }
