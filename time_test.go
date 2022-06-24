@@ -84,3 +84,11 @@ func Test_Int64MillisToPointerTime(t *testing.T) {
 		assert.EqualValues(t, expected, Int64MillisToPointerTime(millis).Format(time.RFC3339Nano))
 	})
 }
+
+func Test_GenerateULIDFromTime(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		ulid := GenerateULIDFromTime(time.Now())
+		assert.NotNil(t, ulid)
+		assert.IsType(t, "string", ulid)
+	})
+}
