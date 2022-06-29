@@ -92,3 +92,14 @@ func Test_GenerateULIDFromTime(t *testing.T) {
 		assert.IsType(t, "string", ulid)
 	})
 }
+
+func Test_ParseDurationWithDefault(t *testing.T) {
+	defaultDuration := 3 * time.Second
+
+	assert.Equal(t, defaultDuration, ParseDurationWithDefault("8000", defaultDuration))
+	assert.Equal(t, 8000*time.Second, ParseDurationWithDefault("8000s", defaultDuration))
+	assert.Equal(t, time.Duration(0), ParseDurationWithDefault("0", defaultDuration))
+	assert.Equal(t, time.Duration(0), ParseDurationWithDefault("0s", defaultDuration))
+	assert.Equal(t, defaultDuration, ParseDurationWithDefault("s", defaultDuration))
+	assert.Equal(t, defaultDuration, ParseDurationWithDefault("anystring", defaultDuration))
+}

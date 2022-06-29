@@ -54,7 +54,17 @@ func Int64MillisToPointerTime(millis int64) *time.Time {
 	return &t
 }
 
+// GenerateULIDFromTime :nodoc:
 func GenerateULIDFromTime(t time.Time) string {
 	entropy := ulid.Monotonic(rand.New(rand.NewSource(t.UnixNano())), 0)
 	return strings.ToLower(ulid.MustNew(ulid.Timestamp(t), entropy).String())
+}
+
+// ParseDurationWithDefault self explained
+func ParseDurationWithDefault(in string, defaultDuration time.Duration) time.Duration {
+	d, err := time.ParseDuration(in)
+	if err != nil {
+		return defaultDuration
+	}
+	return d
 }
