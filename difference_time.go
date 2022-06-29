@@ -21,8 +21,8 @@ func GetDifferenceDaysForHumans(startsAt time.Time, endsAt time.Time) string {
 	case numDay == 1:
 		return "kemarin"
 	case numDay < -1:
-		return fmt.Sprintf("%d hari lagi", -(int64(numDay)))
+		return fmt.Sprintf("%d hari lagi", -(numDay))
 	default:
-		return fmt.Sprintf("%d hari yang lalu", int64(numDay))
+		return fmt.Sprintf("%d hari yang lalu", numDay)
 	}
 }

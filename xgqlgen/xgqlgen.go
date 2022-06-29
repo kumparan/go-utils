@@ -160,6 +160,7 @@ func UnmarshalGormDeletedAt(v interface{}) (gorm.DeletedAt, error) {
 	}
 }
 
+// MarshalNullTimeRFC3339Nano :nodoc:
 func MarshalNullTimeRFC3339Nano(nt null.Time) graphql.Marshaler {
 	return graphql.WriterFunc(func(w io.Writer) {
 		if !nt.Valid {

@@ -69,7 +69,7 @@ func Test_Int64WithMinAndMaxLimit(t *testing.T) {
 		min int64 = 1
 		max int64 = 25
 		a   int64 = 5
-		b   int64 = 0
+		b   int64
 		c   int64 = 26
 	)
 

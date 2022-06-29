@@ -115,13 +115,13 @@ func TestNullTime(t *testing.T) {
 
 func TestConstraintSize(t *testing.T) {
 	var (
-		min        int64           = 1
-		max        int64           = 25
-		a          int64           = 5
-		b          int64           = 0
+		min        int64 = 1
+		max        int64 = 25
+		a          int64 = 5
+		b          int64
 		c          int64           = 26
-		sizeField  string          = "size"
-		otherField string          = "other"
+		sizeField                  = "size"
+		otherField                 = "other"
 		ctx        context.Context = context.TODO()
 	)
 
