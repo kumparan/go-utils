@@ -1,5 +1,11 @@
 # go-utils
 
+<a name="v1.23.0"></a>
+## [v1.23.0] - 2022-04-14
+### New Features
+- add int64 pointer to int64 conversion
+
+
 <a name="v1.22.0"></a>
 ## [v1.22.0] - 2022-06-24
 ### New Features
@@ -7,9 +13,9 @@
 
 
 <a name="v1.21.0"></a>
-## [v1.21.0] - 2022-06-23
+## [v1.21.0] - 2022-06-24
 ### New Features
-- add some functions using go generic 
+- add some functions using go generic ([#34](https://github.com/kumparan/kumnats/issues/34))
 
 
 <a name="v1.20.1"></a>
@@ -120,11 +126,11 @@
 - add money formatter for multiple currencies ([#13](https://github.com/kumparan/kumnats/issues/13))
 
 
-<a name="v1.8.0"></a>
-## [v1.8.0] - 2020-12-10
-
 <a name="v1.7.1"></a>
 ## [v1.7.1] - 2020-12-10
+
+<a name="v1.8.0"></a>
+## [v1.8.0] - 2020-12-10
 ### New Features
 - add formatter for indonesian money and date
 
@@ -189,7 +195,8 @@
 - init go-utils
 
 
-[Unreleased]: https://github.com/kumparan/kumnats/compare/v1.22.0...HEAD
+[Unreleased]: https://github.com/kumparan/kumnats/compare/v1.23.0...HEAD
+[v1.23.0]: https://github.com/kumparan/kumnats/compare/v1.22.0...v1.23.0
 [v1.22.0]: https://github.com/kumparan/kumnats/compare/v1.21.0...v1.22.0
 [v1.21.0]: https://github.com/kumparan/kumnats/compare/v1.20.1...v1.21.0
 [v1.20.1]: https://github.com/kumparan/kumnats/compare/v1.20.0...v1.20.1
@@ -210,9 +217,9 @@
 [v1.12.0]: https://github.com/kumparan/kumnats/compare/v1.11.0...v1.12.0
 [v1.11.0]: https://github.com/kumparan/kumnats/compare/v1.10.0...v1.11.0
 [v1.10.0]: https://github.com/kumparan/kumnats/compare/v1.9.0...v1.10.0
-[v1.9.0]: https://github.com/kumparan/kumnats/compare/v1.8.0...v1.9.0
-[v1.8.0]: https://github.com/kumparan/kumnats/compare/v1.7.1...v1.8.0
-[v1.7.1]: https://github.com/kumparan/kumnats/compare/v1.7.0...v1.7.1
+[v1.9.0]: https://github.com/kumparan/kumnats/compare/v1.7.1...v1.9.0
+[v1.7.1]: https://github.com/kumparan/kumnats/compare/v1.8.0...v1.7.1
+[v1.8.0]: https://github.com/kumparan/kumnats/compare/v1.7.0...v1.8.0
 [v1.7.0]: https://github.com/kumparan/kumnats/compare/v1.6.0...v1.7.0
 [v1.6.0]: https://github.com/kumparan/kumnats/compare/v1.5.0...v1.6.0
 [v1.5.0]: https://github.com/kumparan/kumnats/compare/v1.4.0...v1.5.0

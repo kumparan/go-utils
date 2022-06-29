@@ -26,6 +26,16 @@ func Test_Int32PointerToInt32(t *testing.T) {
 	assert.Equal(t, int32(0), Int32PointerToInt32(i))
 }
 
+func Test_Int64PointerToInt64(t *testing.T) {
+	var i *int64
+	assert.Equal(t, int64(0), Int64PointerToInt64(i))
+	ii := int64(12345678901)
+	i = &ii
+	assert.Equal(t, ii, Int64PointerToInt64(i))
+	*i = 0
+	assert.Equal(t, int64(0), Int64PointerToInt64(i))
+}
+
 func Test_IsSameSliceIgnoreOrder(t *testing.T) {
 	a := []int64{2, 1, 3}
 	b := []int64{2, 1, 3}
