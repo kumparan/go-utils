@@ -3,8 +3,11 @@
 <a name="v1.23.0"></a>
 ## [v1.23.0] - 2022-06-29
 ### New Features
-- parse duration with default
+- parse duration with default ([#36](https://github.com/kumparan/kumnats/issues/36))
 - add int64 pointer to int64 conversion ([#33](https://github.com/kumparan/kumnats/issues/33))
+
+### Other Improvements
+- fix dependabot alert
 
 
 <a name="v1.22.0"></a>

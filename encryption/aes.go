@@ -69,7 +69,7 @@ func (c *AESCryptor) Decrypt(cipherText string) (plainText string, err error) {
 	}
 
 	mode := cipher.NewCBCDecrypter(block, ivKey)
-	mode.CryptBlocks([]byte(cipherTextDecoded), []byte(cipherTextDecoded))
+	mode.CryptBlocks(cipherTextDecoded, cipherTextDecoded)
 
 	return string(c.pkcs5Unpadding(cipherTextDecoded)), nil
 }
@@ -117,5 +117,5 @@ func (c *AESCryptor) pkcs5Unpadding(src []byte) []byte {
 func generateEncryptionKey(key string) []byte {
 	hash := sha256.New()
 	hash.Write([]byte(key))
-	return []byte(hash.Sum(nil))
+	return hash.Sum(nil)
 }
