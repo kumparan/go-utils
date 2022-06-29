@@ -1,9 +1,10 @@
 # go-utils
 
 <a name="v1.23.0"></a>
-## [v1.23.0] - 2022-04-14
+## [v1.23.0] - 2022-06-29
 ### New Features
-- add int64 pointer to int64 conversion
+- parse duration with default
+- add int64 pointer to int64 conversion ([#33](https://github.com/kumparan/kumnats/issues/33))
 
 
 <a name="v1.22.0"></a>
