@@ -1,5 +1,11 @@
 # go-utils
 
+<a name="v1.24.0"></a>
+## [v1.24.0] - 2022-07-15
+### New Features
+- nanoseconds check on rpc3339nano time formatting
+
+
 <a name="v1.23.0"></a>
 ## [v1.23.0] - 2022-06-29
 ### New Features
@@ -199,7 +205,8 @@
 - init go-utils
 
 
-[Unreleased]: https://github.com/kumparan/kumnats/compare/v1.23.0...HEAD
+[Unreleased]: https://github.com/kumparan/kumnats/compare/v1.24.0...HEAD
+[v1.24.0]: https://github.com/kumparan/kumnats/compare/v1.23.0...v1.24.0
 [v1.23.0]: https://github.com/kumparan/kumnats/compare/v1.22.0...v1.23.0
 [v1.22.0]: https://github.com/kumparan/kumnats/compare/v1.21.0...v1.22.0
 [v1.21.0]: https://github.com/kumparan/kumnats/compare/v1.20.1...v1.21.0
