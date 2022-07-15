@@ -119,10 +119,10 @@ func TestConstraintSize(t *testing.T) {
 		max        int64 = 25
 		a          int64 = 5
 		b          int64
-		c          int64           = 26
-		sizeField                  = "size"
-		otherField                 = "other"
-		ctx        context.Context = context.TODO()
+		c          int64 = 26
+		sizeField        = "size"
+		otherField       = "other"
+		ctx              = context.TODO()
 	)
 
 	t.Run("within constraint", func(t *testing.T) {
