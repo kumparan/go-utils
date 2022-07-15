@@ -13,11 +13,25 @@ func Test_FormatTimeRFC3339(t *testing.T) {
 		assert.EqualValues(t, "", s)
 	})
 
-	t.Run("Now", func(t *testing.T) {
+	t.Run("ok", func(t *testing.T) {
+		now, err := time.Parse(time.RFC3339Nano, "2016-06-06T20:00:31.451838Z")
+		assert.NoError(t, err)
+		s := FormatTimeRFC3339(&now)
+		assert.EqualValues(t, "2016-06-06T20:00:31.451838Z", s)
+	})
+
+	t.Run("Time without millisecond", func(t *testing.T) {
 		now, err := time.Parse(time.RFC3339Nano, "2016-06-06T03:55:00Z")
 		assert.NoError(t, err)
 		s := FormatTimeRFC3339(&now)
-		assert.EqualValues(t, "2016-06-06T03:55:00Z", s)
+		assert.EqualValues(t, "2016-06-06T03:55:00.000000000Z", s)
+	})
+
+	t.Run("Time without nanosecond", func(t *testing.T) {
+		now, err := time.Parse(time.RFC3339Nano, "2016-06-06T03:55:12Z")
+		assert.NoError(t, err)
+		s := FormatTimeRFC3339(&now)
+		assert.EqualValues(t, "2016-06-06T03:55:12.000000000Z", s)
 	})
 }
 
