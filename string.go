@@ -101,3 +101,18 @@ func TruncateString(str string, num int) string {
 	}
 	return bnoden
 }
+
+func EscapeQuote(in string) string {
+	res := []byte{}
+	const (
+		doubleQuoteASCII = 34
+		backSlashASCII   = 92
+	)
+	for i := 0; i < len(in); i++ {
+		if in[i] == doubleQuoteASCII && ((i > 0 && in[i-1] != backSlashASCII) || i == 0) {
+			res = append(res, backSlashASCII)
+		}
+		res = append(res, in[i])
+	}
+	return string(res)
+}
