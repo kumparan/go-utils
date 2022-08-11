@@ -91,3 +91,19 @@ func Test_TruncateString(t *testing.T) {
 	assert.Equal(t, "Ab", TruncateString("Absolutely Longer", 2))
 	assert.Equal(t, "A...", TruncateString("Absolutely Longer", 4))
 }
+
+func Test_EscapeQuote(t *testing.T) {
+	strWithoutQuote := "this is brazil"
+	strWithQuote := "\"bek bek bek\""
+	strWithEscapedQuote := "\\\"bek\\\" bek\\\" bek\\\""
+
+	testCases := map[string]string{
+		strWithoutQuote:     "this is brazil",
+		strWithQuote:        "\\\"bek bek bek\\\"",
+		strWithEscapedQuote: "\\\"bek\\\" bek\\\" bek\\\"",
+	}
+
+	for in, out := range testCases {
+		assert.Equal(t, out, EscapeQuote(in))
+	}
+}
