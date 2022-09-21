@@ -102,6 +102,7 @@ func TruncateString(str string, num int) string {
 	return bnoden
 }
 
+// EscapeQuote :nodoc:
 func EscapeQuote(in string) string {
 	res := []byte{}
 	const (
