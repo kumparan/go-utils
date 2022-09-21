@@ -1,5 +1,11 @@
 # go-utils
 
+<a name="v1.26.0"></a>
+## [v1.26.0] - 2022-09-21
+### New Features
+- create ValueOrDefault function
+
+
 <a name="v1.25.1"></a>
 ## [v1.25.1] - 2022-08-25
 ### Other Improvements
@@ -217,7 +223,8 @@
 - init go-utils
 
 
-[Unreleased]: https://github.com/kumparan/kumnats/compare/v1.25.1...HEAD
+[Unreleased]: https://github.com/kumparan/kumnats/compare/v1.26.0...HEAD
+[v1.26.0]: https://github.com/kumparan/kumnats/compare/v1.25.1...v1.26.0
 [v1.25.1]: https://github.com/kumparan/kumnats/compare/v1.25.0...v1.25.1
 [v1.25.0]: https://github.com/kumparan/kumnats/compare/v1.24.0...v1.25.0
 [v1.24.0]: https://github.com/kumparan/kumnats/compare/v1.23.0...v1.24.0
