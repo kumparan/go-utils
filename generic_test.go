@@ -72,3 +72,15 @@ func Test_InterfaceBytesToType(t *testing.T) {
 	resultStruct := InterfaceBytesToType[myStruct](interface{}(bt))
 	assert.EqualValues(t, someStruct, resultStruct)
 }
+
+func Test_ValueOrDefault(t *testing.T) {
+	assert.EqualValues(t, 10, ValueOrDefault[int64](0, 10))
+	assert.EqualValues(t, -5, ValueOrDefault[int64](-5, 10))
+	assert.EqualValues(t, 10, ValueOrDefault[int64](10, 100))
+
+	assert.EqualValues(t, "hello", ValueOrDefault[string]("", "hello"))
+	assert.EqualValues(t, "hello", ValueOrDefault[string]("hello", "hi"))
+
+	assert.EqualValues(t, 10.1, ValueOrDefault[float64](0.0, 10.1))
+	assert.EqualValues(t, 11.2, ValueOrDefault[float64](11.2, 10.1))
+}

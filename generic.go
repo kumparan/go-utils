@@ -65,3 +65,14 @@ func InterfaceBytesToType[T any](i interface{}) (out T) {
 	_ = json.Unmarshal(bt, &out)
 	return
 }
+
+// ValueOrDefault use the given value or use default value if the value = empty value
+func ValueOrDefault[T comparable](value, defaultValue T) T {
+	var emptyValue T
+
+	if value == emptyValue {
+		return defaultValue
+	}
+
+	return value
+}
