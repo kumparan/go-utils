@@ -4,11 +4,13 @@ go 1.18
 
 require (
 	github.com/99designs/gqlgen v0.14.0
+	github.com/agiledragon/gomonkey v2.0.2+incompatible
 	github.com/getsentry/sentry-go v0.11.0
 	github.com/goodsign/monday v1.0.0
 	github.com/graph-gophers/graphql-go v1.4.0
 	github.com/leekchan/accounting v0.3.1
 	github.com/microcosm-cc/bluemonday v1.0.19
+	github.com/robfig/cron/v3 v3.0.1
 	github.com/shopspring/decimal v1.2.0
 	github.com/sirupsen/logrus v1.8.1
 	github.com/stretchr/testify v1.7.1
