@@ -1,5 +1,11 @@
 # go-utils
 
+<a name="v1.27.0"></a>
+## [v1.27.0] - 2022-09-22
+### New Features
+- add GetCronNextAt
+
+
 <a name="v1.26.0"></a>
 ## [v1.26.0] - 2022-09-21
 ### New Features
