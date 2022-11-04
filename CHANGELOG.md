@@ -1,5 +1,11 @@
 # go-utils
 
+<a name="v1.28.0"></a>
+## [v1.28.0] - 2022-11-04
+### New Features
+- add DeleteByValue
+
+
 <a name="v1.27.0"></a>
 ## [v1.27.0] - 2022-09-22
 ### New Features
@@ -58,11 +64,11 @@
 - fix marshal issue on gorm.DeletedAt empty value ([#32](https://github.com/kumparan/kumnats/issues/32))
 
 
-<a name="v.1.20.0"></a>
-## [v.1.20.0] - 2022-03-11
-
 <a name="v1.20.0"></a>
 ## [v1.20.0] - 2022-03-11
+
+<a name="v.1.20.0"></a>
+## [v.1.20.0] - 2022-03-11
 ### New Features
 - add constraint size gql directive ([#30](https://github.com/kumparan/kumnats/issues/30))
 
@@ -229,7 +235,8 @@
 - init go-utils
 
 
-[Unreleased]: https://github.com/kumparan/kumnats/compare/v1.27.0...HEAD
+[Unreleased]: https://github.com/kumparan/kumnats/compare/v1.28.0...HEAD
+[v1.28.0]: https://github.com/kumparan/kumnats/compare/v1.27.0...v1.28.0
 [v1.27.0]: https://github.com/kumparan/kumnats/compare/v1.26.0...v1.27.0
 [v1.26.0]: https://github.com/kumparan/kumnats/compare/v1.25.1...v1.26.0
 [v1.25.1]: https://github.com/kumparan/kumnats/compare/v1.25.0...v1.25.1
@@ -238,9 +245,9 @@
 [v1.23.0]: https://github.com/kumparan/kumnats/compare/v1.22.0...v1.23.0
 [v1.22.0]: https://github.com/kumparan/kumnats/compare/v1.21.0...v1.22.0
 [v1.21.0]: https://github.com/kumparan/kumnats/compare/v1.20.1...v1.21.0
-[v1.20.1]: https://github.com/kumparan/kumnats/compare/v.1.20.0...v1.20.1
-[v.1.20.0]: https://github.com/kumparan/kumnats/compare/v1.20.0...v.1.20.0
-[v1.20.0]: https://github.com/kumparan/kumnats/compare/v1.19.3...v1.20.0
+[v1.20.1]: https://github.com/kumparan/kumnats/compare/v1.20.0...v1.20.1
+[v1.20.0]: https://github.com/kumparan/kumnats/compare/v.1.20.0...v1.20.0
+[v.1.20.0]: https://github.com/kumparan/kumnats/compare/v1.19.3...v.1.20.0
 [v1.19.3]: https://github.com/kumparan/kumnats/compare/v1.19.2...v1.19.3
 [v1.19.2]: https://github.com/kumparan/kumnats/compare/v1.19.1...v1.19.2
 [v1.19.1]: https://github.com/kumparan/kumnats/compare/v1.19.0...v1.19.1
