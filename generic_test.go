@@ -89,6 +89,9 @@ func Test_DeleteByValue(t *testing.T) {
 	int64s := []int64{1, 2, 3, 4, 5}
 	int64ExpectTrueDelete := []int64{2, 3, 4, 5}
 
+	int64sUnique := []int64{1, 2, 3, 4, 5, 1}
+	int64sUniqueExpectTrueDelete := []int64{2, 3, 4, 5}
+
 	int32s := []int32{1, 2, 3, 4, 5}
 	int32ExpectTrueDelete := []int32{1, 2, 4, 5}
 
@@ -103,6 +106,9 @@ func Test_DeleteByValue(t *testing.T) {
 
 	assert.EqualValues(t, int64ExpectTrueDelete, DeleteByValue[int64](int64s, 1))
 	assert.EqualValues(t, int64s, DeleteByValue[int64](int64s, 10))
+
+	assert.EqualValues(t, int64sUniqueExpectTrueDelete, DeleteByValue[int64](int64sUnique, 1))
+	assert.EqualValues(t, int64sUnique, DeleteByValue[int64](int64sUnique, 10))
 
 	assert.EqualValues(t, int32ExpectTrueDelete, DeleteByValue[int32](int32s, 3))
 	assert.EqualValues(t, int32s, DeleteByValue[int32](int32s, 10))

@@ -79,11 +79,12 @@ func ValueOrDefault[T comparable](value, defaultValue T) T {
 
 // DeleteByValue use for delete value in slice
 func DeleteByValue[T comparable](a []T, x T) []T {
-	for i, n := range a {
-		if x == n {
-			return append(a[:i], a[i+1:]...)
+	var newValue []T
+	for _, n := range a {
+		if x != n {
+			newValue = append(newValue, n)
 		}
 	}
 
-	return a
+	return newValue
 }
