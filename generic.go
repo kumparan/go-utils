@@ -76,3 +76,15 @@ func ValueOrDefault[T comparable](value, defaultValue T) T {
 
 	return value
 }
+
+// DeleteByValue use for delete value in slice
+func DeleteByValue[T comparable](a []T, x T) []T {
+	var newValue []T
+	for _, n := range a {
+		if x != n {
+			newValue = append(newValue, n)
+		}
+	}
+
+	return newValue
+}
