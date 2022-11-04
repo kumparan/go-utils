@@ -84,3 +84,36 @@ func Test_ValueOrDefault(t *testing.T) {
 	assert.EqualValues(t, 10.1, ValueOrDefault[float64](0.0, 10.1))
 	assert.EqualValues(t, 11.2, ValueOrDefault[float64](11.2, 10.1))
 }
+
+func Test_DeleteByValue(t *testing.T) {
+	int64s := []int64{1, 2, 3, 4, 5}
+	int64ExpectTrueDelete := []int64{2, 3, 4, 5}
+
+	int32s := []int32{1, 2, 3, 4, 5}
+	int32ExpectTrueDelete := []int32{1, 2, 4, 5}
+
+	strings := []string{"a", "be", "see", "deep"}
+	stringExpectTrueDelete := []string{"a", "be", "deep"}
+
+	float64s := []float64{1.1, 2.2, 3.3, 4.4, 5.5}
+	float64ExpectTrueDelete := []float64{1.1, 3.3, 4.4, 5.5}
+
+	float32s := []float32{1.2, 2.3, 3.4, 4.5, 5.6}
+	float32ExpectTrueDelete := []float32{1.2, 2.3, 3.4, 4.5}
+
+	assert.EqualValues(t, int64ExpectTrueDelete, DeleteByValue[int64](int64s, 1))
+	assert.EqualValues(t, int64s, DeleteByValue[int64](int64s, 10))
+
+	assert.EqualValues(t, int32ExpectTrueDelete, DeleteByValue[int32](int32s, 3))
+	assert.EqualValues(t, int32s, DeleteByValue[int32](int32s, 10))
+
+	assert.EqualValues(t, stringExpectTrueDelete, DeleteByValue[string](strings, "see"))
+	assert.EqualValues(t, strings, DeleteByValue[string](strings, "lol"))
+
+	assert.EqualValues(t, float64ExpectTrueDelete, DeleteByValue[float64](float64s, 2.2))
+	assert.EqualValues(t, float64s, DeleteByValue[float64](float64s, 5.7))
+
+	assert.EqualValues(t, float32ExpectTrueDelete, DeleteByValue[float32](float32s, 5.6))
+	assert.EqualValues(t, float32s, DeleteByValue[float32](float32s, 5.7))
+
+}
