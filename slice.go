@@ -147,7 +147,7 @@ func PaginateSlice[T comparable](data []T, page, size int64) []T {
 		return nil
 	}
 
-	offset := (page - 1) * size
+	offset := Offset(page, size)
 	count := len(data)
 	switch {
 	case count < int(offset):
