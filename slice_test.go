@@ -74,13 +74,24 @@ func Test_SlicePointerInt32PointerToSliceInt64(t *testing.T) {
 }
 
 func Test_PaginateSlice(t *testing.T) {
-	s := []string{"a", "a", "b", "a", "d", "b"}
-	assert.Equal(t, []string{"a", "a", "b"}, PaginateSlice(s, 1, 3))
+	slice1 := []string{"a", "a", "b", "a", "d", "b"}
+	assert.Equal(t, []string{"a", "a", "b"}, PaginateSlice(slice1, 1, 3))
 
-	i := []int64{1, 1, 2, 4, 2}
-	assert.Equal(t, []int64{1, 1, 2}, PaginateSlice(i, 1, 3))
+	slice2 := []int64{1, 1, 2, 4, 2}
+	assert.Equal(t, []int64{1, 1, 2}, PaginateSlice(slice2, 1, 3))
 
 	type dummy struct{ a int8 }
-	objects := []dummy{{a: 1}, {a: 2}, {a: 3}, {a: 4}}
-	assert.Equal(t, []dummy{{a: 1}, {a: 2}, {a: 3}}, PaginateSlice(objects, 1, 3))
+	slice3 := []dummy{{a: 1}, {a: 2}, {a: 3}, {a: 4}}
+	assert.Equal(t, []dummy{{a: 1}, {a: 2}, {a: 3}}, PaginateSlice(slice3, 1, 3))
+
+	// offset are too high, return empty
+	slice4 := []int64{1, 1, 2, 4, 2}
+	assert.Equal(t, []int64{}, PaginateSlice(slice4, 10, 3))
+
+	// secondPage
+	slice5 := []int64{1, 1, 2, 4, 2}
+	assert.Equal(t, []int64{4, 2}, PaginateSlice(slice5, 2, 3))
+
+	// invalid page size input, return nil
+	assert.Equal(t, []int64(nil), PaginateSlice(slice5, -123123, -4242))
 }
