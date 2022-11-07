@@ -140,3 +140,21 @@ func SlicePointerInt32PointerToSliceInt64(i *[]*int32) (result []int64) {
 	}
 	return result
 }
+
+// PaginateSlice :nodoc:
+func PaginateSlice[T comparable](data []T, page, size int64) []T {
+	if page < 1 || size < 1 {
+		return nil
+	}
+
+	offset := (page - 1) * size
+	count := len(data)
+	switch {
+	case count < int(offset):
+		return []T{}
+	case count < int(offset+size):
+		return data[offset:count]
+	default:
+		return data[offset : offset+size]
+	}
+}

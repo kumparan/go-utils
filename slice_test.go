@@ -72,3 +72,15 @@ func Test_SlicePointerInt32PointerToSliceInt64(t *testing.T) {
 	var j []int64
 	assert.Equal(t, j, SlicePointerInt32PointerToSliceInt64(i))
 }
+
+func Test_PaginateSlice(t *testing.T) {
+	s := []string{"a", "a", "b", "a", "d", "b"}
+	assert.Equal(t, []string{"a", "a", "b"}, PaginateSlice(s, 1, 3))
+
+	i := []int64{1, 1, 2, 4, 2}
+	assert.Equal(t, []int64{1, 1, 2}, PaginateSlice(i, 1, 3))
+
+	type dummy struct{ a int8 }
+	objects := []dummy{{a: 1}, {a: 2}, {a: 3}, {a: 4}}
+	assert.Equal(t, []dummy{{a: 1}, {a: 2}, {a: 3}}, PaginateSlice(objects, 1, 3))
+}
