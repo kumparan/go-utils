@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"strconv"
 	"strings"
+
+	"github.com/gofrs/uuid"
 )
 
 // StandardizeSpaces -> JoinURL long query to one line query
@@ -116,4 +118,10 @@ func EscapeQuote(in string) string {
 		res = append(res, in[i])
 	}
 	return string(res)
+}
+
+// GenerateUUID :nodoc:
+func GenerateUUID() string {
+	reqID, _ := uuid.NewV4()
+	return reqID.String()
 }

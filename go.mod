@@ -6,6 +6,7 @@ require (
 	github.com/99designs/gqlgen v0.14.0
 	github.com/agiledragon/gomonkey v2.0.2+incompatible
 	github.com/getsentry/sentry-go v0.11.0
+	github.com/gofrs/uuid v4.3.1+incompatible
 	github.com/goodsign/monday v1.0.0
 	github.com/graph-gophers/graphql-go v1.4.0
 	github.com/leekchan/accounting v0.3.1
