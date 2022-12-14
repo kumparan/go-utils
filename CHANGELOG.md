@@ -1,5 +1,10 @@
 # go-utils
 
+<a name="v1.29.1"></a>
+## [v1.29.1] - 2022-12-14
+### New Features
+- add GitHub action to run golangci-lint, unit test, and go build
+
 <a name="v1.28.0"></a>
 ## [v1.28.0] - 2022-11-04
 ### New Features
