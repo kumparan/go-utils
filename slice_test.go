@@ -95,3 +95,29 @@ func Test_PaginateSlice(t *testing.T) {
 	// invalid page size input, return nil
 	assert.Equal(t, []int64(nil), PaginateSlice(slice5, -123123, -4242))
 }
+
+func Test_StringSliceToInt64Slice(t *testing.T) {
+	type testCase struct {
+		Input          []string
+		ExpectedOutPut []int64
+	}
+
+	testCases := []testCase{
+		{
+			Input:          []string{"1", "3", "5"},
+			ExpectedOutPut: []int64{1, 3, 5},
+		},
+		{
+			Input:          []string{"abc", "12a", "13"},
+			ExpectedOutPut: []int64{0, 0, 13},
+		},
+		{
+			Input:          []string{},
+			ExpectedOutPut: nil,
+		},
+	}
+
+	for _, testCase := range testCases {
+		assert.EqualValues(t, testCase.ExpectedOutPut, StringSliceToInt64Slice(testCase.Input))
+	}
+}

@@ -158,3 +158,12 @@ func PaginateSlice[T comparable](data []T, page, size int64) []T {
 		return data[offset : offset+size]
 	}
 }
+
+// StringSliceToInt64Slice :nodoc:
+func StringSliceToInt64Slice(in []string) []int64 {
+	var res []int64
+	for _, s := range in {
+		res = append(res, StringToInt64(s))
+	}
+	return res
+}
