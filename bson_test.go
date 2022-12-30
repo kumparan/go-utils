@@ -8,6 +8,18 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+func BenchmarkTimeFromObjectIDHex(b *testing.B) {
+	cases := []string{
+		"63acfc824ffda9000ee65045",
+		"5c4b288bac1b2972d0291377",
+	}
+
+	for _, v := range cases {
+		_, _ = TimeFromObjectIDHex(v)
+
+	}
+}
+
 func TestTimeFromObjectIDHex(t *testing.T) {
 	t.Run("valid hex objectID", func(t *testing.T) {
 		cases := map[string]time.Time{
