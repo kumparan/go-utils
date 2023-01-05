@@ -13,3 +13,41 @@ func Test_LowerMapStringKey(t *testing.T) {
 	res := LowerMapStringKey(value)
 	assert.Equal(t, res["storyid"].(string), "testing")
 }
+
+func Test_MapValuesToOrderedSlice(t *testing.T) {
+	value := map[string]string{
+		"a": "A",
+		"b": "B",
+		"c": "C",
+		"d": "D",
+		"e": "E",
+	}
+
+	type tc struct {
+		order  []string
+		output []string
+	}
+	testCases := []tc{
+		{
+			order:  []string{"a", "b", "c"},
+			output: []string{"A", "B", "C"},
+		},
+		{
+			order:  []string{"d", "e"},
+			output: []string{"D", "E"},
+		},
+		{
+			order:  []string{"f", "g", "h"},
+			output: []string{},
+		},
+		{
+			order:  []string{"c", "a", "d"},
+			output: []string{"C", "A", "D"},
+		},
+	}
+
+	for _, tc := range testCases {
+		res := MapValuesToOrderedSlice(tc.order, value)
+		assert.EqualValues(t, tc.output, res)
+	}
+}
