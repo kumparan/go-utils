@@ -44,6 +44,10 @@ func Test_MapValuesToOrderedSlice(t *testing.T) {
 			order:  []string{"c", "a", "d"},
 			output: []string{"C", "A", "D"},
 		},
+		{
+			order:  []string{"d", "f", "a"},
+			output: []string{"D", "A"},
+		},
 	}
 
 	for _, tc := range testCases {
