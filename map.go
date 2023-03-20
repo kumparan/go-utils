@@ -18,7 +18,10 @@ func MapValuesToOrderedSlice[K comparable, V any](order []K, src map[K]V) []V {
 	for _, o := range order {
 		if v, ok := src[o]; ok {
 			res = append(res, v)
+			continue
 		}
+		var zero V
+		res = append(res, zero)
 	}
 	return res
 }

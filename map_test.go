@@ -38,7 +38,7 @@ func Test_MapValuesToOrderedSlice(t *testing.T) {
 		},
 		{
 			order:  []string{"f", "g", "h"},
-			output: []string{},
+			output: []string{"", "", ""},
 		},
 		{
 			order:  []string{"c", "a", "d"},
@@ -46,7 +46,7 @@ func Test_MapValuesToOrderedSlice(t *testing.T) {
 		},
 		{
 			order:  []string{"d", "f", "a"},
-			output: []string{"D", "A"},
+			output: []string{"D", "", "A"},
 		},
 	}
 
