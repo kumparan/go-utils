@@ -1,14 +1,33 @@
 # go-utils
 
+<a name="v1.31.0"></a>
+## [v1.31.0] - 2023-03-20
+### New Features
+- map values to ordered slices
+
+
+<a name="v1.30.0"></a>
+## [v1.30.0] - 2022-12-30
+### New Features
+- parse time from bson objectID ([#48](https://github.com/kumparan/kumnats/issues/48))
+
+
 <a name="v1.29.1"></a>
 ## [v1.29.1] - 2022-12-14
 ### New Features
 - add GitHub action to run golangci-lint, unit test, and go build
 
+
+<a name="v1.29.0"></a>
+## [v1.29.0] - 2022-11-07
+### New Features
+- add PaginateSlice ([#44](https://github.com/kumparan/kumnats/issues/44))
+
+
 <a name="v1.28.0"></a>
 ## [v1.28.0] - 2022-11-04
 ### New Features
-- add DeleteByValue
+- add delete by value in slice
 
 
 <a name="v1.27.0"></a>
@@ -171,11 +190,11 @@
 - add money formatter for multiple currencies ([#13](https://github.com/kumparan/kumnats/issues/13))
 
 
-<a name="v1.8.0"></a>
-## [v1.8.0] - 2020-12-10
-
 <a name="v1.7.1"></a>
 ## [v1.7.1] - 2020-12-10
+
+<a name="v1.8.0"></a>
+## [v1.8.0] - 2020-12-10
 ### New Features
 - add formatter for indonesian money and date
 
@@ -240,7 +259,11 @@
 - init go-utils
 
 
-[Unreleased]: https://github.com/kumparan/kumnats/compare/v1.28.0...HEAD
+[Unreleased]: https://github.com/kumparan/kumnats/compare/v1.31.0...HEAD
+[v1.31.0]: https://github.com/kumparan/kumnats/compare/v1.30.0...v1.31.0
+[v1.30.0]: https://github.com/kumparan/kumnats/compare/v1.29.1...v1.30.0
+[v1.29.1]: https://github.com/kumparan/kumnats/compare/v1.29.0...v1.29.1
+[v1.29.0]: https://github.com/kumparan/kumnats/compare/v1.28.0...v1.29.0
 [v1.28.0]: https://github.com/kumparan/kumnats/compare/v1.27.0...v1.28.0
 [v1.27.0]: https://github.com/kumparan/kumnats/compare/v1.26.0...v1.27.0
 [v1.26.0]: https://github.com/kumparan/kumnats/compare/v1.25.1...v1.26.0
@@ -268,9 +291,9 @@
 [v1.12.0]: https://github.com/kumparan/kumnats/compare/v1.11.0...v1.12.0
 [v1.11.0]: https://github.com/kumparan/kumnats/compare/v1.10.0...v1.11.0
 [v1.10.0]: https://github.com/kumparan/kumnats/compare/v1.9.0...v1.10.0
-[v1.9.0]: https://github.com/kumparan/kumnats/compare/v1.8.0...v1.9.0
-[v1.8.0]: https://github.com/kumparan/kumnats/compare/v1.7.1...v1.8.0
-[v1.7.1]: https://github.com/kumparan/kumnats/compare/v1.7.0...v1.7.1
+[v1.9.0]: https://github.com/kumparan/kumnats/compare/v1.7.1...v1.9.0
+[v1.7.1]: https://github.com/kumparan/kumnats/compare/v1.8.0...v1.7.1
+[v1.8.0]: https://github.com/kumparan/kumnats/compare/v1.7.0...v1.8.0
 [v1.7.0]: https://github.com/kumparan/kumnats/compare/v1.6.0...v1.7.0
 [v1.6.0]: https://github.com/kumparan/kumnats/compare/v1.5.0...v1.6.0
 [v1.5.0]: https://github.com/kumparan/kumnats/compare/v1.4.0...v1.5.0

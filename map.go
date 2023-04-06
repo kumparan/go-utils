@@ -10,3 +10,17 @@ func LowerMapStringKey(v map[string]interface{}) map[string]interface{} {
 	}
 	return lv
 }
+
+// MapValuesToOrderedSlice convert map values to ordered slice.
+// If the map didn't contain one or more key in the keysOrder slice, then it will be filled with zero value.
+func MapValuesToOrderedSlice[K comparable, V any](src map[K]V, keysOrder []K) (orderedMapValues []V) {
+	var zero V
+	for _, o := range keysOrder {
+		if v, ok := src[o]; ok {
+			orderedMapValues = append(orderedMapValues, v)
+			continue
+		}
+		orderedMapValues = append(orderedMapValues, zero)
+	}
+	return
+}
