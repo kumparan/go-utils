@@ -1,7 +1,7 @@
 # go-utils
 
 <a name="v1.31.0"></a>
-## [v1.31.0] - 2023-01-05
+## [v1.31.0] - 2023-03-20
 ### New Features
 - map values to ordered slices
 
