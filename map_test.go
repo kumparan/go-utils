@@ -51,7 +51,7 @@ func Test_MapValuesToOrderedSlice(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		res := MapValuesToOrderedSlice(tc.order, value)
+		res := MapValuesToOrderedSlice(value, tc.order)
 		assert.EqualValues(t, tc.output, res)
 	}
 }
