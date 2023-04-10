@@ -158,3 +158,29 @@ func PaginateSlice[T comparable](data []T, page, size int64) []T {
 		return data[offset : offset+size]
 	}
 }
+
+// FindDifferencesFromSlices find item that not exists in all slices but exists in one or more of them
+func FindDifferencesFromSlices[T comparable](slices ...[]T) []T {
+	if len(slices) < 2 {
+		return nil
+	}
+
+	itemCountMap := map[T]int{}
+	for _, slice := range slices {
+		handledItem := map[T]bool{}
+		for _, item := range slice {
+			// handle duplicate item in one slice
+			if !handledItem[item] {
+				itemCountMap[item]++
+			}
+		}
+	}
+	var result []T
+	for item, count := range itemCountMap {
+		if count < len(slices) {
+			result = append(result, item)
+		}
+	}
+
+	return result
+}

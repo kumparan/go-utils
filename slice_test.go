@@ -95,3 +95,50 @@ func Test_PaginateSlice(t *testing.T) {
 	// invalid page size input, return nil
 	assert.Equal(t, []int64(nil), PaginateSlice(slice5, -123123, -4242))
 }
+
+func Test_FindDifferencesFromSlices(t *testing.T) {
+	type tc struct {
+		slices [][]string
+		result []string
+	}
+
+	var testCases = []tc{
+		{
+			slices: [][]string{
+				{"a", "b", "c"},
+				{"a", "b"},
+			},
+			result: []string{"c"},
+		},
+		{
+			slices: [][]string{
+				{"a", "b", "c"},
+				{"c", "d", "e"},
+				{"e", "f", "g"},
+			},
+			result: []string{"a", "b", "c", "d", "e", "f", "g"},
+		},
+		{
+			slices: [][]string{
+				{"a", "b", "c"},
+				{"a", "b", "c"},
+				{"a", "b", "c"},
+			},
+			result: nil,
+		},
+		{
+			slices: [][]string{
+				{"a", "b", "c"},
+			},
+			result: nil,
+		},
+	}
+
+	for _, tc := range testCases {
+		res := FindDifferencesFromSlices(tc.slices...)
+		for _, it := range tc.result {
+			assert.Contains(t, res, it)
+
+		}
+	}
+}
