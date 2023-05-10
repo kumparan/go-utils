@@ -1,6 +1,9 @@
 package utils
 
-import "encoding/json"
+import (
+	"encoding/json"
+	"fmt"
+)
 
 // Contains tells whether slice A contains x.
 func Contains[T comparable](a []T, x T) bool {
@@ -87,4 +90,19 @@ func DeleteByValue[T comparable](a []T, x T) []T {
 	}
 
 	return newValue
+}
+
+// ParseCacheResultToPointerObject parse cache result to any object you want
+func ParseCacheResultToPointerObject[T any](in any) (*T, error) {
+	var obj *T
+	by, ok := in.([]byte)
+	if !ok {
+		return nil, fmt.Errorf("failed to cast %T to byte", in)
+	}
+
+	err := json.Unmarshal(by, &obj)
+	if err != nil {
+		return nil, fmt.Errorf("failed to unmarshal %s to %T", by, obj)
+	}
+	return obj, nil
 }
