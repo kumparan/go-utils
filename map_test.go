@@ -56,7 +56,7 @@ func Test_MapValuesToOrderedSlice(t *testing.T) {
 	}
 }
 
-func Test_MapValuesToOrderedSliceExcludeNil(t *testing.T) {
+func Test_MapValuesToOrderedSliceExistOnly(t *testing.T) {
 	value := map[string]string{
 		"a": "A",
 		"b": "B",
@@ -93,7 +93,7 @@ func Test_MapValuesToOrderedSliceExcludeNil(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		res := MapValuesToOrderedSliceExcludeNil(value, tc.order)
+		res := MapValuesToOrderedSliceExistOnly(value, tc.order)
 		assert.EqualValues(t, tc.output, res)
 	}
 }

@@ -25,9 +25,9 @@ func MapValuesToOrderedSlice[K comparable, V any](src map[K]V, keysOrder []K) (o
 	return
 }
 
-// MapValuesToOrderedSliceExcludeNil convert map values to ordered slice.
-// If the map didn't contain one or more key in the keysOrder slice, then it will be excluded.
-func MapValuesToOrderedSliceExcludeNil[K comparable, V any](src map[K]V, keysOrder []K) (orderedMapValues []V) {
+// MapValuesToOrderedSliceExistOnly convert map values to ordered slice.
+// If the map didn't contain one or more key in the keysOrder slice, then it will be ignored.
+func MapValuesToOrderedSliceExistOnly[K comparable, V any](src map[K]V, keysOrder []K) (orderedMapValues []V) {
 	for _, o := range keysOrder {
 		if v, ok := src[o]; ok {
 			orderedMapValues = append(orderedMapValues, v)
