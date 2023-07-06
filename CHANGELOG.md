@@ -1,5 +1,11 @@
 # go-utils
 
+<a name="v1.32.1"></a>
+## [v1.32.1] - 2023-07-06
+### Other Improvements
+- up grpc lib version
+
+
 <a name="v1.32.0"></a>
 ## [v1.32.0] - 2023-04-10
 ### New Features
@@ -265,7 +271,8 @@
 - init go-utils
 
 
-[Unreleased]: https://github.com/kumparan/kumnats/compare/v1.32.0...HEAD
+[Unreleased]: https://github.com/kumparan/kumnats/compare/v1.32.1...HEAD
+[v1.32.1]: https://github.com/kumparan/kumnats/compare/v1.32.0...v1.32.1
 [v1.32.0]: https://github.com/kumparan/kumnats/compare/v1.31.0...v1.32.0
 [v1.31.0]: https://github.com/kumparan/kumnats/compare/v1.30.0...v1.31.0
 [v1.30.0]: https://github.com/kumparan/kumnats/compare/v1.29.1...v1.30.0

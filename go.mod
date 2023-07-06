@@ -16,8 +16,8 @@ require (
 	github.com/sirupsen/logrus v1.8.1
 	github.com/stretchr/testify v1.7.1
 	github.com/vektah/gqlparser/v2 v2.2.0
-	golang.org/x/text v0.3.6
-	google.golang.org/grpc v1.17.0
+	golang.org/x/text v0.9.0
+	google.golang.org/grpc v1.56.1
 	gopkg.in/guregu/null.v4 v4.0.0
 	gorm.io/gorm v1.22.4
 )
@@ -34,6 +34,6 @@ require (
 	github.com/oklog/ulid v1.3.1
 	github.com/pkg/errors v0.8.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
-	golang.org/x/net v0.0.0-20210614182718-04defd469f4e // indirect
-	golang.org/x/sys v0.0.0-20210423082822-04245dca01da // indirect
+	golang.org/x/net v0.9.0 // indirect
+	golang.org/x/sys v0.7.0 // indirect
 )
