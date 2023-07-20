@@ -2,6 +2,7 @@ package utils
 
 import (
 	"encoding/json"
+	"reflect"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -122,4 +123,9 @@ func Test_DeleteByValue(t *testing.T) {
 	assert.EqualValues(t, float32ExpectTrueDelete, DeleteByValue[float32](float32s, 5.6))
 	assert.EqualValues(t, float32s, DeleteByValue[float32](float32s, 5.7))
 
+}
+
+func Test_ToPointer(t *testing.T) {
+	assert.EqualValues(t, "*string", reflect.TypeOf(ToPointer("val")).String())
+	assert.EqualValues(t, "*int", reflect.TypeOf(ToPointer(123)).String())
 }

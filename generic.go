@@ -88,3 +88,8 @@ func DeleteByValue[T comparable](a []T, x T) []T {
 
 	return newValue
 }
+
+// ToPointer returns a pointer to the value passed in.
+func ToPointer[T any](in T) *T {
+	return &in
+}
