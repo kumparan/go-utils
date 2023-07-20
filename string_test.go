@@ -107,3 +107,18 @@ func Test_EscapeQuote(t *testing.T) {
 		assert.Equal(t, out, EscapeQuote(in))
 	}
 }
+
+func Test_TrimSpacePointerString(t *testing.T) {
+	str := "this is america"
+	strWithSpace := "     this is america  "
+
+	testCases := map[*string]*string{
+		&str:          &str,
+		&strWithSpace: &str,
+	}
+
+	for in, out := range testCases {
+		TrimSpacePointerString(in)
+		assert.Equal(t, out, in)
+	}
+}

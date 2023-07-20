@@ -123,3 +123,21 @@ func Test_DeleteByValue(t *testing.T) {
 	assert.EqualValues(t, float32s, DeleteByValue[float32](float32s, 5.7))
 
 }
+
+func Test_ValueOfPointer(t *testing.T) {
+	var i *int
+	assert.Equal(t, 0, ValueOfPointer(i))
+	ii := 12345678901
+	i = &ii
+	assert.Equal(t, ii, ValueOfPointer(i))
+	*i = 0
+	assert.Equal(t, 0, ValueOfPointer(i))
+
+	var j *string
+	assert.Equal(t, "", ValueOfPointer(j))
+	jj := "jjjjj"
+	j = &jj
+	assert.Equal(t, jj, ValueOfPointer(j))
+	*j = ""
+	assert.Equal(t, "", ValueOfPointer(j))
+}

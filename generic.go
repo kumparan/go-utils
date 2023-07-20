@@ -88,3 +88,13 @@ func DeleteByValue[T comparable](a []T, x T) []T {
 
 	return newValue
 }
+
+// ValueOfPointer return value of pointer T
+func ValueOfPointer[T comparable](i *T) T {
+	var emptyValue T
+	if i == nil {
+		return emptyValue
+	}
+
+	return *i
+}

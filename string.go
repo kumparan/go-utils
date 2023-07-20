@@ -117,3 +117,11 @@ func EscapeQuote(in string) string {
 	}
 	return string(res)
 }
+
+// TrimSpacePointerString  :nodoc:
+func TrimSpacePointerString(s *string) {
+	if s == nil {
+		return
+	}
+	*s = strings.TrimSpace(*s)
+}
