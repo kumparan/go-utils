@@ -4,7 +4,7 @@ changelog_args=-o CHANGELOG.md -tag-filter-pattern '^v'
 test_command=richgo test ./... $(TEST_ARGS) -v --cover
 
 lint:
-	golangci-lint run --concurrency 4 --print-issued-lines=false --exclude-use-default=false --enable=revive --enable=goimports  --enable=unconvert --fix
+	golangci-lint run
 
 changelog:
 ifdef version

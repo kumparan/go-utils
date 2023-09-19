@@ -91,7 +91,7 @@ func (c *AESCryptor) generateIVKey(iv string) (bIv []byte, err error) {
 	return hex.DecodeString(ivKey)
 }
 
-func (c *AESCryptor) pkcs5Padding(ciphertext []byte, blockSize int, after int) []byte {
+func (c *AESCryptor) pkcs5Padding(ciphertext []byte, blockSize int, _ int) []byte {
 	padding := (blockSize - len(ciphertext)%blockSize)
 	padtext := bytes.Repeat([]byte{byte(padding)}, padding)
 

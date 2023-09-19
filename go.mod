@@ -4,9 +4,10 @@ go 1.18
 
 require (
 	github.com/99designs/gqlgen v0.14.0
-	github.com/agiledragon/gomonkey v2.0.2+incompatible
+	github.com/agiledragon/gomonkey/v2 v2.10.1
 	github.com/getsentry/sentry-go v0.11.0
 	github.com/globalsign/mgo v0.0.0-20181015135952-eeefdecb41b8
+	github.com/gofrs/uuid/v5 v5.0.0
 	github.com/goodsign/monday v1.0.0
 	github.com/graph-gophers/graphql-go v1.4.0
 	github.com/leekchan/accounting v0.3.1
@@ -22,7 +23,7 @@ require (
 	gorm.io/gorm v1.22.4
 )
 
-require gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c // indirect
+require gopkg.in/yaml.v3 v3.0.1 // indirect
 
 require (
 	github.com/aymerick/douceur v0.2.0 // indirect

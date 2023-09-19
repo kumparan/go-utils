@@ -4,6 +4,9 @@ import (
 	"encoding/json"
 	"strconv"
 	"strings"
+
+	"github.com/gofrs/uuid/v5"
+	"github.com/sirupsen/logrus"
 )
 
 // StandardizeSpaces -> JoinURL long query to one line query
@@ -124,4 +127,15 @@ func TrimSpacePointerString(s *string) {
 		return
 	}
 	*s = strings.TrimSpace(*s)
+}
+
+// GenerateUUID generate random UUID v4
+func GenerateUUID() string {
+	u, err := uuid.NewV4()
+	if err != nil {
+		logrus.Error(err)
+		return ""
+	}
+
+	return u.String()
 }
