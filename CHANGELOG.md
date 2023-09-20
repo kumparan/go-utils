@@ -3,8 +3,7 @@
 <a name="v1.34.0"></a>
 ## [v1.34.0] - 2023-09-19
 ### New Features
-- fix linters
-- add generate uuid functionality
+- add generate uuid functionality and update linter
 
 
 <a name="v1.33.0"></a>
