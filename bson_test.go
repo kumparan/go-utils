@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func BenchmarkTimeFromObjectIDHex(b *testing.B) {
+func BenchmarkTimeFromObjectIDHex(_ *testing.B) {
 	cases := []string{
 		"63acfc824ffda9000ee65045",
 		"5c4b288bac1b2972d0291377",

@@ -122,3 +122,9 @@ func Test_TrimSpacePointerString(t *testing.T) {
 		assert.Equal(t, out, in)
 	}
 }
+
+func TestGenerateUUID(t *testing.T) {
+	uuid := GenerateUUID()
+	assert.NotEqual(t, "", uuid)
+	assert.Equal(t, 36, len(uuid))
+}

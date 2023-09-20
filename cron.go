@@ -11,6 +11,7 @@ var cronNextAtTimeFormat = "2006-01-02T15:04:05"
 // GetCronNextAt supports
 //   - Standard crontab specs, e.g. "* * * * ?"
 //   - Descriptors, e.g. "@midnight", "@every 1h30m"
+//
 // if cron parsing error then return current time
 func GetCronNextAt(cronTab string) string {
 	now := time.Now()
