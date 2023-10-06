@@ -30,7 +30,7 @@ func DoHTTPRequest[T httpResponse](ctx context.Context, httpClient *http.Client,
 	respInBytes, err := io.ReadAll(httpResp.Body)
 	if err != nil {
 		logger.Error(err)
-		return respStatusCode, nil, err
+		return httpResp.StatusCode, nil, err
 	}
 	defer func() {
 		_ = httpResp.Body.Close()
@@ -39,8 +39,8 @@ func DoHTTPRequest[T httpResponse](ctx context.Context, httpClient *http.Client,
 	var resp T
 	err = json.Unmarshal(respInBytes, &resp)
 	if err != nil {
-		logger.Error(err)
-		return respStatusCode, nil, err
+		logger.WithField("respInBytes", Dump(respInBytes)).Error(err)
+		return httpResp.StatusCode, nil, err
 	}
 	return httpResp.StatusCode, &resp, nil
 }
