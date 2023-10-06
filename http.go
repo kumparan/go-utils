@@ -39,7 +39,7 @@ func DoHTTPRequest[T httpResponse](ctx context.Context, httpClient *http.Client,
 	var resp T
 	err = json.Unmarshal(respInBytes, &resp)
 	if err != nil {
-		logger.WithField("respInBytes", Dump(respInBytes)).Error(err)
+		logger.WithField("respInBytes", string(respInBytes)).Error(err)
 		return httpResp.StatusCode, nil, err
 	}
 	return httpResp.StatusCode, &resp, nil
