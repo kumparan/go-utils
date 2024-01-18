@@ -4,6 +4,8 @@ import (
 	"net/http"
 	"net/url"
 	"path"
+
+	log "github.com/sirupsen/logrus"
 )
 
 // JoinURL joins URL with the path elements
@@ -22,6 +24,7 @@ func JoinURL(baseURL string, pathElements ...string) (string, error) {
 func IsURLReachable(url string) bool {
 	res, err := http.Head(url) //nolint:gosec
 	if err != nil {
+		log.WithField("url", url).Error(err)
 		return false
 	}
 	defer func() {
