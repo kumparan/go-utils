@@ -48,7 +48,6 @@ func Test_JoinURL(t *testing.T) {
 
 			assert.Equal(t, "https://kumparan.com/trending/feed", resURL)
 			assert.NoError(t, err)
-
 		})
 	})
 
@@ -67,5 +66,28 @@ func Test_JoinURL(t *testing.T) {
 		resURL, err := JoinURL(baseURL, url)
 		assert.Equal(t, expectedURL, resURL)
 		assert.NoError(t, err)
+	})
+}
+
+func TestIsURLReachable(t *testing.T) {
+	t.Run("should return true on valid + reachable url", func(t *testing.T) {
+		url := "https://google.com"
+
+		res := IsURLReachable(url)
+		assert.True(t, res)
+	})
+
+	t.Run("should return false on valid + not reachable url", func(t *testing.T) {
+		url := "https://haha.hihi"
+
+		res := IsURLReachable(url)
+		assert.False(t, res)
+	})
+
+	t.Run("should return false on invalid + not reachable url", func(t *testing.T) {
+		url := "haha"
+
+		res := IsURLReachable(url)
+		assert.False(t, res)
 	})
 }
