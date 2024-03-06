@@ -184,3 +184,16 @@ func FindDifferencesFromSlices[T comparable](slices ...[]T) []T {
 
 	return result
 }
+
+// IsUniqueSliceItem :nodoc:
+func IsUniqueSliceItem[T comparable](data []T) bool {
+	mapData := make(map[T]bool, len(data))
+	for _, d := range data {
+		if _, ok := mapData[d]; ok {
+			return false
+		}
+		mapData[d] = true
+	}
+
+	return true
+}
