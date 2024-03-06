@@ -102,7 +102,7 @@ func Test_FindDifferencesFromSlices(t *testing.T) {
 		result []string
 	}
 
-	var testCases = []tc{
+	testCases := []tc{
 		{
 			slices: [][]string{
 				{"a", "b", "c"},
@@ -138,7 +138,57 @@ func Test_FindDifferencesFromSlices(t *testing.T) {
 		res := FindDifferencesFromSlices(tc.slices...)
 		for _, it := range tc.result {
 			assert.Contains(t, res, it)
-
 		}
+	}
+}
+
+func Test_IsUniqueSliceItem(t *testing.T) {
+	type tc[T comparable] struct {
+		slice  []T
+		result bool
+	}
+
+	testCasesString := []tc[string]{
+		{
+			slice: []string{
+				"haha", "hehe",
+			},
+			result: true,
+		},
+		{
+			slice: []string{
+				"HAHA", "haha",
+			},
+			result: true,
+		},
+		{
+			slice: []string{
+				"haha", "haha",
+			},
+			result: false,
+		},
+	}
+
+	for _, tc := range testCasesString {
+		assert.Equal(t, tc.result, IsUniqueSliceItem(tc.slice))
+	}
+
+	testCasesInt := []tc[int]{
+		{
+			slice: []int{
+				1, 2,
+			},
+			result: true,
+		},
+		{
+			slice: []int{
+				1, 1,
+			},
+			result: false,
+		},
+	}
+
+	for _, tc := range testCasesInt {
+		assert.Equal(t, tc.result, IsUniqueSliceItem(tc.slice))
 	}
 }

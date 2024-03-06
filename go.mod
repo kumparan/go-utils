@@ -1,6 +1,6 @@
 module github.com/kumparan/go-utils
 
-go 1.18
+go 1.20
 
 require (
 	github.com/99designs/gqlgen v0.14.0
