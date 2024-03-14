@@ -197,3 +197,12 @@ func IsUniqueSliceItem[T comparable](data []T) bool {
 
 	return true
 }
+
+// ConvertSlice can change slice data type or even manipulate the data using converter func
+func ConvertSlice[T1 any, T2 any](in []T1, converter func(T1) T2) []T2 {
+	var res []T2
+	for _, v := range in {
+		res = append(res, converter(v))
+	}
+	return res
+}
