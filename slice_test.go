@@ -1,6 +1,8 @@
 package utils
 
 import (
+	"fmt"
+	"strings"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -191,4 +193,45 @@ func Test_IsUniqueSliceItem(t *testing.T) {
 	for _, tc := range testCasesInt {
 		assert.Equal(t, tc.result, IsUniqueSliceItem(tc.slice))
 	}
+}
+
+func Test_ConvertSliceType(t *testing.T) {
+	t.Run("struct", func(t *testing.T) {
+		type (
+			a struct {
+				B string
+			}
+			b struct {
+				A string
+			}
+		)
+
+		srcSlices := []a{{B: "1. this is B inside a"}, {B: "2. this is B inside a"}}
+		converter := func(in a) b {
+			return b{A: in.B}
+		}
+		var dstSlices []b
+		for _, v := range srcSlices {
+			dstSlices = append(dstSlices, converter(v))
+		}
+
+		res := ConvertSlice[a, b](srcSlices, converter)
+		assert.Equal(t, dstSlices, res)
+	})
+
+	t.Run("int - string", func(t *testing.T) {
+		srcSlice := []int{1, 2, 3}
+		dstSlice := []string{"1", "2", "3"}
+		converter := func(in int) string {
+			return fmt.Sprint(in)
+		}
+
+		assert.Equal(t, dstSlice, ConvertSlice(srcSlice, converter))
+	})
+
+	t.Run("string - string", func(t *testing.T) {
+		srcSlice := []string{"a  ", "  b  ", "  c  "}
+		dstSlice := []string{"a", "b", "c"}
+		assert.Equal(t, dstSlice, ConvertSlice(srcSlice, strings.TrimSpace))
+	})
 }
