@@ -15,9 +15,9 @@ jobs:
         go-version: 1.22
 
     - name: Golangci-lint
-      uses: golangci/golangci-lint-action@v3
+      uses: golangci/golangci-lint-action@v6
       with:
-        version: v1.46.2
+        version: v1.56.2
         args: --print-issued-lines=false --exclude-use-default=false --enable=revive --enable=goimports --enable=unconvert --concurrency=2
 
     - name: Test
