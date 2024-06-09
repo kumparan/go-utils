@@ -1,7 +1,7 @@
 # go-utils
 
-<a name="v1.38.1"></a>
-## [v1.38.1] - 2024-06-09
+<a name="v1.39.1"></a>
+## [v1.39.1] - 2024-06-09
 ### Fixes
 - unescape characters after stripping html
 
@@ -319,8 +319,8 @@
 - init go-utils
 
 
-[Unreleased]: https://github.com/kumparan/kumnats/compare/v1.38.1...HEAD
-[v1.38.1]: https://github.com/kumparan/kumnats/compare/v1.39.0...v1.38.1
+[Unreleased]: https://github.com/kumparan/kumnats/compare/v1.39.1...HEAD
+[v1.39.1]: https://github.com/kumparan/kumnats/compare/v1.39.0...v1.39.1
 [v1.39.0]: https://github.com/kumparan/kumnats/compare/v1.38.0...v1.39.0
 [v1.38.0]: https://github.com/kumparan/kumnats/compare/v1.37.0...v1.38.0
 [v1.37.0]: https://github.com/kumparan/kumnats/compare/v1.36.0...v1.37.0
