@@ -1,9 +1,21 @@
 # go-utils
 
+<a name="v1.39.1"></a>
+## [v1.39.1] - 2024-06-09
+### Fixes
+- unescape characters after stripping html
+
+
+<a name="v1.39.0"></a>
+## [v1.39.0] - 2024-05-13
+### Other Improvements
+- upgrade go version ([#61](https://github.com/kumparan/kumnats/issues/61))
+
+
 <a name="v1.38.0"></a>
 ## [v1.38.0] - 2024-03-14
 ### New Features
-- add ConvertSlice
+- add ConvertSlice ([#60](https://github.com/kumparan/kumnats/issues/60))
 
 
 <a name="v1.37.0"></a>
@@ -307,7 +319,9 @@
 - init go-utils
 
 
-[Unreleased]: https://github.com/kumparan/kumnats/compare/v1.38.0...HEAD
+[Unreleased]: https://github.com/kumparan/kumnats/compare/v1.39.1...HEAD
+[v1.39.1]: https://github.com/kumparan/kumnats/compare/v1.39.0...v1.39.1
+[v1.39.0]: https://github.com/kumparan/kumnats/compare/v1.38.0...v1.39.0
 [v1.38.0]: https://github.com/kumparan/kumnats/compare/v1.37.0...v1.38.0
 [v1.37.0]: https://github.com/kumparan/kumnats/compare/v1.36.0...v1.37.0
 [v1.36.0]: https://github.com/kumparan/kumnats/compare/v1.35.0...v1.36.0

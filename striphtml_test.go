@@ -8,8 +8,8 @@ import (
 
 func Test_StripHTML(t *testing.T) {
 	t.Run("no html", func(t *testing.T) {
-		assert.Equal(t, "podo wae masbro",
-			StripHTML("podo wae masbro"))
+		assert.Equal(t, "podo wae mas'bro&&",
+			StripHTML("podo wae mas'bro&&"))
 	})
 
 	t.Run("with html", func(t *testing.T) {
@@ -18,7 +18,7 @@ func Test_StripHTML(t *testing.T) {
 	})
 
 	t.Run("with incomplete html", func(t *testing.T) {
-		assert.Equal(t, "&gt;plz click hier",
+		assert.Equal(t, ">plz click hier",
 			StripHTML("><a href='https://www.downloadmoreram.com'>plz click hier"))
 	})
 }

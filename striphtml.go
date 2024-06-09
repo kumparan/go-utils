@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"html"
 	"sync"
 
 	"github.com/microcosm-cc/bluemonday"
@@ -16,5 +17,5 @@ func StripHTML(s string) string {
 	once.Do(func() {
 		bmStrict = bluemonday.StrictPolicy()
 	})
-	return bmStrict.Sanitize(s)
+	return html.UnescapeString(bmStrict.Sanitize(s))
 }
