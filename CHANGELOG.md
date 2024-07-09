@@ -1,9 +1,15 @@
 # go-utils
 
+<a name="v1.39.2"></a>
+## [v1.39.2] - 2024-07-09
+### Other Improvements
+- fix vulnerabilities in go.mod
+
+
 <a name="v1.39.1"></a>
 ## [v1.39.1] - 2024-06-09
 ### Fixes
-- unescape characters after stripping html
+- unescape characters after stripping html ([#62](https://github.com/kumparan/kumnats/issues/62))
 
 
 <a name="v1.39.0"></a>
@@ -319,7 +325,8 @@
 - init go-utils
 
 
-[Unreleased]: https://github.com/kumparan/kumnats/compare/v1.39.1...HEAD
+[Unreleased]: https://github.com/kumparan/kumnats/compare/v1.39.2...HEAD
+[v1.39.2]: https://github.com/kumparan/kumnats/compare/v1.39.1...v1.39.2
 [v1.39.1]: https://github.com/kumparan/kumnats/compare/v1.39.0...v1.39.1
 [v1.39.0]: https://github.com/kumparan/kumnats/compare/v1.38.0...v1.39.0
 [v1.38.0]: https://github.com/kumparan/kumnats/compare/v1.37.0...v1.38.0
