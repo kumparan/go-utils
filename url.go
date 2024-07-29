@@ -22,7 +22,7 @@ func JoinURL(baseURL string, pathElements ...string) (string, error) {
 
 // IsURLReachable check is the url reachable
 func IsURLReachable(url string) bool {
-	res, err := http.Head(url) //nolint:gosec
+	res, err := http.Get(url) //nolint:gosec
 	if err != nil {
 		log.WithField("url", url).Error(err)
 		return false
