@@ -36,6 +36,10 @@ func DoHTTPRequest[T httpResponse](ctx context.Context, httpClient *http.Client,
 		_ = httpResp.Body.Close()
 	}()
 
+	if httpResp.StatusCode != http.StatusOK {
+		logger.WithField("body", string(respInBytes)).Warn("http status code is not ok")
+	}
+
 	var resp T
 	err = json.Unmarshal(respInBytes, &resp)
 	if err != nil {
