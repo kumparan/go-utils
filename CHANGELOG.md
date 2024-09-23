@@ -1,9 +1,15 @@
 # go-utils
 
+<a name="v1.39.4"></a>
+## [v1.39.4] - 2024-09-23
+### Other Improvements
+- add log on status not ok
+
+
 <a name="v1.39.3"></a>
 ## [v1.39.3] - 2024-07-29
 ### Fixes
-- use http get instead of head to check reachable url
+- use http get instead of head to check reachable url ([#64](https://github.com/kumparan/go-utils/issues/64))
 
 
 <a name="v1.39.2"></a>
@@ -162,6 +168,9 @@
 
 <a name="v1.20.0"></a>
 ## [v1.20.0] - 2022-03-11
+
+<a name="v.1.20.0"></a>
+## [v.1.20.0] - 2022-03-11
 ### New Features
 - add constraint size gql directive ([#30](https://github.com/kumparan/go-utils/issues/30))
 
@@ -328,7 +337,8 @@
 - init go-utils
 
 
-[Unreleased]: https://github.com/kumparan/go-utils/compare/v1.39.3...HEAD
+[Unreleased]: https://github.com/kumparan/go-utils/compare/v1.39.4...HEAD
+[v1.39.4]: https://github.com/kumparan/go-utils/compare/v1.39.3...v1.39.4
 [v1.39.3]: https://github.com/kumparan/go-utils/compare/v1.39.2...v1.39.3
 [v1.39.2]: https://github.com/kumparan/go-utils/compare/v1.39.1...v1.39.2
 [v1.39.1]: https://github.com/kumparan/go-utils/compare/v1.39.0...v1.39.1
@@ -355,7 +365,8 @@
 [v1.22.0]: https://github.com/kumparan/go-utils/compare/v1.21.0...v1.22.0
 [v1.21.0]: https://github.com/kumparan/go-utils/compare/v1.20.1...v1.21.0
 [v1.20.1]: https://github.com/kumparan/go-utils/compare/v1.20.0...v1.20.1
-[v1.20.0]: https://github.com/kumparan/go-utils/compare/v1.19.3...v1.20.0
+[v1.20.0]: https://github.com/kumparan/go-utils/compare/v.1.20.0...v1.20.0
+[v.1.20.0]: https://github.com/kumparan/go-utils/compare/v1.19.3...v.1.20.0
 [v1.19.3]: https://github.com/kumparan/go-utils/compare/v1.19.2...v1.19.3
 [v1.19.2]: https://github.com/kumparan/go-utils/compare/v1.19.1...v1.19.2
 [v1.19.1]: https://github.com/kumparan/go-utils/compare/v1.19.0...v1.19.1
