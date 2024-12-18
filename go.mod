@@ -10,7 +10,7 @@ require (
 	github.com/gofrs/uuid/v5 v5.2.0
 	github.com/goodsign/monday v1.0.2
 	github.com/graph-gophers/graphql-go v1.5.0
-	github.com/leekchan/accounting v1.0.0
+	github.com/leekchan/accounting v0.3.1
 	github.com/microcosm-cc/bluemonday v1.0.27
 	github.com/robfig/cron/v3 v3.0.1
 	github.com/shopspring/decimal v1.4.0
