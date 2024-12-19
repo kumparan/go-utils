@@ -1,6 +1,6 @@
 module github.com/kumparan/go-utils
 
-go 1.22
+go 1.23.4
 
 require (
 	github.com/99designs/gqlgen v0.17.49
@@ -17,7 +17,7 @@ require (
 	github.com/sirupsen/logrus v1.9.3
 	github.com/stretchr/testify v1.9.0
 	github.com/vektah/gqlparser/v2 v2.5.16
-	golang.org/x/text v0.16.0
+	golang.org/x/text v0.21.0
 	google.golang.org/grpc v1.65.0
 	gopkg.in/guregu/null.v4 v4.0.0
 	gorm.io/gorm v1.22.4
@@ -39,6 +39,6 @@ require (
 	github.com/oklog/ulid v1.3.1
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
-	golang.org/x/net v0.26.0
-	golang.org/x/sys v0.21.0 // indirect
+	golang.org/x/net v0.33.0
+	golang.org/x/sys v0.28.0 // indirect
 )
