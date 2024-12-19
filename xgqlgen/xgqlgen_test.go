@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"github.com/99designs/gqlgen/graphql"
-	"github.com/kumparan/go-utils"
+	utils "github.com/kumparan/go-utils"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"gopkg.in/guregu/null.v4"
@@ -115,8 +115,8 @@ func TestNullTime(t *testing.T) {
 
 func TestConstraintSize(t *testing.T) {
 	var (
-		min        int64 = 1
-		max        int64 = 25
+		minimum    int64 = 1
+		maximum    int64 = 25
 		a          int64 = 5
 		b          int64
 		c          int64 = 26
@@ -127,30 +127,30 @@ func TestConstraintSize(t *testing.T) {
 
 	t.Run("within constraint", func(t *testing.T) {
 		obj := map[string]interface{}{sizeField: a}
-		res, err := ConstraintSize(ctx, obj, nil, min, max, nil)
+		res, err := ConstraintSize(ctx, obj, nil, minimum, maximum, nil)
 		assert.NoError(t, err)
 		assert.EqualValues(t, a, res)
 	})
 
-	t.Run("below min constraint", func(t *testing.T) {
+	t.Run("below minimum constraint", func(t *testing.T) {
 		obj := map[string]interface{}{sizeField: b}
-		res, err := ConstraintSize(ctx, obj, nil, min, max, nil)
+		res, err := ConstraintSize(ctx, obj, nil, minimum, maximum, nil)
 		assert.NoError(t, err)
-		assert.EqualValues(t, min, res)
+		assert.EqualValues(t, minimum, res)
 	})
 
-	t.Run("above max constraint", func(t *testing.T) {
+	t.Run("above maximum constraint", func(t *testing.T) {
 		obj := map[string]interface{}{sizeField: c}
-		res, err := ConstraintSize(ctx, obj, nil, min, max, nil)
+		res, err := ConstraintSize(ctx, obj, nil, minimum, maximum, nil)
 		assert.NoError(t, err)
-		assert.EqualValues(t, max, res)
+		assert.EqualValues(t, maximum, res)
 	})
 
 	t.Run("non-default field", func(t *testing.T) {
 		obj := map[string]interface{}{otherField: c}
-		res, err := ConstraintSize(ctx, obj, nil, min, max, &otherField)
+		res, err := ConstraintSize(ctx, obj, nil, minimum, maximum, &otherField)
 		assert.NoError(t, err)
-		assert.EqualValues(t, max, res)
+		assert.EqualValues(t, maximum, res)
 	})
 }
 

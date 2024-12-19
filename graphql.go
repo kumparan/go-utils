@@ -39,16 +39,16 @@ func GraphQLIDPointerToInt64(id *graphql.ID) int64 {
 	return StringToInt64(string(*id))
 }
 
-// GraphQLIDToInt32 :nodoc:
+// GraphQLIDToInt32 Deprecated. Do not use.
 func GraphQLIDToInt32(id graphql.ID) int32 {
 	newID, err := strconv.Atoi(string(id))
 	if err != nil {
 		return int32(0)
 	}
-	return int32(newID)
+	return int32(newID) //nolint:gosec
 }
 
-// GraphQLIDPointerToInt32 :nodoc:
+// GraphQLIDPointerToInt32 Deprecated. Do not use.
 func GraphQLIDPointerToInt32(id *graphql.ID) int32 {
 	if id == nil {
 		return int32(0)
@@ -58,5 +58,5 @@ func GraphQLIDPointerToInt32(id *graphql.ID) int32 {
 	if err != nil {
 		return int32(0)
 	}
-	return int32(newID)
+	return int32(newID) //nolint:gosec
 }

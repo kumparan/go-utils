@@ -1,7 +1,8 @@
 package utils
 
 import (
-	"math/rand"
+	"crypto/rand"
+	"math/big"
 	"strconv"
 	"time"
 )
@@ -12,7 +13,7 @@ func Int64ToString(i int64) string {
 	return s
 }
 
-// Offset to get offset from page and limit, min value for page = 1
+// Offset to get offset from page and limit, minimum value for page = 1
 func Offset(page, limit int64) int64 {
 	offset := (page - 1) * limit
 	if offset < 0 {
@@ -23,7 +24,13 @@ func Offset(page, limit int64) int64 {
 
 // GenerateID based on current time
 func GenerateID() int64 {
-	return time.Now().UnixNano() + int64(rand.Intn(10000))
+	now := time.Now().UnixNano()
+	randomInt, err := rand.Int(rand.Reader, big.NewInt(10000))
+	if err != nil {
+		return now
+	}
+
+	return now + randomInt.Int64()
 }
 
 // Int32PointerToInt64 :nodoc:
@@ -78,14 +85,14 @@ func Int64WithLimit(input int64, limit int64) int64 {
 	return input
 }
 
-// Int64WithMinAndMaxLimit check input value. if bigger than max, then return max. if smaller than min, then return min. else return input.
-func Int64WithMinAndMaxLimit(input, min, max int64) int64 {
-	if input < min {
-		return min
+// Int64WithMinAndMaxLimit check input value. if bigger than maximum, then return maximum. if smaller than minimum, then return minimum. else return input.
+func Int64WithMinAndMaxLimit(input, minimum, maximum int64) int64 {
+	if input < minimum {
+		return minimum
 	}
 
-	if input > max {
-		return max
+	if input > maximum {
+		return maximum
 	}
 
 	return input

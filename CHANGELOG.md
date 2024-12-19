@@ -1,9 +1,15 @@
 # go-utils
 
+<a name="v1.39.5"></a>
+## [v1.39.5] - 2024-12-19
+### Fixes
+- upgrade go version and dependencies to fix vulnerability issue
+
+
 <a name="v1.39.4"></a>
 ## [v1.39.4] - 2024-09-23
 ### Other Improvements
-- add log on status not ok
+- add log on status not ok ([#65](https://github.com/kumparan/go-utils/issues/65))
 
 
 <a name="v1.39.3"></a>
@@ -337,7 +343,8 @@
 - init go-utils
 
 
-[Unreleased]: https://github.com/kumparan/go-utils/compare/v1.39.4...HEAD
+[Unreleased]: https://github.com/kumparan/go-utils/compare/v1.39.5...HEAD
+[v1.39.5]: https://github.com/kumparan/go-utils/compare/v1.39.4...v1.39.5
 [v1.39.4]: https://github.com/kumparan/go-utils/compare/v1.39.3...v1.39.4
 [v1.39.3]: https://github.com/kumparan/go-utils/compare/v1.39.2...v1.39.3
 [v1.39.2]: https://github.com/kumparan/go-utils/compare/v1.39.1...v1.39.2

@@ -12,7 +12,7 @@ import (
 	"gorm.io/gorm"
 
 	"github.com/99designs/gqlgen/graphql"
-	"github.com/kumparan/go-utils"
+	utils "github.com/kumparan/go-utils"
 	"gopkg.in/guregu/null.v4"
 )
 
@@ -207,8 +207,8 @@ func MarshalNullString(i null.String) graphql.Marshaler {
 	})
 }
 
-// ConstraintSize directive to constrain field between min and max values. if field is above max, then directive returns max. if field is below min, then directive returns min. else return field.
-func ConstraintSize(ctx context.Context, obj interface{}, next graphql.Resolver, min int64, max int64, field *string) (interface{}, error) {
+// ConstraintSize directive to constrain field between minimun and maximum values. if field is above maximum, then directive returns maximum. if field is below minimun, then directive returns minimun. else return field.
+func ConstraintSize(ctx context.Context, obj interface{}, next graphql.Resolver, minimun int64, maximum int64, field *string) (interface{}, error) {
 	val, ok := obj.(map[string]interface{}) // safe check is valid map
 	if !ok {
 		return next(ctx) // skip if invalid
@@ -224,5 +224,5 @@ func ConstraintSize(ctx context.Context, obj interface{}, next graphql.Resolver,
 		return next(ctx) // skip if invalid
 	}
 
-	return utils.Int64WithMinAndMaxLimit(valInt, min, max), nil
+	return utils.Int64WithMinAndMaxLimit(valInt, minimun, maximum), nil
 }
