@@ -61,7 +61,7 @@ func Int64MillisToPointerTime(millis int64) *time.Time {
 
 // GenerateULIDFromTime :nodoc:
 func GenerateULIDFromTime(t time.Time) string {
-	entropy := ulid.Monotonic(rand.New(rand.NewSource(t.UnixNano())), 0)
+	entropy := ulid.Monotonic(rand.New(rand.NewSource(t.UnixNano())), 0) // nolint: gosec
 	return strings.ToLower(ulid.MustNew(ulid.Timestamp(t), entropy).String())
 }
 
