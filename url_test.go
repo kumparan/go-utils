@@ -71,6 +71,13 @@ func Test_JoinURL(t *testing.T) {
 
 func TestIsURLReachable(t *testing.T) {
 	t.Run("should return true on valid + reachable url", func(t *testing.T) {
+		url := "https://docs.google.com/spreadsheets/d/1IJ3C-U-N8OqIlk1pZoGyKadTPowiJIhWla4CQMFh9NQ/edit?gid=1131639184#gid=1131639184"
+
+		res := IsURLReachable(url)
+		assert.True(t, res)
+	})
+
+	t.Run("should return true on valid + reachable url", func(t *testing.T) {
 		url := "https://google.com"
 
 		res := IsURLReachable(url)
