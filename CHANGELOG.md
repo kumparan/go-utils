@@ -1,7 +1,10 @@
 # go-utils
 
 <a name="v1.39.6"></a>
-## [v1.39.6] - 0001-01-01
+## [v1.39.6] - 2025-01-17
+### Fixes
+- change IsURLReachable status code rule
+
 
 <a name="v1.39.5"></a>
 ## [v1.39.5] - 2024-12-19
