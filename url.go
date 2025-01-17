@@ -31,5 +31,6 @@ func IsURLReachable(url string) bool {
 		_ = res.Body.Close()
 	}()
 
-	return res.StatusCode == http.StatusOK
+	log.Infof("statusCode: %d", res.StatusCode)
+	return res.StatusCode < 500
 }
