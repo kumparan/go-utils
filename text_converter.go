@@ -9,12 +9,12 @@ import (
 )
 
 const (
-	_comma             = ","
+	_commaSeparator    = ","
 	_dotSeparator      = "."
 	_newline           = "\n"
 	_punctuationMarks  = ".,:;!?"
 	_sentenceSeparator = ". "
-	_space             = " "
+	_spaceSeparator    = " "
 )
 
 // Leaf represents a text element with optional formatting.
@@ -52,7 +52,7 @@ func SerializeSlateToText(documentJSON string) (string, error) {
 		return "", err
 	}
 
-	text := serializeNodes(wrappedDocument.Document.Nodes, _newline, _space)
+	text := serializeNodes(wrappedDocument.Document.Nodes, _newline, _spaceSeparator)
 	text = regexp.MustCompile(`\n+`).ReplaceAllString(text, _newline)
 
 	return strings.TrimSpace(text), nil
@@ -82,10 +82,10 @@ func serializeNodes(nodes []Node, nodeSeparator, leaveSeparator string) string {
 				result.WriteString(cleaned)
 				continue
 			case "inline":
-				modifiedNodeSeparator = _space
+				modifiedNodeSeparator = _spaceSeparator
 				result.WriteString(serializeNodes(node.Nodes, modifiedNodeSeparator, leaveSeparator) + leaveSeparator)
 			case "list-item":
-				modifiedNodeSeparator = _comma
+				modifiedNodeSeparator = _commaSeparator
 				if node.isLastListElement {
 					modifiedNodeSeparator = ". "
 				}
@@ -93,7 +93,7 @@ func serializeNodes(nodes []Node, nodeSeparator, leaveSeparator string) string {
 			default:
 				res := serializeNodes(node.Nodes, " ", leaveSeparator)
 				res = strings.TrimSpace(res)
-				if modifiedNodeSeparator == _comma && endsWithPunctuation(res) {
+				if modifiedNodeSeparator == _commaSeparator && endsWithPunctuation(res) {
 					res = res[:len(res)-1] + modifiedNodeSeparator
 				} else if modifiedNodeSeparator == _newline {
 					res += modifiedNodeSeparator
