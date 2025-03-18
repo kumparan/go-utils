@@ -8,6 +8,11 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
+var (
+	_multipleDotsRegex = regexp.MustCompile(`\.+`)
+	_dotSpaceRegex     = regexp.MustCompile(`\.\s`)
+)
+
 const (
 	_commaSeparator    = ","
 	_dotSeparator      = "."
@@ -36,12 +41,12 @@ type SlateLeaf struct {
 
 // SlateNode represents a hierarchical document structure.
 type SlateNode struct {
-	Object     string      `json:"object"`
-	Type       string      `json:"type"`
-	SlateNodes []SlateNode `json:"nodes,omitempty"`
-	Leaves     []SlateLeaf `json:"leaves,omitempty"`
+	Object string      `json:"object"`
+	Type   string      `json:"type"`
+	Nodes  []SlateNode `json:"nodes,omitempty"`
+	Leaves []SlateLeaf `json:"leaves,omitempty"`
 
-	isLastListElement bool
+	isLastInList bool
 }
 
 // SlateDocument represents the root structure of a Slate document.
@@ -63,7 +68,7 @@ func ParseSlateDocument(documentJSON string) (*SlateDocument, error) {
 }
 
 // ToPlainText converts a Slate document into a plain-text format.
-func (slateDocument *SlateDocument) ToPlainText() (string, error) {
+func (slateDocument SlateDocument) ToPlainText() (string, error) {
 	text := serializeSlateNodes(slateDocument.Document.Nodes, _newline, _spaceSeparator)
 	text = regexp.MustCompile(`\n+`).ReplaceAllString(text, _newline)
 
@@ -78,34 +83,34 @@ func serializeSlateNodes(nodes []SlateNode, nodeSeparator, leaveSeparator string
 	for _, node := range nodes {
 		// Handle paragraph nodes by ensuring they end with punctuation.
 		if node.Type == _nodeTypeParagraph {
-			ensureEndsWithPunctuation(&node)
+			node.ensureEndsWithPunctuation()
 		}
 
 		// Recursively process child nodes.
 		switch {
-		case len(node.SlateNodes) > 0:
+		case len(node.Nodes) > 0:
 			switch node.Type {
 			case _nodeTypeHeadingLarge, _nodeTypeCaption, _nodeTypeFigure:
 				continue
 			case _nodeTypeHeadingMedium:
 				modifiedSlateNodeSeparator = _sentenceSeparator
 			case _nodeTypeBulletedList, _nodeTypeNumberedList:
-				node.SlateNodes[len(node.SlateNodes)-1].isLastListElement = true
-				temp := serializeSlateNodes(node.SlateNodes, modifiedSlateNodeSeparator, leaveSeparator)
+				node.Nodes[len(node.Nodes)-1].isLastInList = true
+				temp := serializeSlateNodes(node.Nodes, modifiedSlateNodeSeparator, leaveSeparator)
 				cleaned := cleanUpList(temp)
 				result.WriteString(cleaned)
 				continue
 			case _nodeTypeInline:
 				modifiedSlateNodeSeparator = _spaceSeparator
-				result.WriteString(serializeSlateNodes(node.SlateNodes, modifiedSlateNodeSeparator, leaveSeparator) + leaveSeparator)
+				result.WriteString(serializeSlateNodes(node.Nodes, modifiedSlateNodeSeparator, leaveSeparator) + leaveSeparator)
 			case _nodeTypeListItem:
 				modifiedSlateNodeSeparator = _commaSeparator
-				if node.isLastListElement {
+				if node.isLastInList {
 					modifiedSlateNodeSeparator = _sentenceSeparator
 				}
-				result.WriteString(serializeSlateNodes(node.SlateNodes, modifiedSlateNodeSeparator, leaveSeparator) + leaveSeparator)
+				result.WriteString(serializeSlateNodes(node.Nodes, modifiedSlateNodeSeparator, leaveSeparator) + leaveSeparator)
 			default:
-				res := serializeSlateNodes(node.SlateNodes, _spaceSeparator, leaveSeparator)
+				res := serializeSlateNodes(node.Nodes, _spaceSeparator, leaveSeparator)
 				res = strings.TrimSpace(res)
 				if modifiedSlateNodeSeparator == _commaSeparator && endsWithPunctuation(res) {
 					res = res[:len(res)-1] + modifiedSlateNodeSeparator
@@ -115,15 +120,15 @@ func serializeSlateNodes(nodes []SlateNode, nodeSeparator, leaveSeparator string
 				result.WriteString(res)
 			}
 		case len(node.Leaves) > 0:
-			result.WriteString(serializeLeaves(node.Leaves, leaveSeparator))
+			result.WriteString(serializeSlateLeaves(node.Leaves, leaveSeparator))
 		}
 	}
 
 	return result.String()
 }
 
-// serializeLeaves joins leaf texts with the specified separator.
-func serializeLeaves(leaves []SlateLeaf, separator string) string {
+// serializeSlateLeaves joins leaf texts with the specified separator.
+func serializeSlateLeaves(leaves []SlateLeaf, separator string) string {
 	var result []string
 	for _, leaf := range leaves {
 		text := leaf.Text
@@ -136,7 +141,7 @@ func serializeLeaves(leaves []SlateLeaf, separator string) string {
 }
 
 // ensureEndsWithPunctuation ensures that the last leaf of a paragraph node ends with punctuation.
-func ensureEndsWithPunctuation(node *SlateNode) {
+func (node *SlateNode) ensureEndsWithPunctuation() {
 	if len(node.Leaves) > 0 {
 		lastSlateLeaf := node.Leaves[len(node.Leaves)-1]
 		if text := lastSlateLeaf.Text; text != "" {
@@ -147,21 +152,21 @@ func ensureEndsWithPunctuation(node *SlateNode) {
 		node.Leaves[len(node.Leaves)-1] = lastSlateLeaf
 	}
 
-	if len(node.SlateNodes) > 0 && len(node.SlateNodes[len(node.SlateNodes)-1].Leaves) > 0 {
-		lastSlateLeaf := node.SlateNodes[len(node.SlateNodes)-1].Leaves[len(node.SlateNodes[len(node.SlateNodes)-1].Leaves)-1]
+	if len(node.Nodes) > 0 && len(node.Nodes[len(node.Nodes)-1].Leaves) > 0 {
+		lastSlateLeaf := node.Nodes[len(node.Nodes)-1].Leaves[len(node.Nodes[len(node.Nodes)-1].Leaves)-1]
 		if text := lastSlateLeaf.Text; text != "" {
 			if !endsWithPunctuation(text) {
 				lastSlateLeaf.Text += _sentenceSeparator
 			}
 		}
-		node.SlateNodes[len(node.SlateNodes)-1].Leaves[len(node.SlateNodes[len(node.SlateNodes)-1].Leaves)-1] = lastSlateLeaf
+		node.Nodes[len(node.Nodes)-1].Leaves[len(node.Nodes[len(node.Nodes)-1].Leaves)-1] = lastSlateLeaf
 	}
 }
 
 // cleans up the serialized list by removing excessive punctuation.
 func cleanUpList(text string) string {
-	cleaned := regexp.MustCompile(`\.+`).ReplaceAllString(text, _sentenceSeparator)
-	return regexp.MustCompile(`\.\s`).ReplaceAllString(cleaned, _dotSeparator)
+	cleaned := _multipleDotsRegex.ReplaceAllString(text, _sentenceSeparator)
+	return _dotSpaceRegex.ReplaceAllString(cleaned, _dotSeparator)
 }
 
 func endsWithPunctuation(text string) bool {
