@@ -62,7 +62,7 @@ func ParseSlateDocument(documentJSON string) (*SlateDocument, error) {
 	return &wrappedDocument, nil
 }
 
-// ToPlainText processes and formats a Slate document JSON string.
+// ToPlainText converts a Slate document into a plain-text format.
 func (slateDocument *SlateDocument) ToPlainText() (string, error) {
 	text := serializeSlateNodes(slateDocument.Document.Nodes, _newline, _spaceSeparator)
 	text = regexp.MustCompile(`\n+`).ReplaceAllString(text, _newline)
