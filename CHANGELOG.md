@@ -1,9 +1,15 @@
 # go-utils
 
+<a name="v1.40.0"></a>
+## [v1.40.0] - 2025-03-17
+### New Features
+- create SerializeSlateToText
+
+
 <a name="v1.39.6"></a>
 ## [v1.39.6] - 2025-01-17
 ### Fixes
-- change IsURLReachable status code rule
+- change is url reachable status code rule ([#67](https://github.com/kumparan/go-utils/issues/67))
 
 
 <a name="v1.39.5"></a>
@@ -346,7 +352,8 @@
 - init go-utils
 
 
-[Unreleased]: https://github.com/kumparan/go-utils/compare/v1.39.6...HEAD
+[Unreleased]: https://github.com/kumparan/go-utils/compare/v1.40.0...HEAD
+[v1.40.0]: https://github.com/kumparan/go-utils/compare/v1.39.6...v1.40.0
 [v1.39.6]: https://github.com/kumparan/go-utils/compare/v1.39.5...v1.39.6
 [v1.39.5]: https://github.com/kumparan/go-utils/compare/v1.39.4...v1.39.5
 [v1.39.4]: https://github.com/kumparan/go-utils/compare/v1.39.3...v1.39.4
