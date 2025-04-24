@@ -1,7 +1,18 @@
 # go-utils
 
+<a name="v1.40.1"></a>
+## [v1.40.1] - 2025-04-24
+### Fixes
+- force jpeg on push notif image for better compression
+
+
 <a name="v1.40.0"></a>
-## [v1.40.0] - 2025-03-17
+## [v1.40.0] - 2025-04-15
+### Code Improvements
+- review mr
+- review mr
+- review mr
+
 ### New Features
 - create SerializeSlateToText
 
@@ -352,7 +363,8 @@
 - init go-utils
 
 
-[Unreleased]: https://github.com/kumparan/go-utils/compare/v1.40.0...HEAD
+[Unreleased]: https://github.com/kumparan/go-utils/compare/v1.40.1...HEAD
+[v1.40.1]: https://github.com/kumparan/go-utils/compare/v1.40.0...v1.40.1
 [v1.40.0]: https://github.com/kumparan/go-utils/compare/v1.39.6...v1.40.0
 [v1.39.6]: https://github.com/kumparan/go-utils/compare/v1.39.5...v1.39.6
 [v1.39.5]: https://github.com/kumparan/go-utils/compare/v1.39.4...v1.39.5

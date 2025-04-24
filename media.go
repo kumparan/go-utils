@@ -27,13 +27,13 @@ func GeneratePushNotificationMediaURL(cdnURL, mediaSrcURL, imageType string) str
 	switch imageType {
 
 	case LargeIcon:
-		param = "image/upload/fl_progressive,fl_lossy,c_fill,g_face,q_auto:best,w_256,ar_1:1"
+		param = "image/upload/fl_progressive,fl_lossy,c_fill,g_face,q_auto:best,w_256,ar_1:1,f_jpeg"
 
 	case BigPicture:
-		param = "image/upload/fl_progressive,fl_lossy,c_fill,g_face,q_auto:best,w_1440,h_720"
+		param = "image/upload/fl_progressive,fl_lossy,c_fill,g_face,q_auto:best,w_1440,h_720,f_jpeg"
 
 	case IOSAttachment:
-		param = "image/upload/fl_progressive,fl_lossy,c_fill,g_face,q_auto:best,w_1024,h_1024"
+		param = "image/upload/fl_progressive,fl_lossy,c_fill,g_face,q_auto:best,w_1024,h_1024,f_jpeg"
 	}
 
 	mediaURL := cdnURL + "/" + param + "/" + coverMediaFile
