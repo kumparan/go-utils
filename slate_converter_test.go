@@ -22,3 +22,53 @@ RedMagic 10 Pro+ berada di posisi ketiga dengan skor AnTuTu 2.879.356, diikuti o
 	assert.Nil(t, err)
 	assert.Equal(t, expected, result)
 }
+
+func Test_ToPlainText_Link(t *testing.T) {
+	t.Run("text link not contain space", func(t *testing.T) {
+		inputJSON := `{"document":{"nodes":[{"object":"block","type":"heading-large","data":{},"nodes":[{"object":"text","leaves":[{"object":"leaf","text":"ini adalah judul","marks":[]}]}]},{"object":"block","type":"paragraph","data":{},"nodes":[{"object":"text","leaves":[{"object":"leaf","text":"tanda kemunculan ","marks":[]}]},{"object":"inline","type":"link","data":{"href":"https://kumparan.com"},"nodes":[{"object":"text","leaves":[{"object":"leaf","text":"suzuki fronx","marks":[]}]}]},{"object":"text","leaves":[{"object":"leaf","text":" di indonesia.","marks":[]}]}]}]}}`
+		expected := `tanda kemunculan suzuki fronx di indonesia.`
+
+		input, err := ParseSlateDocument(inputJSON)
+		assert.NoError(t, err)
+
+		result, err := input.ToPlainText()
+		assert.NoError(t, err)
+		assert.Equal(t, expected, result)
+	})
+
+	t.Run("text link include space on prefix", func(t *testing.T) {
+		inputJSON := `{"document":{"nodes":[{"object":"block","type":"heading-large","data":{},"nodes":[{"object":"text","leaves":[{"object":"leaf","text":"ini adalah judul","marks":[]}]}]},{"object":"block","type":"paragraph","data":{},"nodes":[{"object":"text","leaves":[{"object":"leaf","text":"tanda kemunculan","marks":[]}]},{"object":"inline","type":"link","data":{"href":"https://kumparan.com"},"nodes":[{"object":"text","leaves":[{"object":"leaf","text":" suzuki fronx","marks":[]}]}]},{"object":"text","leaves":[{"object":"leaf","text":" di indonesia.","marks":[]}]}]}]}}`
+		expected := `tanda kemunculan suzuki fronx di indonesia.`
+
+		input, err := ParseSlateDocument(inputJSON)
+		assert.NoError(t, err)
+
+		result, err := input.ToPlainText()
+		assert.NoError(t, err)
+		assert.Equal(t, expected, result)
+	})
+
+	t.Run("text link include space on suffix", func(t *testing.T) {
+		inputJSON := `{"document":{"nodes":[{"object":"block","type":"heading-large","data":{},"nodes":[{"object":"text","leaves":[{"object":"leaf","text":"ini adalah judul","marks":[]}]}]},{"object":"block","type":"paragraph","data":{},"nodes":[{"object":"text","leaves":[{"object":"leaf","text":"tanda kemunculan ","marks":[]}]},{"object":"inline","type":"link","data":{"href":"https://kumparan.com"},"nodes":[{"object":"text","leaves":[{"object":"leaf","text":"suzuki fronx ","marks":[]}]}]},{"object":"text","leaves":[{"object":"leaf","text":"di indonesia.","marks":[]}]}]}]}}`
+		expected := `tanda kemunculan suzuki fronx di indonesia.`
+
+		input, err := ParseSlateDocument(inputJSON)
+		assert.NoError(t, err)
+
+		result, err := input.ToPlainText()
+		assert.NoError(t, err)
+		assert.Equal(t, expected, result)
+	})
+
+	t.Run("text link include space on prefix and suffix", func(t *testing.T) {
+		inputJSON := `{"document":{"nodes":[{"object":"block","type":"heading-large","data":{},"nodes":[{"object":"text","leaves":[{"object":"leaf","text":"ini adalah judul","marks":[]}]}]},{"object":"block","type":"paragraph","data":{},"nodes":[{"object":"text","leaves":[{"object":"leaf","text":"tanda kemunculan","marks":[]}]},{"object":"inline","type":"link","data":{"href":"https://kumparan.com"},"nodes":[{"object":"text","leaves":[{"object":"leaf","text":" suzuki fronx ","marks":[]}]}]},{"object":"text","leaves":[{"object":"leaf","text":"di indonesia.","marks":[]}]}]}]}}`
+		expected := `tanda kemunculan suzuki fronx di indonesia.`
+
+		input, err := ParseSlateDocument(inputJSON)
+		assert.NoError(t, err)
+
+		result, err := input.ToPlainText()
+		assert.NoError(t, err)
+		assert.Equal(t, expected, result)
+	})
+}
