@@ -30,6 +30,7 @@ const (
 	_nodeTypeInline        = "inline"
 	_nodeTypeCaption       = "caption"
 	_nodeTypeFigure        = "figure"
+	_nodeTypeLink          = "link"
 )
 
 // SlateLeaf represents a text element with optional formatting.
@@ -103,6 +104,9 @@ func serializeSlateNodes(nodes []SlateNode, nodeSeparator, leaveSeparator string
 			case _nodeTypeInline:
 				modifiedSlateNodeSeparator = _spaceSeparator
 				result.WriteString(serializeSlateNodes(node.Nodes, modifiedSlateNodeSeparator, leaveSeparator) + leaveSeparator)
+			case _nodeTypeLink:
+				modifiedSlateNodeSeparator = _spaceSeparator
+				result.WriteString(serializeSlateNodes(node.Nodes, modifiedSlateNodeSeparator, leaveSeparator))
 			case _nodeTypeListItem:
 				modifiedSlateNodeSeparator = _commaSeparator
 				if node.isLastInList {
