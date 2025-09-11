@@ -235,3 +235,17 @@ func Test_ConvertSliceType(t *testing.T) {
 		assert.Equal(t, dstSlice, ConvertSlice(srcSlice, strings.TrimSpace))
 	})
 }
+
+func Test_ReverseSlice(t *testing.T) {
+	t.Run("success", func(t *testing.T) {
+		source := []int{1, 2, 3, 4, 5}
+		dest := []int{5, 4, 3, 2, 1}
+		assert.Equal(t, dest, ReverseSlice(source))
+	})
+
+	t.Run("empty slice", func(t *testing.T) {
+		source := []int{}
+		dest := []int{}
+		assert.Equal(t, dest, ReverseSlice(source))
+	})
+}
