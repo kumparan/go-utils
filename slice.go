@@ -206,3 +206,12 @@ func ConvertSlice[T1 any, T2 any](in []T1, converter func(T1) T2) []T2 {
 	}
 	return res
 }
+
+// ReverseSlice :nodoc:
+func ReverseSlice[T any](in []T) []T {
+	reversed := make([]T, 0)
+	for i := len(in) - 1; i >= 0; i-- {
+		reversed = append(reversed, in[i])
+	}
+	return reversed
+}

@@ -1,9 +1,21 @@
 # go-utils
 
+<a name="v1.41.0"></a>
+## [v1.41.0] - 2025-09-11
+### New Features
+- reverse slice
+
+
+<a name="v1.40.2"></a>
+## [v1.40.2] - 2025-06-10
+### Fixes
+- handle space on node link ([#70](https://github.com/kumparan/go-utils/issues/70))
+
+
 <a name="v1.40.1"></a>
 ## [v1.40.1] - 2025-04-24
 ### Fixes
-- force jpeg on push notif image for better compression
+- force jpeg on push notif image for better compression ([#69](https://github.com/kumparan/go-utils/issues/69))
 
 
 <a name="v1.40.0"></a>
@@ -363,7 +375,9 @@
 - init go-utils
 
 
-[Unreleased]: https://github.com/kumparan/go-utils/compare/v1.40.1...HEAD
+[Unreleased]: https://github.com/kumparan/go-utils/compare/v1.41.0...HEAD
+[v1.41.0]: https://github.com/kumparan/go-utils/compare/v1.40.2...v1.41.0
+[v1.40.2]: https://github.com/kumparan/go-utils/compare/v1.40.1...v1.40.2
 [v1.40.1]: https://github.com/kumparan/go-utils/compare/v1.40.0...v1.40.1
 [v1.40.0]: https://github.com/kumparan/go-utils/compare/v1.39.6...v1.40.0
 [v1.39.6]: https://github.com/kumparan/go-utils/compare/v1.39.5...v1.39.6
