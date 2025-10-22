@@ -4,6 +4,7 @@ import (
 	"sort"
 	"strings"
 	"unicode"
+	"unicode/utf8"
 )
 
 // IsQuestion returns true if a query is a question
@@ -73,10 +74,19 @@ func matchByType(q string, r Rule) bool {
 				return true
 			}
 		}
-	case MatchTypeEndsTokenSuffix:
-		for _, tok := range strings.Split(q, " ") {
-			if len(tok) > 3 && strings.HasSuffix(tok, "kah") {
-				return true
+	case MatchTypeTokenSuffix:
+		minLen := r.MinTokenLen
+		if minLen <= 0 {
+			minLen = 4
+		}
+		for _, tok := range tokenize(q) {
+			if len(tok) < minLen {
+				continue
+			}
+			for _, suf := range r.Terms {
+				if strings.HasSuffix(tok, suf) {
+					return true
+				}
 			}
 		}
 	}
@@ -109,3 +119,39 @@ func collapseSpaces(s string) string {
 	}
 	return strings.TrimSpace(b.String())
 }
+
+// tokenize splits on whitespace and trims leading/trailing non-letters/digits per token.
+// keeps tokens simple & fast (no regex).
+func tokenize(s string) []string {
+	raw := strings.Fields(s)
+	out := make([]string, 0, len(raw))
+	for _, t := range raw {
+		t = trimNonAlphaNum(t)
+		if t != "" {
+			out = append(out, t)
+		}
+	}
+	return out
+}
+
+func trimNonAlphaNum(s string) string {
+	start, end := 0, len(s)
+	for start < end {
+		r := rune(s[start])
+		if isAlphaNum(r) {
+			break
+		}
+		_, w := utf8.DecodeRuneInString(s[start:])
+		start += w
+	}
+	for end > start {
+		r, w := utf8.DecodeLastRuneInString(s[:end])
+		if isAlphaNum(r) {
+			break
+		}
+		end -= w
+	}
+	return s[start:end]
+}
+
+func isAlphaNum(r rune) bool { return unicode.IsLetter(r) || unicode.IsDigit(r) }
