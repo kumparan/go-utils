@@ -1,6 +1,9 @@
 package tanya
 
-import "testing"
+import (
+	"strings"
+	"testing"
+)
 
 func TestIsQuestion(t *testing.T) {
 	t.Parallel()
@@ -9,7 +12,7 @@ func TestIsQuestion(t *testing.T) {
 		q    string
 		want bool
 	}{
-		// questions
+		// --- explicit / canonical questions
 		{"apa itu knowledge graph", true},
 		{"bagaimana cara reset password gmail", true},
 		{"perbedaan redux vs zustand", true},
@@ -20,24 +23,75 @@ func TestIsQuestion(t *testing.T) {
 		{"jelasin cara mukbang", true},
 		{"update kematian mahasiswa unud", true},
 
-		// abbreviations
-		{"gmn cara scrape instagram", true},
-		{"knp server down semalem", true},
-		{"dmn lokasi konser", true},
-		{"brp harga langganan", false},
+		// --- abbreviations / slang normalization
+		{"gmn cara scrape instagram", true}, // gmn -> gimana
+		{"knp server down semalem", true},   // knp -> kenapa
+		{"dmn lokasi konser", true},         // dmn -> dimana
+		{"brp harga langganan", false},      // brp -> berapa -> price intent => non-question
 
-		// non-question
+		// --- particles at the end (colloquial endings)
+		{"mau makan kemana siang ini", true},
+		{"dia tadi ke kantor dimana", true},
+		{"ini kenapa ya", true},
+		{"ini apa sih", true},
+		{"performanya turun ya kan", true},
+
+		// --- -kah suffix
+		{"bisakah presiden diganti", true},
+		{"mungkinkah ini berhasil", true},
+		{"adakah solusi cepatnya", true},
+
+		// --- how-to variants
+		{"cara deploy ke production docker", true},
+		{"bagaimana cara memperbaiki error 500", true},
+		{"cara  cepat  push ke github  ", true}, // extra spaces
+
+		// --- comparison signals
+		{"bagusan mana mirrorless atau dslr", true},
+		{"A vs B untuk data pipeline", true},
+		{"versus airflow vs dagster", true},
+
+		// --- definition / explain variants
+		{"apa arti resilien", true},
+		{"apa maksud zero copy", true},
+		{"explain RAG pls", true},
+		{"penjelasan implementasi RAG", true}, // explanation intent
+
+		// --- update/time intent
+		{"terkini erupsi bromo", true},
+		{"perkembangan kasus x sekarang", true},
+
+		// --- punctuation / emoji / casing
+		{"KENAPA SERVER LEMOT", true},
+		{"Kenapa server lemot?", true}, // explicit '?'
+		{"kenapa server lemot 🤔", true},
+		{"  Bagaimana Cara Reset Password  ", true},
+
+		// --- URL / noise in a query
+		{"cara setting oauth di https://example.com/docs", true},
+		{"update api rate limit v2 (lihat changelog)", true},
+
+		// --- obvious non-questions
 		{"toyota", false},
 		{"harga paket premium", false},
 		{"kontak cs kumparan", false},
 		{"download aplikasi android", false},
+		{"grab promo kupon", false},
 		{"", false},
 		{"   \t  ", false},
+
+		// --- tricky near-misses / should remain non-question
+		{"vs code extensions", false}, // 'vs' as product word, not comparison
+		{"mana store", false},         // 'mana' as noun chunk; intended info/browse
 	}
 
 	for _, tc := range cases {
 		tc := tc
-		t.Run(tc.q, func(t *testing.T) {
+		name := tc.q
+		if strings.TrimSpace(name) == "" {
+			name = "<empty or whitespace>"
+		}
+		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 			got := IsQuestion(tc.q)
 			if got != tc.want {
