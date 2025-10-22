@@ -73,12 +73,6 @@ func matchByType(q string, r Rule) bool {
 				return true
 			}
 		}
-	case MatchTypeEndsTokenSuffix:
-		for _, tok := range strings.Split(q, " ") {
-			if len(tok) > 3 && strings.HasSuffix(tok, "kah") {
-				return true
-			}
-		}
 	}
 	return false
 }

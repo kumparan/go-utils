@@ -23,10 +23,9 @@ const (
 	IntentQuestion       Intent = "question" // general fallback
 	IntentOther          Intent = "other"
 
-	MatchTypeContains        MatchType = "contains"
-	MatchTypeStarts          MatchType = "starts"
-	MatchTypeEnds            MatchType = "ends"
-	MatchTypeEndsTokenSuffix MatchType = "ends_token_suffix" // nolint:gosec
+	MatchTypeContains MatchType = "contains"
+	MatchTypeStarts   MatchType = "starts"
+	MatchTypeEnds     MatchType = "ends"
 )
 
 type (
