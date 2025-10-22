@@ -61,6 +61,9 @@ var intentTable = []IntentSpec{
 		{terms("bagaimana cara ", "gimana cara "), 3, MatchTypeStarts, 0},
 		{terms("cara "), 3, MatchTypeStarts, 0},
 		{terms(" cara ", " langkah ", " step "), 1, MatchTypeContains, 0},
+		{terms("resep "), 3, MatchTypeStarts, 0},
+		{terms(" panduan ", "panduan "), 2, MatchTypeContains, 0},
+		{terms(" tutorial ", "tutorial "), 2, MatchTypeContains, 0},
 	}},
 	{IntentDefinition, 75, []Rule{
 		{terms("apa itu "), 3, MatchTypeStarts, 0},
@@ -74,6 +77,8 @@ var intentTable = []IntentSpec{
 	{IntentRecommendation, 65, []Rule{
 		{terms("rekomendasi", "rekom", "saran"), 2, MatchTypeContains, 0},
 		{terms("bagusan mana", "pilih mana", "cocok yang mana"), 2, MatchTypeContains, 0},
+		{terms("menu "), 2, MatchTypeStarts, 0},
+		{terms(" ide ", "ide "), 1, MatchTypeContains, 0},
 	}},
 	{IntentTroubleshoot, 60, []Rule{
 		{terms("kenapa", "mengapa"), 2, MatchTypeContains, 0},
@@ -100,8 +105,9 @@ var intentTable = []IntentSpec{
 		{terms("apa", "apakah", "bagaimana", "gimana", "kapan", "siapa", "dimana", "di mana", "kemana", "ke mana", "berapa"), 2, MatchTypeContains, 0},
 		{terms(" vs ", " versus "), 1, MatchTypeContains, 0},
 		{terms(" yang mana "), 2, MatchTypeContains, 0},
+		{terms("yang mana "), 2, MatchTypeStarts, 0},
 		{terms(" mana"), 2, MatchTypeEnds, 0},
-		{terms("kah"), 1, MatchTypeTokenSuffix, 4},
+		{terms("kah"), 1, MatchTypeTokenSuffix, 5},
 		{terms("ya ga sih", "ya gak sih", "ya nggak sih", "ya kan", "apa sih", "gimana sih", "kenapa sih"), 2, MatchTypeContains, 0},
 		{terms(" kok "), 2, MatchTypeContains, 0},
 		{terms("?"), 3, MatchTypeContains, 0},
@@ -109,5 +115,20 @@ var intentTable = []IntentSpec{
 }
 
 var abbrevMap = map[string]string{
-	" gmn ": " gimana ", " knp ": " kenapa ", " dmn ": " dimana ", " brp ": " berapa ",
+	"gmn":  "gimana",
+	"gmna": "gimana",
+	"bgmn": "bagaimana",
+	"knp":  "kenapa",
+	"knpa": "kenapa",
+	"dmn":  "dimana",
+	"dmna": "dimana",
+	"dimn": "dimana",
+	"kmn":  "kemana",
+	"kmna": "kemana",
+	"brp":  "berapa",
+	"brpa": "berapa",
+	"kpn":  "kapan",
+	"kpan": "kapan",
+	"sapa": "siapa",
+	"sp":   "siapa",
 }

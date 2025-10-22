@@ -97,9 +97,7 @@ func matchByType(q string, r Rule) bool {
 func normalize(s string) string {
 	s = strings.ToLower(strings.TrimSpace(collapseSpaces(s)))
 	s = " " + s + " "
-	for k, v := range abbrevMap {
-		s = strings.ReplaceAll(s, k, v)
-	}
+	s = expandAbbreviations(s)
 	return strings.TrimSpace(collapseSpaces(s))
 }
 
@@ -118,6 +116,24 @@ func collapseSpaces(s string) string {
 		}
 	}
 	return strings.TrimSpace(b.String())
+}
+
+// normalize abbreviations anywhere (start/mid/end)
+func expandAbbreviations(s string) string {
+	words := strings.Fields(s)
+	for i, w := range words {
+		if repl, ok := abbrevMap[w]; ok {
+			words[i] = repl
+			continue
+		}
+		// handle punctuation like "knp?" or "dmn," etc.
+		base := strings.TrimRight(w, "?.!,")
+		suffix := w[len(base):]
+		if repl, ok := abbrevMap[base]; ok {
+			words[i] = repl + suffix
+		}
+	}
+	return strings.Join(words, " ")
 }
 
 // tokenize splits on whitespace and trims leading/trailing non-letters/digits per token.

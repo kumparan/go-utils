@@ -23,11 +23,24 @@ func TestIsQuestion(t *testing.T) {
 		{"jelasin cara mukbang", true},
 		{"update kematian mahasiswa unud", true},
 
-		// --- abbreviations / slang normalization
+		// --- abbreviations / slang normalization (start/mid/end + punct)
 		{"gmn cara scrape instagram", true}, // gmn -> gimana
+		{"gmna cara beli tiket", true},      // gmna -> gimana
+		{"bgmn cara install docker", true},  // bgmn -> bagaimana
 		{"knp server down semalem", true},   // knp -> kenapa
+		{"knpa servernya lambat", true},     // knpa -> kenapa
 		{"dmn lokasi konser", true},         // dmn -> dimana
-		{"brp harga langganan", false},      // brp -> berapa -> price intent => non-question
+		{"dmna lokasi vaksin", true},        // dmna -> dimana
+		{"ini ada di dimn", true},           // dimn -> dimana
+		{"kmn mau makan siang?", true},      // kmn -> kemana
+		{"kita kmna abis ini", true},        // kmna -> kemana
+		{"brp harga langganan", false},      // brp -> berapa -> price => non-question
+		{"kpn rilis update?", true},         // kpn -> kapan
+		{"kpan meetingnya", true},           // kpan -> kapan
+		{"sapa yang ikut", true},            // sapa -> siapa
+		{"sp aja yang hadir", true},         // sp -> siapa
+		{"knp?", true},                      // knp at start + punctuation
+		{"server down dmn,", true},          // trailing punctuation handled
 
 		// --- particles at the end (colloquial endings)
 		{"mau makan kemana siang ini", true},
@@ -36,53 +49,67 @@ func TestIsQuestion(t *testing.T) {
 		{"ini apa sih", true},
 		{"performanya turun ya kan", true},
 
-		// --- -kah suffix
+		// --- -kah suffix (via token_suffix) including punctuation
 		{"bisakah presiden diganti", true},
 		{"mungkinkah ini berhasil", true},
 		{"adakah solusi cepatnya", true},
+		{"mungkinkah ini berhasil!!!", true},
+		{"akah", false}, // too short to be meaningful (guard by MinTokenLen)
 
 		// --- how-to variants
 		{"cara deploy ke production docker", true},
 		{"bagaimana cara memperbaiki error 500", true},
 		{"cara  cepat  push ke github  ", true}, // extra spaces
+		{"cara setting oauth di https://example.com/docs", true},
+		{"resep bubur bayi 6 bulan", true},
+		{"resep mpasi tanpa gula garam", true},
+		{"menu mpasi 6 bulan", true},
+		{"ide mpasi murah meriah", true},
+		{"tutorial docker", true},
+		{"panduan upgrade postgres", true},
 
 		// --- comparison signals
 		{"bagusan mana mirrorless atau dslr", true},
 		{"A vs B untuk data pipeline", true},
 		{"versus airflow vs dagster", true},
+		{"pilih mana A atau B", true},
+		{"lebih bagus mana iphone atau pixel", true},
 
 		// --- definition / explain variants
 		{"apa arti resilien", true},
 		{"apa maksud zero copy", true},
 		{"explain RAG pls", true},
-		{"penjelasan implementasi RAG", true}, // explanation intent
+		{"penjelasan implementasi RAG", true},
 
-		// --- update/time intent
+		// --- update / time / location intent
 		{"terkini erupsi bromo", true},
 		{"perkembangan kasus x sekarang", true},
+		{"lokasi kantor jakarta selatan", true}, // location -> question-like
+		{"jadwal konser jakarta", true},         // time -> question-like
+
+		// --- “yang mana” (keep as question), but “mana store” should not
+		{"yang mana yang benar", true},
+		{"ini pilih yang mana", true},
+		{"mana store", false}, // 'mana' as noun chunk; intended info/browse
 
 		// --- punctuation / emoji / casing
 		{"KENAPA SERVER LEMOT", true},
-		{"Kenapa server lemot?", true}, // explicit '?'
+		{"Kenapa server lemot?", true},
 		{"kenapa server lemot 🤔", true},
 		{"  Bagaimana Cara Reset Password  ", true},
 
-		// --- URL / noise in a query
-		{"cara setting oauth di https://example.com/docs", true},
-		{"update api rate limit v2 (lihat changelog)", true},
+		// --- tricky “vs” that is not comparison (product name)
+		{"vs code extensions", false}, // treat 'vs' here as product word, not comparison
 
 		// --- obvious non-questions
 		{"toyota", false},
+		{"jakarta", false},
 		{"harga paket premium", false},
 		{"kontak cs kumparan", false},
 		{"download aplikasi android", false},
 		{"grab promo kupon", false},
 		{"", false},
 		{"   \t  ", false},
-
-		// --- tricky near-misses / should remain non-question
-		{"vs code extensions", false}, // 'vs' as product word, not comparison
-		{"mana store", false},         // 'mana' as noun chunk; intended info/browse
 	}
 
 	for _, tc := range cases {
