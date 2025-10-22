@@ -9,7 +9,7 @@ import (
 // IsQuestion returns true if a query is a question
 func IsQuestion(q string) bool {
 	intent := ClassifyIntent(q)
-	switch intent {
+	switch intent { // nolint:exhaustive
 	case IntentPrice, IntentContact, IntentOther:
 		return false
 	default:

@@ -1,10 +1,13 @@
 package tanya
 
 type (
-	Intent    string
+	// Intent is the intent of a query
+	Intent string
+	// MatchType is the type of match
 	MatchType string
 )
 
+// Intent and MatchType constants
 const (
 	IntentUpdate         Intent = "update"
 	IntentExplain        Intent = "explain"
@@ -23,16 +26,18 @@ const (
 	MatchTypeContains        MatchType = "contains"
 	MatchTypeStarts          MatchType = "starts"
 	MatchTypeEnds            MatchType = "ends"
-	MatchTypeEndsTokenSuffix MatchType = "ends_token_suffix"
+	MatchTypeEndsTokenSuffix MatchType = "ends_token_suffix" // nolint:gosec
 )
 
 type (
+	// Rule is a rule for matching a query to intent
 	Rule struct {
 		Terms     []string
 		Weight    int
 		MatchType MatchType
 	}
 
+	// IntentSpec is a specification for intent
 	IntentSpec struct {
 		Intent   Intent
 		Priority int
