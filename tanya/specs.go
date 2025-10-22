@@ -120,7 +120,7 @@ var abbrevMap = map[string]string{
 	"bgmn":  "bagaimana",
 	"knp":   "kenapa",
 	"knpa":  "kenapa",
-	"dmn":   "d imana",
+	"dmn":   "di mana",
 	"dmna":  "di mana",
 	"dimn":  "di mana",
 	"kmn":   "ke mana",
