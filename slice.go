@@ -165,7 +165,7 @@ func FindDifferencesFromSlices[T comparable](slices ...[]T) []T {
 		return nil
 	}
 
-	var allItem []T
+	var allItems []T
 	itemCountMap := map[T]int{}
 	for _, slice := range slices {
 		handledItem := map[T]bool{}
@@ -173,14 +173,14 @@ func FindDifferencesFromSlices[T comparable](slices ...[]T) []T {
 			// handle duplicate item in one slice
 			if !handledItem[item] {
 				itemCountMap[item]++
-				allItem = append(allItem, item)
+				allItems = append(allItems, item)
 				handledItem[item] = true
 			}
 		}
 	}
-	allItem = Unique(allItem)
+	allItems = Unique(allItems)
 	var result []T
-	for _, item := range allItem {
+	for _, item := range allItems {
 		count := itemCountMap[item]
 		if count < len(slices) {
 			result = append(result, item)
