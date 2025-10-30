@@ -134,6 +134,14 @@ func Test_FindDifferencesFromSlices(t *testing.T) {
 			},
 			result: nil,
 		},
+		{
+			slices: [][]string{
+				{"b", "a", "c"},
+				{"a", "c", "d"},
+				{"e", "f", "a", "b"},
+			},
+			result: []string{"b", "d", "e", "f"},
+		},
 	}
 
 	for _, tc := range testCases {
