@@ -27,6 +27,8 @@ func DoHTTPRequest[T httpResponse](ctx context.Context, httpClient *http.Client,
 		return respStatusCode, nil, err
 	}
 
+	logger = logger.WithField("response header", Dump(httpResp.Header))
+
 	respInBytes, err := io.ReadAll(httpResp.Body)
 	if err != nil {
 		logger.Error(err)
