@@ -13,7 +13,6 @@ type Range struct {
 	End   time.Time
 }
 
-// IsZero tell if both start and end are zero/undefined
 func (r Range) IsZero() bool { return r.Start.IsZero() && r.End.IsZero() }
 
 // Parse scans query and returns the BEST date range it can extract.
@@ -26,6 +25,10 @@ func Parse(query string, now time.Time) (r Range, ok bool, err error) {
 		return Range{}, false, nil
 	}
 
+	hasEventHint := containsEventHint(s)
+	topicIntent := containsTopicIntent(s)
+	nowYear := now.Year()
+
 	bestScore := -1
 	var best Range
 
@@ -35,8 +38,9 @@ func Parse(query string, now time.Time) (r Range, ok bool, err error) {
 			continue
 		}
 		sub := s[i:]
+		prev := prevToken(s, i)
 
-		cand, score, found := parseBestAtStart(sub, now)
+		cand, score, found := parseBestAtStart(sub, now, prev, hasEventHint, topicIntent, nowYear)
 		if !found {
 			continue
 		}
@@ -56,23 +60,23 @@ func Parse(query string, now time.Time) (r Range, ok bool, err error) {
    Core parsing at start
 --------------------------*/
 
-func parseBestAtStart(s string, now time.Time) (Range, int, bool) {
+func parseBestAtStart(s string, now time.Time, prev string, hasEventHint bool, topicIntent bool, nowYear int) (Range, int, bool) {
 	// Highest: explicit "dari ... sampai ..."
-	if r, ok := parseFromRangeAtStart(s, now); ok {
+	if r, ok := parseFromRangeAtStart(s, now, hasEventHint, topicIntent, nowYear); ok {
 		return r, scoreFromRange, true
 	}
 	// Next: inline "A sampai B" / "A - B" / "A sd B"
-	if r, ok := parseInlineRangeAtStart(s, now); ok {
+	if r, ok := parseInlineRangeAtStart(s, now, hasEventHint, topicIntent, nowYear); ok {
 		return r, scoreInlineRange, true
 	}
 	// Single expression with specificity scoring
-	if r, score, ok := parseOneExprFromStart(s, now); ok {
+	if r, score, ok := parseOneExprFromStart(s, now, prev, hasEventHint, topicIntent, nowYear); ok {
 		return r, score, true
 	}
 	return Range{}, -1, false
 }
 
-func parseFromRangeAtStart(s string, now time.Time) (Range, bool) {
+func parseFromRangeAtStart(s string, now time.Time, hasEventHint bool, topicIntent bool, nowYear int) (Range, bool) {
 	m := rxFromRange.FindStringSubmatchIndex(s)
 	if m == nil || m[0] != 0 {
 		return Range{}, false
@@ -80,11 +84,11 @@ func parseFromRangeAtStart(s string, now time.Time) (Range, bool) {
 	startExpr := strings.TrimSpace(s[m[2]:m[3]])
 	endExpr := strings.TrimSpace(s[m[6]:m[7]])
 
-	rs, _, ok := parseOneExprAny(startExpr, now)
+	rs, _, ok := parseOneExprAny(startExpr, now, "", hasEventHint, topicIntent, nowYear)
 	if !ok {
 		return Range{}, false
 	}
-	re, _, ok := parseOneExprAny(endExpr, now)
+	re, _, ok := parseOneExprAny(endExpr, now, "", hasEventHint, topicIntent, nowYear)
 	if !ok {
 		return Range{}, false
 	}
@@ -97,7 +101,7 @@ func parseFromRangeAtStart(s string, now time.Time) (Range, bool) {
 	return r, true
 }
 
-func parseInlineRangeAtStart(s string, now time.Time) (Range, bool) {
+func parseInlineRangeAtStart(s string, now time.Time, hasEventHint bool, topicIntent bool, nowYear int) (Range, bool) {
 	m := rxInlineRange.FindStringSubmatchIndex(s)
 	if m == nil || m[0] != 0 {
 		return Range{}, false
@@ -105,11 +109,11 @@ func parseInlineRangeAtStart(s string, now time.Time) (Range, bool) {
 	left := strings.TrimSpace(s[m[2]:m[3]])
 	right := strings.TrimSpace(s[m[6]:m[7]])
 
-	rl, _, ok := parseOneExprAny(left, now)
+	rl, _, ok := parseOneExprAny(left, now, "", hasEventHint, topicIntent, nowYear)
 	if !ok {
 		return Range{}, false
 	}
-	rr, _, ok := parseOneExprAny(right, now)
+	rr, _, ok := parseOneExprAny(right, now, "", hasEventHint, topicIntent, nowYear)
 	if !ok {
 		return Range{}, false
 	}
@@ -119,6 +123,25 @@ func parseInlineRangeAtStart(s string, now time.Time) (Range, bool) {
 		return rl, true
 	}
 	return r, true
+}
+
+func prevToken(s string, start int) string {
+	// start is token boundary index in s
+	if start <= 0 {
+		return ""
+	}
+	j := start - 1
+	for j >= 0 && s[j] == ' ' {
+		j--
+	}
+	if j < 0 {
+		return ""
+	}
+	k := j
+	for k >= 0 && s[k] != ' ' {
+		k--
+	}
+	return s[k+1 : j+1]
 }
 
 /* -------------------------
@@ -164,14 +187,14 @@ const (
 	scoreRelative  = 40 // hariini/kemarin/besok, unit modifiers
 )
 
-func parseOneExprAny(expr string, now time.Time) (Range, int, bool) {
+func parseOneExprAny(expr string, now time.Time, prev string, hasEventHint bool, topicIntent bool, nowYear int) (Range, int, bool) {
 	e := normalizeID(strings.TrimSpace(expr))
-	return parseOneExprFromStart(e, now)
+	return parseOneExprFromStart(e, now, prev, hasEventHint, topicIntent, nowYear)
 }
 
 // parseOneExprFromStart parses if expression begins at start of s.
 // Ambiguous expressions default to PAST (latest date <= now).
-func parseOneExprFromStart(s string, now time.Time) (Range, int, bool) {
+func parseOneExprFromStart(s string, now time.Time, prev string, hasEventHint bool, topicIntent bool, nowYear int) (Range, int, bool) {
 	// 0) "awal bulan ini" / "akhir bulan ini" (day-range)
 	if m := rxEdgeMonthThis.FindStringSubmatchIndex(s); m != nil && m[0] == 0 {
 		edge := s[m[2]:m[3]] // "awal"|"akhir"
@@ -223,6 +246,15 @@ func parseOneExprFromStart(s string, now time.Time) (Range, int, bool) {
 			return yearRange(y, now.Location()), scoreYear, true
 		}
 		return Range{}, -1, false
+	}
+
+	// 5.5) Bare year: "1998" (only if event-hint and not topic/title context and not future-year)
+	if m := rxBareYear.FindStringSubmatchIndex(s); m != nil && m[0] == 0 {
+		y, _ := strconv.Atoi(s[m[2]:m[3]])
+		next := nextTokenAfterPrefix(s[m[1]:])
+		if okYear(y) && allowBareYear(prev, next, hasEventHint, topicIntent, y, nowYear) {
+			return yearRange(y, now.Location()), scoreYear - 1, true
+		}
 	}
 
 	// 6) Numeric YMD: 2026-02-04 / 2026/02/04
@@ -294,6 +326,91 @@ func parseOneExprFromStart(s string, now time.Time) (Range, int, bool) {
 	}
 
 	return Range{}, -1, false
+}
+
+func nextTokenAfterPrefix(rest string) string {
+	rest = strings.TrimSpace(rest)
+	if rest == "" {
+		return ""
+	}
+	if i := strings.IndexByte(rest, ' '); i >= 0 {
+		return rest[:i]
+	}
+	return rest
+}
+
+func allowBareYear(prev, next string, hasEventHint bool, topicIntent bool, year int, nowYear int) bool {
+	// Topic-intent: year is likely a theme, not a published_at filter.
+	if topicIntent {
+		return false
+	}
+	// Future year: often a target topic/prediction, not document time.
+	if year > nowYear {
+		return false
+	}
+	// Must have event/time hint (to avoid false positives).
+	if !hasEventHint {
+		return false
+	}
+	// Title/entity contexts (film, review, trailer, etc).
+	if isEntityBlocker(prev) || isEntityBlocker(next) {
+		return false
+	}
+	return true
+}
+
+func isEntityBlocker(tok string) bool {
+	switch tok {
+	case "film", "movie", "series", "serial", "drama", "anime",
+		"album", "lagu", "song", "buku", "novel", "game",
+		"review", "ulasan", "sinopsis", "trailer", "subtitle":
+		return true
+	default:
+		return false
+	}
+}
+
+func containsEventHint(q string) bool {
+	// q already normalized & lowercase
+	eventPhrases := []string{
+		"piala dunia",
+		"world cup",
+	}
+	for _, ph := range eventPhrases {
+		if strings.Contains(q, ph) {
+			return true
+		}
+	}
+	eventTokens := []string{
+		"pemilu", "pilpres", "pilkada",
+		"oscar", "grammy",
+		"olimpiade", "olympic", "olympics",
+		"liga", "turnamen", "juara", "final", "pemenang",
+		"gempa", "banjir", "krisis", "inflasi", "resesi",
+		"piala", "musim",
+	}
+	for _, t := range eventTokens {
+		if strings.Contains(q, t) {
+			return true
+		}
+	}
+	return false
+}
+
+func containsTopicIntent(q string) bool {
+	// q already normalized & lowercase
+	tokens := []string{
+		"prediksi", "ramalan", "forecast", "proyeksi", "outlook",
+		"tren", "trend", "gaya", "model", "inspirasi",
+		"rekomendasi", "tips", "tip", "cara", "panduan", "tutorial",
+		"review", "ulasan", "sinopsis", "trailer",
+	}
+	for _, t := range tokens {
+		if strings.Contains(q, t) {
+			return true
+		}
+	}
+	return false
 }
 
 /* -------------------------
@@ -548,7 +665,6 @@ func monthID(s string) (time.Month, bool) {
 --------------------------*/
 
 var (
-	// Make end greedy to allow "10 feb 2026 foo" and still parse prefix.
 	rxFromRange   = regexp.MustCompile(`^dari\s+(.+?)\s+(sampai|hingga|sd|-)\s+(.+)$`)
 	rxInlineRange = regexp.MustCompile(`^(.+?)\s+(sampai|hingga|sd|-)\s+(.+)$`)
 
@@ -562,6 +678,7 @@ var (
 	rxRelNUnit = regexp.MustCompile(`^(\d+)\s+(hari|minggu|pekan|bulan|tahun)\s+(lalu|lagi|yanglalu|kedepan|darisekarang|darihariini)(?:\s|$)`)
 
 	rxTahunYYYY = regexp.MustCompile(`^tahun\s+(\d{4})(?:\s|$)`)
+	rxBareYear  = regexp.MustCompile(`^((?:19|20)\d{2})(?:\s|$)`)
 
 	rxYMDNumeric = regexp.MustCompile(`^(\d{4})[-/](\d{1,2})[-/](\d{1,2})(?:\s|$)`)
 
