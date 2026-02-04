@@ -20,7 +20,7 @@ func (r Range) IsZero() bool { return r.Start.IsZero() && r.End.IsZero() }
 // ok=false means "no range found" (not an error).
 //
 // Timezone is taken from now.Location(). So pass now in the timezone you want.
-func Parse(query string, now time.Time) (r Range, ok bool, err error) {
+func Parse(query string, now time.Time) (r Range, isTimeRage bool, err error) {
 	s := normalizeID(strings.TrimSpace(query))
 	if s == "" {
 		return Range{}, false, nil
