@@ -85,11 +85,11 @@ func parseFromRangeAtStart(s string, now time.Time, hasEventHint bool, topicInte
 	startExpr := strings.TrimSpace(s[m[2]:m[3]])
 	endExpr := strings.TrimSpace(s[m[6]:m[7]])
 
-	rs, _, ok := parseOneExprAny(startExpr, now, "", hasEventHint, topicIntent, nowYear)
+	rs, _, ok := parseOneExprAny(startExpr, now, hasEventHint, topicIntent, nowYear)
 	if !ok {
 		return Range{}, false
 	}
-	re, _, ok := parseOneExprAny(endExpr, now, "", hasEventHint, topicIntent, nowYear)
+	re, _, ok := parseOneExprAny(endExpr, now, hasEventHint, topicIntent, nowYear)
 	if !ok {
 		return Range{}, false
 	}
@@ -110,11 +110,11 @@ func parseInlineRangeAtStart(s string, now time.Time, hasEventHint bool, topicIn
 	left := strings.TrimSpace(s[m[2]:m[3]])
 	right := strings.TrimSpace(s[m[6]:m[7]])
 
-	rl, _, ok := parseOneExprAny(left, now, "", hasEventHint, topicIntent, nowYear)
+	rl, _, ok := parseOneExprAny(left, now, hasEventHint, topicIntent, nowYear)
 	if !ok {
 		return Range{}, false
 	}
-	rr, _, ok := parseOneExprAny(right, now, "", hasEventHint, topicIntent, nowYear)
+	rr, _, ok := parseOneExprAny(right, now, hasEventHint, topicIntent, nowYear)
 	if !ok {
 		return Range{}, false
 	}
@@ -188,9 +188,9 @@ const (
 	scoreRelative  = 40 // hariini/kemarin/besok, unit modifiers
 )
 
-func parseOneExprAny(expr string, now time.Time, prev string, hasEventHint bool, topicIntent bool, nowYear int) (Range, int, bool) {
+func parseOneExprAny(expr string, now time.Time, hasEventHint bool, topicIntent bool, nowYear int) (Range, int, bool) {
 	e := normalizeID(strings.TrimSpace(expr))
-	return parseOneExprFromStart(e, now, prev, hasEventHint, topicIntent, nowYear)
+	return parseOneExprFromStart(e, now, "", hasEventHint, topicIntent, nowYear)
 }
 
 // parseOneExprFromStart parses if expression begins at start of s.
