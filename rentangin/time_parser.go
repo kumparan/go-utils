@@ -13,6 +13,7 @@ type Range struct {
 	End   time.Time
 }
 
+// IsZero returns true if empty
 func (r Range) IsZero() bool { return r.Start.IsZero() && r.End.IsZero() }
 
 // Parse scans query and returns the BEST date range it can extract.
