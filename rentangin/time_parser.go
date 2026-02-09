@@ -1,4 +1,4 @@
-package rentangin
+package daterange
 
 import (
 	"regexp"
@@ -20,7 +20,7 @@ func (r Range) IsZero() bool { return r.Start.IsZero() && r.End.IsZero() }
 // ok=false means "no range found" (not an error).
 //
 // Timezone is taken from now.Location(). So pass now in the timezone you want.
-func Parse(query string, now time.Time) (r Range, isTimeRage bool, err error) {
+func Parse(query string, now time.Time) (r Range, isTimeRange bool, err error) {
 	s := normalizeID(strings.TrimSpace(query))
 	if s == "" {
 		return Range{}, false, nil
@@ -66,6 +66,10 @@ func parseBestAtStart(s string, now time.Time, prev string, hasEventHint bool, t
 	if r, ok := parseFromRangeAtStart(s, now, hasEventHint, topicIntent, nowYear); ok {
 		return r, scoreFromRange, true
 	}
+	// sejak... / ... sampai sekarang/hari ini / awal pekan ini / akhir pekan lalu / sejak awal tahun
+	if r, ok := parseSinceOrUntilNowAtStart(s, now, hasEventHint, topicIntent, nowYear); ok {
+		return r, scoreSinceRange, true
+	}
 	// Next: inline "A sampai B" / "A - B" / "A sd B"
 	if r, ok := parseInlineRangeAtStart(s, now, hasEventHint, topicIntent, nowYear); ok {
 		return r, scoreInlineRange, true
@@ -85,11 +89,21 @@ func parseFromRangeAtStart(s string, now time.Time, hasEventHint bool, topicInte
 	startExpr := strings.TrimSpace(s[m[2]:m[3]])
 	endExpr := strings.TrimSpace(s[m[6]:m[7]])
 
-	rs, _, ok := parseOneExprAny(startExpr, now, hasEventHint, topicIntent, nowYear)
+	rs, _, ok := parseOneExprAny(startExpr, now, "", hasEventHint, topicIntent, nowYear)
 	if !ok {
 		return Range{}, false
 	}
-	re, _, ok := parseOneExprAny(endExpr, now, hasEventHint, topicIntent, nowYear)
+
+	// handle "dari X sampai sekarang/hari ini" as open-ended end of today
+	if isNowEndExpr(endExpr) {
+		r := Range{Start: rs.Start, End: endOfTodayPlus1(now)}
+		if !r.End.After(r.Start) {
+			return rs, true
+		}
+		return r, true
+	}
+
+	re, _, ok := parseOneExprAny(endExpr, now, "", hasEventHint, topicIntent, nowYear)
 	if !ok {
 		return Range{}, false
 	}
@@ -110,11 +124,11 @@ func parseInlineRangeAtStart(s string, now time.Time, hasEventHint bool, topicIn
 	left := strings.TrimSpace(s[m[2]:m[3]])
 	right := strings.TrimSpace(s[m[6]:m[7]])
 
-	rl, _, ok := parseOneExprAny(left, now, hasEventHint, topicIntent, nowYear)
+	rl, _, ok := parseOneExprAny(left, now, "", hasEventHint, topicIntent, nowYear)
 	if !ok {
 		return Range{}, false
 	}
-	rr, _, ok := parseOneExprAny(right, now, hasEventHint, topicIntent, nowYear)
+	rr, _, ok := parseOneExprAny(right, now, "", hasEventHint, topicIntent, nowYear)
 	if !ok {
 		return Range{}, false
 	}
@@ -124,6 +138,50 @@ func parseInlineRangeAtStart(s string, now time.Time, hasEventHint bool, topicIn
 		return rl, true
 	}
 	return r, true
+}
+
+func parseSinceOrUntilNowAtStart(s string, now time.Time, hasEventHint bool, topicIntent bool, nowYear int) (Range, bool) {
+	// A) "sejak awal tahun" / "sejak awal tahun ini"
+	if m := rxSejakAwalTahun.FindStringSubmatchIndex(s); m != nil && m[0] == 0 {
+		loc := now.Location()
+		start := time.Date(now.Year(), 1, 1, 0, 0, 0, 0, loc)
+		return Range{Start: start, End: endOfTodayPlus1(now)}, true
+	}
+
+	// B) "awal pekan ini" (Senin saja)
+	if m := rxAwalPekanIni.FindStringSubmatchIndex(s); m != nil && m[0] == 0 {
+		start := weekRange(now).Start
+		return dayRange(start), true
+	}
+
+	// C) "akhir pekan lalu" (Sabtu+Minggu minggu lalu)
+	if m := rxAkhirPekanLalu.FindStringSubmatchIndex(s); m != nil && m[0] == 0 {
+		weekStart := weekRange(now).Start    // Monday this week
+		start := weekStart.AddDate(0, 0, -2) // Saturday of last week
+		return Range{Start: start, End: weekStart}, true
+	}
+
+	// D) "sejak <expr>"
+	if m := rxSejakExpr.FindStringSubmatchIndex(s); m != nil && m[0] == 0 {
+		expr := strings.TrimSpace(s[m[2]:m[3]])
+		rs, _, ok := parseOneExprAny(expr, now, "", hasEventHint, topicIntent, nowYear)
+		if !ok {
+			return Range{}, false
+		}
+		return Range{Start: rs.Start, End: endOfTodayPlus1(now)}, true
+	}
+
+	// E) "<expr> sampai|hingga sekarang|hari ini"
+	if m := rxUntilNow.FindStringSubmatchIndex(s); m != nil && m[0] == 0 {
+		expr := strings.TrimSpace(s[m[2]:m[3]])
+		rs, _, ok := parseOneExprAny(expr, now, "", hasEventHint, topicIntent, nowYear)
+		if !ok {
+			return Range{}, false
+		}
+		return Range{Start: rs.Start, End: endOfTodayPlus1(now)}, true
+	}
+
+	return Range{}, false
 }
 
 func prevToken(s string, start int) string {
@@ -177,6 +235,7 @@ func normalizeID(s string) string {
 
 const (
 	scoreFromRange   = 100
+	scoreSinceRange  = 89 // sejak X / X sampai sekarang
 	scoreInlineRange = 90
 
 	scoreLastNRange = 85 // "7 hari terakhir"
@@ -188,9 +247,9 @@ const (
 	scoreRelative  = 40 // hariini/kemarin/besok, unit modifiers
 )
 
-func parseOneExprAny(expr string, now time.Time, hasEventHint bool, topicIntent bool, nowYear int) (Range, int, bool) {
+func parseOneExprAny(expr string, now time.Time, prev string, hasEventHint bool, topicIntent bool, nowYear int) (Range, int, bool) {
 	e := normalizeID(strings.TrimSpace(expr))
-	return parseOneExprFromStart(e, now, "", hasEventHint, topicIntent, nowYear)
+	return parseOneExprFromStart(e, now, prev, hasEventHint, topicIntent, nowYear)
 }
 
 // parseOneExprFromStart parses if expression begins at start of s.
@@ -216,6 +275,11 @@ func parseOneExprFromStart(s string, now time.Time, prev string, hasEventHint bo
 	// 2) One-word relative
 	if m := rxOneWord.FindStringSubmatchIndex(s); m != nil && m[0] == 0 {
 		w := s[m[2]:m[3]]
+		// Guard: jangan biarkan "sampai sekarang/hari ini" tanpa start expr yang valid
+		// jatuhnya diparse dari token "sekarang/hariini" saja.
+		if (w == "sekarang" || w == "hariini") && isEndConnector(prev) {
+			return Range{}, -1, false
+		}
 		if r, ok := oneWord(w, now); ok {
 			return r, scoreRelative, true
 		}
@@ -444,7 +508,7 @@ func lastN(unit string, n int, now time.Time) (Range, bool) {
 	if n <= 0 {
 		return Range{}, false
 	}
-	end := truncateDay(now).AddDate(0, 0, 1)
+	end := endOfTodayPlus1(now)
 
 	switch unit {
 	case "hari":
@@ -597,6 +661,10 @@ func truncateDay(t time.Time) time.Time {
 	return time.Date(t.Year(), t.Month(), t.Day(), 0, 0, 0, 0, t.Location())
 }
 
+func endOfTodayPlus1(now time.Time) time.Time {
+	return truncateDay(now).AddDate(0, 0, 1)
+}
+
 func dayRange(ref time.Time) Range {
 	s := truncateDay(ref)
 	return Range{Start: s, End: s.AddDate(0, 0, 1)}
@@ -621,6 +689,31 @@ func weekRange(ref time.Time) Range {
 	}
 	start := d.AddDate(0, 0, -(wd - 1))
 	return Range{Start: start, End: start.AddDate(0, 0, 7)}
+}
+
+/* -------------------------
+   Special helpers
+--------------------------*/
+
+func isNowEndExpr(expr string) bool {
+	expr = strings.TrimSpace(normalizeID(expr))
+	if expr == "" {
+		return false
+	}
+	tok := expr
+	if i := strings.IndexByte(tok, ' '); i >= 0 {
+		tok = tok[:i]
+	}
+	return tok == "sekarang" || tok == "hariini"
+}
+
+func isEndConnector(prev string) bool {
+	switch prev {
+	case "sampai", "hingga", "sd", "-":
+		return true
+	default:
+		return false
+	}
 }
 
 /* -------------------------
@@ -668,6 +761,12 @@ func monthID(s string) (time.Month, bool) {
 var (
 	rxFromRange   = regexp.MustCompile(`^dari\s+(.+?)\s+(sampai|hingga|sd|-)\s+(.+)$`)
 	rxInlineRange = regexp.MustCompile(`^(.+?)\s+(sampai|hingga|sd|-)\s+(.+)$`)
+
+	rxSejakAwalTahun = regexp.MustCompile(`^sejak\s+awal\s+tahun(?:\s+ini)?(?:\s|$)`)
+	rxSejakExpr      = regexp.MustCompile(`^sejak\s+(.+)$`)
+	rxUntilNow       = regexp.MustCompile(`^(.+?)\s+(sampai|hingga)\s+(sekarang|hariini)(?:\s|$)`)
+	rxAwalPekanIni   = regexp.MustCompile(`^awal\s+(pekan|minggu)\s+ini(?:\s|$)`)
+	rxAkhirPekanLalu = regexp.MustCompile(`^akhir\s+(pekan|minggu)\s+lalu(?:\s|$)`)
 
 	rxEdgeMonthThis = regexp.MustCompile(`^(awal|akhir)\s+bulan\s+ini(?:\s|$)`)
 

@@ -1,4 +1,4 @@
-package rentangin
+package daterange
 
 import (
 	"testing"
@@ -139,7 +139,7 @@ func TestParse_LastN_Range(t *testing.T) {
 
 	r = mustRange(t, "2 bulan terakhir", now)
 	assertRangeEq(t, r, Range{
-		Start: time.Date(2026, 1, 1, 0, 0, 0, 0, wibLoc()), // monthRange(now) start is Feb 1; - (2-1) months => Jan 1
+		Start: time.Date(2026, 1, 1, 0, 0, 0, 0, wibLoc()),
 		End:   time.Date(2026, 2, 5, 0, 0, 0, 0, wibLoc()),
 	})
 }
@@ -303,6 +303,100 @@ func TestParse_BareYear_FutureYear_BlockedEvenWithEventHint(t *testing.T) {
 
 	// future year relative to nowYear(2025) => do NOT prefilter
 	mustNoRange(t, "piala dunia 2026", now)
+}
+
+func TestParse_SejakKemarin_OpenEnded(t *testing.T) {
+	loc := wibLoc()
+	now := time.Date(2026, 2, 4, 10, 0, 0, 0, loc)
+
+	r := mustRange(t, "banjir sejak kemarin", now)
+	assertRangeEq(t, r, Range{
+		Start: time.Date(2026, 2, 3, 0, 0, 0, 0, loc),
+		End:   time.Date(2026, 2, 5, 0, 0, 0, 0, loc),
+	})
+}
+
+func TestParse_SejakAwalTahun(t *testing.T) {
+	loc := wibLoc()
+	now := time.Date(2026, 2, 4, 10, 0, 0, 0, loc)
+
+	r := mustRange(t, "sejak awal tahun", now)
+	assertRangeEq(t, r, Range{
+		Start: time.Date(2026, 1, 1, 0, 0, 0, 0, loc),
+		End:   time.Date(2026, 2, 5, 0, 0, 0, 0, loc),
+	})
+
+	r = mustRange(t, "sejak awal tahun ini", now)
+	assertRangeEq(t, r, Range{
+		Start: time.Date(2026, 1, 1, 0, 0, 0, 0, loc),
+		End:   time.Date(2026, 2, 5, 0, 0, 0, 0, loc),
+	})
+}
+
+func TestParse_UntilNow_Form(t *testing.T) {
+	loc := wibLoc()
+	now := time.Date(2026, 2, 4, 10, 0, 0, 0, loc)
+
+	// direct form: "<expr> sampai sekarang"
+	r := mustRange(t, "1 feb 2026 sampai sekarang", now)
+	assertRangeEq(t, r, Range{
+		Start: time.Date(2026, 2, 1, 0, 0, 0, 0, loc),
+		End:   time.Date(2026, 2, 5, 0, 0, 0, 0, loc),
+	})
+
+	// If expr cannot be parsed -> no range
+	mustNoRange(t, "kasus covid sampai sekarang", now)
+}
+
+func TestParse_FromX_UntilNow_OpenEnded(t *testing.T) {
+	loc := wibLoc()
+	now := time.Date(2026, 2, 4, 10, 0, 0, 0, loc)
+
+	r := mustRange(t, "dari 1 feb 2026 sampai sekarang", now)
+	assertRangeEq(t, r, Range{
+		Start: time.Date(2026, 2, 1, 0, 0, 0, 0, loc),
+		End:   time.Date(2026, 2, 5, 0, 0, 0, 0, loc),
+	})
+
+	r = mustRange(t, "dari 1 feb 2026 sampai hari ini", now)
+	assertRangeEq(t, r, Range{
+		Start: time.Date(2026, 2, 1, 0, 0, 0, 0, loc),
+		End:   time.Date(2026, 2, 5, 0, 0, 0, 0, loc),
+	})
+
+	r = mustRange(t, "dari kemarin sampai sekarang", now)
+	assertRangeEq(t, r, Range{
+		Start: time.Date(2026, 2, 3, 0, 0, 0, 0, loc),
+		End:   time.Date(2026, 2, 5, 0, 0, 0, 0, loc),
+	})
+}
+
+func TestParse_AwalAkhirPekan(t *testing.T) {
+	loc := wibLoc()
+	// 2026-02-04 is Wednesday; week starts Monday 2026-02-02
+	now := time.Date(2026, 2, 4, 10, 0, 0, 0, loc)
+
+	r := mustRange(t, "awal pekan ini", now)
+	assertRangeEq(t, r, Range{
+		Start: time.Date(2026, 2, 2, 0, 0, 0, 0, loc),
+		End:   time.Date(2026, 2, 3, 0, 0, 0, 0, loc),
+	})
+
+	r = mustRange(t, "akhir pekan lalu", now)
+	// Saturday+Sunday last week => 2026-01-31 to 2026-02-02
+	assertRangeEq(t, r, Range{
+		Start: time.Date(2026, 1, 31, 0, 0, 0, 0, loc),
+		End:   time.Date(2026, 2, 2, 0, 0, 0, 0, loc),
+	})
+}
+
+func TestParse_TerkiniTerbaru_NoRange(t *testing.T) {
+	loc := wibLoc()
+	now := time.Date(2026, 2, 4, 10, 0, 0, 0, loc)
+
+	mustNoRange(t, "update terbaru", now)
+	mustNoRange(t, "update terkini", now)
+	mustNoRange(t, "hasil terakhir mu", now)
 }
 
 func TestParse_BestMatchWins(t *testing.T) {
