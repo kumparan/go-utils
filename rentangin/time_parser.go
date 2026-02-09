@@ -225,6 +225,16 @@ func normalizeID(s string) string {
 	ls = strings.ReplaceAll(ls, "dari sekarang", "darisekarang")
 	ls = strings.ReplaceAll(ls, "dari hariini", "darihariini")
 
+	// punctuation -> space (so "ini?" becomes "ini")
+	ls = strings.Map(func(r rune) rune {
+		switch r {
+		case '?', '!', '.', ',', ';', ':', '(', ')', '[', ']', '{', '}', '"', '\'', '“', '”', '‘', '’':
+			return ' '
+		default:
+			return r
+		}
+	}, ls)
+
 	ls = strings.Join(strings.Fields(ls), " ")
 	return ls
 }

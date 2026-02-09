@@ -416,3 +416,13 @@ func TestParse_BestMatchWins(t *testing.T) {
 		End:   time.Date(2026, 2, 10, 0, 0, 0, 0, wibLoc()),
 	})
 }
+
+func TestParse_IgnoresQuestionMark(t *testing.T) {
+	now := time.Date(2026, 2, 4, 10, 0, 0, 0, wibLoc())
+
+	r := mustRange(t, "apa kebijakan baru pemerintah bulan ini?", now)
+	assertRangeEq(t, r, Range{
+		Start: time.Date(2026, 2, 1, 0, 0, 0, 0, wibLoc()),
+		End:   time.Date(2026, 3, 1, 0, 0, 0, 0, wibLoc()),
+	})
+}
