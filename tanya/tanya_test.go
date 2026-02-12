@@ -147,7 +147,6 @@ func TestClassifyIntent(t *testing.T) {
 		{"mau makan kemana siang ini", IntentLocation},
 		{"kapan jadwal konser hari ini", IntentTime},
 		{"berapa harga paket premium", IntentPrice},
-		{"kontak cs atau nomor wa resmi", IntentContact},
 		{"toyota", IntentOther},
 		{"download aplikasi android", IntentOther},
 

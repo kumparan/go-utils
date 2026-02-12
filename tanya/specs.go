@@ -19,7 +19,6 @@ const (
 	IntentLocation       Intent = "location"
 	IntentTime           Intent = "time"
 	IntentPrice          Intent = "price"
-	IntentContact        Intent = "contact"
 	IntentQuestion       Intent = "question" // general fallback
 	IntentOther          Intent = "other"
 

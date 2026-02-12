@@ -11,7 +11,7 @@ import (
 func IsQuestion(q string) bool {
 	intent := ClassifyIntent(q)
 	switch intent { // nolint:exhaustive
-	case IntentPrice, IntentContact, IntentOther:
+	case IntentPrice, IntentOther:
 		return false
 	default:
 		return true

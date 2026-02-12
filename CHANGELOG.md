@@ -3,7 +3,7 @@
 <a name="v1.44.1"></a>
 ## [v1.44.1] - 2026-02-12
 ### Fixes
-- remove 'wa' from tanya spec
+- remove contact intent from tanya specs
 
 
 <a name="v1.44.0"></a>
