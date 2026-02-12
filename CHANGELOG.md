@@ -1,9 +1,27 @@
 # go-utils
 
-<a name="v1.42.1"></a>
-## [v1.42.1] - 2025-10-23
+<a name="v1.44.1"></a>
+## [v1.44.1] - 2026-02-12
 ### Fixes
-- remove side effect from map random ordering on FindDifferencesFromSlices
+- remove contact intent from tanya specs
+
+
+<a name="v1.44.0"></a>
+## [v1.44.0] - 2026-02-12
+### New Features
+- rentangin time parser ([#75](https://github.com/kumparan/go-utils/issues/75))
+
+
+<a name="v1.43.0"></a>
+## [v1.43.0] - 2026-01-21
+### New Features
+- add log http response header ([#74](https://github.com/kumparan/go-utils/issues/74))
+
+
+<a name="v1.42.1"></a>
+## [v1.42.1] - 2025-10-30
+### Fixes
+- remove side effect from map random ordering on FindDifference… ([#73](https://github.com/kumparan/go-utils/issues/73))
 
 
 <a name="v1.42.0"></a>
@@ -318,11 +336,11 @@
 - add money formatter for multiple currencies ([#13](https://github.com/kumparan/go-utils/issues/13))
 
 
-<a name="v1.8.0"></a>
-## [v1.8.0] - 2020-12-10
-
 <a name="v1.7.1"></a>
 ## [v1.7.1] - 2020-12-10
+
+<a name="v1.8.0"></a>
+## [v1.8.0] - 2020-12-10
 ### New Features
 - add formatter for indonesian money and date
 
@@ -387,7 +405,10 @@
 - init go-utils
 
 
-[Unreleased]: https://github.com/kumparan/go-utils/compare/v1.42.1...HEAD
+[Unreleased]: https://github.com/kumparan/go-utils/compare/v1.44.1...HEAD
+[v1.44.1]: https://github.com/kumparan/go-utils/compare/v1.44.0...v1.44.1
+[v1.44.0]: https://github.com/kumparan/go-utils/compare/v1.43.0...v1.44.0
+[v1.43.0]: https://github.com/kumparan/go-utils/compare/v1.42.1...v1.43.0
 [v1.42.1]: https://github.com/kumparan/go-utils/compare/v1.42.0...v1.42.1
 [v1.42.0]: https://github.com/kumparan/go-utils/compare/v1.41.0...v1.42.0
 [v1.41.0]: https://github.com/kumparan/go-utils/compare/v1.40.2...v1.41.0
@@ -439,9 +460,9 @@
 [v1.12.0]: https://github.com/kumparan/go-utils/compare/v1.11.0...v1.12.0
 [v1.11.0]: https://github.com/kumparan/go-utils/compare/v1.10.0...v1.11.0
 [v1.10.0]: https://github.com/kumparan/go-utils/compare/v1.9.0...v1.10.0
-[v1.9.0]: https://github.com/kumparan/go-utils/compare/v1.8.0...v1.9.0
-[v1.8.0]: https://github.com/kumparan/go-utils/compare/v1.7.1...v1.8.0
-[v1.7.1]: https://github.com/kumparan/go-utils/compare/v1.7.0...v1.7.1
+[v1.9.0]: https://github.com/kumparan/go-utils/compare/v1.7.1...v1.9.0
+[v1.7.1]: https://github.com/kumparan/go-utils/compare/v1.8.0...v1.7.1
+[v1.8.0]: https://github.com/kumparan/go-utils/compare/v1.7.0...v1.8.0
 [v1.7.0]: https://github.com/kumparan/go-utils/compare/v1.6.0...v1.7.0
 [v1.6.0]: https://github.com/kumparan/go-utils/compare/v1.5.0...v1.6.0
 [v1.5.0]: https://github.com/kumparan/go-utils/compare/v1.4.0...v1.5.0

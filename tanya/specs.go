@@ -19,7 +19,6 @@ const (
 	IntentLocation       Intent = "location"
 	IntentTime           Intent = "time"
 	IntentPrice          Intent = "price"
-	IntentContact        Intent = "contact"
 	IntentQuestion       Intent = "question" // general fallback
 	IntentOther          Intent = "other"
 
@@ -96,9 +95,6 @@ var intentTable = []IntentSpec{
 	}},
 	{IntentPrice, 50, []Rule{
 		{terms("harga", "biaya", "tarif", "fee", "ongkir"), 2, MatchTypeContains, 0},
-	}},
-	{IntentContact, 50, []Rule{
-		{terms("kontak", "contact", "telepon", "telp", "nomor", "email", "whatsapp", "wa"), 2, MatchTypeContains, 0},
 	}},
 	// fallback tanya umum
 	{IntentQuestion, 10, []Rule{
