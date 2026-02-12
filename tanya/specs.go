@@ -97,9 +97,6 @@ var intentTable = []IntentSpec{
 	{IntentPrice, 50, []Rule{
 		{terms("harga", "biaya", "tarif", "fee", "ongkir"), 2, MatchTypeContains, 0},
 	}},
-	{IntentContact, 50, []Rule{
-		{terms("kontak", "contact", "telepon", "telp", "nomor", "email", "whatsapp", "wa"), 2, MatchTypeContains, 0},
-	}},
 	// fallback tanya umum
 	{IntentQuestion, 10, []Rule{
 		{terms("apa", "apakah", "bagaimana", "gimana", "kapan", "siapa", "dimana", "di mana", "kemana", "ke mana", "berapa"), 2, MatchTypeContains, 0},
