@@ -105,6 +105,7 @@ var intentTable = []IntentSpec{
 		{terms("apa", "apakah", "bagaimana", "gimana", "kapan", "siapa", "dimana", "di mana", "kemana", "ke mana", "berapa"), 2, MatchTypeContains, 0},
 		{terms(" vs ", " versus "), 1, MatchTypeContains, 0},
 		{terms(" yang mana "), 2, MatchTypeContains, 0},
+		{terms(" mana saja "), 2, MatchTypeContains, 0},
 		{terms("yang mana "), 2, MatchTypeStarts, 0},
 		{terms(" mana"), 2, MatchTypeEnds, 0},
 		{terms("kah"), 1, MatchTypeTokenSuffix, 5},
