@@ -19,7 +19,7 @@ import (
 // MarshalInt64ID marshal int64 to string ID
 func MarshalInt64ID(i int64) graphql.Marshaler {
 	return graphql.WriterFunc(func(w io.Writer) {
-		_, _ = w.Write([]byte(fmt.Sprintf(`"%d"`, i)))
+		_, _ = fmt.Fprintf(w, `"%d"`, i)
 	})
 }
 
@@ -46,7 +46,7 @@ func UnmarshalInt64ID(v interface{}) (int64, error) {
 // MarshalNullInt64ID marshal int64 to string ID
 func MarshalNullInt64ID(i null.Int) graphql.Marshaler {
 	return graphql.WriterFunc(func(w io.Writer) {
-		_, _ = w.Write([]byte(fmt.Sprintf(`"%d"`, i.Int64)))
+		_, _ = fmt.Fprintf(w, `"%d"`, i.Int64)
 	})
 }
 
@@ -81,7 +81,7 @@ func UnmarshalNullInt64ID(v interface{}) (null.Int, error) {
 // MarshalNullInt64 marshal int64 to string ID
 func MarshalNullInt64(i null.Int) graphql.Marshaler {
 	return graphql.WriterFunc(func(w io.Writer) {
-		_, _ = w.Write([]byte(fmt.Sprintf(`%d`, i.Int64)))
+		_, _ = fmt.Fprintf(w, `%d`, i.Int64)
 	})
 }
 
@@ -117,7 +117,7 @@ func UnmarshalNullInt64(v interface{}) (null.Int, error) {
 func MarshalTimeRFC3339Nano(tt time.Time) graphql.Marshaler {
 	return graphql.WriterFunc(func(w io.Writer) {
 		ts := utils.FormatTimeRFC3339(&tt)
-		_, _ = w.Write([]byte(fmt.Sprintf(`"%s"`, ts)))
+		_, _ = fmt.Fprintf(w, `"%s"`, ts)
 	})
 }
 
@@ -140,7 +140,7 @@ func MarshalGormDeletedAt(gd gorm.DeletedAt) graphql.Marshaler {
 			return
 		}
 		ts := utils.FormatTimeRFC3339(&gd.Time)
-		_, _ = w.Write([]byte(fmt.Sprintf(`"%s"`, ts)))
+		_, _ = fmt.Fprintf(w, `"%s"`, ts)
 	})
 }
 
@@ -168,7 +168,7 @@ func MarshalNullTimeRFC3339Nano(nt null.Time) graphql.Marshaler {
 			return
 		}
 		ts := utils.FormatTimeRFC3339(&nt.Time)
-		_, _ = w.Write([]byte(fmt.Sprintf(`"%s"`, ts)))
+		_, _ = fmt.Fprintf(w, `"%s"`, ts)
 	})
 }
 
@@ -203,7 +203,7 @@ func UnmarshalNullString(v interface{}) (null.String, error) {
 // MarshalNullString marshal int64 to string ID
 func MarshalNullString(i null.String) graphql.Marshaler {
 	return graphql.WriterFunc(func(w io.Writer) {
-		_, _ = w.Write([]byte(fmt.Sprintf(`"%s"`, i.String)))
+		_, _ = fmt.Fprintf(w, `"%s"`, i.String)
 	})
 }
 
