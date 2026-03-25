@@ -1,9 +1,15 @@
 # go-utils
 
+<a name="v1.45.0"></a>
+## [v1.45.0] - 2026-03-25
+### Other Improvements
+- upgrade go & dependencies
+
+
 <a name="v1.44.1"></a>
 ## [v1.44.1] - 2026-02-12
 ### Fixes
-- remove contact intent from tanya specs
+- remove contact intent from tanya spec ([#76](https://github.com/kumparan/go-utils/issues/76))
 
 
 <a name="v1.44.0"></a>
@@ -405,7 +411,8 @@
 - init go-utils
 
 
-[Unreleased]: https://github.com/kumparan/go-utils/compare/v1.44.1...HEAD
+[Unreleased]: https://github.com/kumparan/go-utils/compare/v1.45.0...HEAD
+[v1.45.0]: https://github.com/kumparan/go-utils/compare/v1.44.1...v1.45.0
 [v1.44.1]: https://github.com/kumparan/go-utils/compare/v1.44.0...v1.44.1
 [v1.44.0]: https://github.com/kumparan/go-utils/compare/v1.43.0...v1.44.0
 [v1.43.0]: https://github.com/kumparan/go-utils/compare/v1.42.1...v1.43.0

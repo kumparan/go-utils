@@ -1,24 +1,24 @@
 module github.com/kumparan/go-utils
 
-go 1.23.4
+go 1.26.0
 
 require (
 	github.com/99designs/gqlgen v0.17.49
 	github.com/agiledragon/gomonkey/v2 v2.12.0
-	github.com/getsentry/sentry-go v0.30.0
+	github.com/getsentry/sentry-go v0.44.1
 	github.com/globalsign/mgo v0.0.0-20181015135952-eeefdecb41b8
-	github.com/gofrs/uuid/v5 v5.3.0
+	github.com/gofrs/uuid/v5 v5.4.0
 	github.com/goodsign/monday v1.0.2
-	github.com/graph-gophers/graphql-go v1.5.0
+	github.com/graph-gophers/graphql-go v1.9.0
 	github.com/leekchan/accounting v1.0.0
 	github.com/microcosm-cc/bluemonday v1.0.27
 	github.com/robfig/cron/v3 v3.0.1
 	github.com/shopspring/decimal v1.4.0
-	github.com/sirupsen/logrus v1.9.3
-	github.com/stretchr/testify v1.9.0
+	github.com/sirupsen/logrus v1.9.4
+	github.com/stretchr/testify v1.10.0
 	github.com/vektah/gqlparser/v2 v2.5.16
-	golang.org/x/text v0.21.0
-	google.golang.org/grpc v1.69.2
+	golang.org/x/text v0.35.0
+	google.golang.org/grpc v1.79.3
 	gopkg.in/guregu/null.v4 v4.0.0
 	gorm.io/gorm v1.22.4
 )
@@ -39,6 +39,6 @@ require (
 	github.com/oklog/ulid v1.3.1
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
-	golang.org/x/net v0.33.0
-	golang.org/x/sys v0.28.0 // indirect
+	golang.org/x/net v0.52.0
+	golang.org/x/sys v0.42.0 // indirect
 )
