@@ -149,21 +149,30 @@ func (node *SlateNode) ensureEndsWithPunctuation() {
 	if len(node.Leaves) > 0 {
 		lastSlateLeaf := node.Leaves[len(node.Leaves)-1]
 		if text := lastSlateLeaf.Text; text != "" {
-			if !endsWithPunctuation(text) {
-				lastSlateLeaf.Text += _sentenceSeparator
+			trimmed := strings.TrimRight(text, " ")
+			if !endsWithPunctuation(trimmed) {
+				lastSlateLeaf.Text = trimmed + _sentenceSeparator
+			} else {
+				lastSlateLeaf.Text = trimmed
 			}
 		}
 		node.Leaves[len(node.Leaves)-1] = lastSlateLeaf
 	}
 
 	if len(node.Nodes) > 0 && len(node.Nodes[len(node.Nodes)-1].Leaves) > 0 {
-		lastSlateLeaf := node.Nodes[len(node.Nodes)-1].Leaves[len(node.Nodes[len(node.Nodes)-1].Leaves)-1]
+		lastNodeIdx := len(node.Nodes) - 1
+		lastLeafIdx := len(node.Nodes[lastNodeIdx].Leaves) - 1
+
+		lastSlateLeaf := node.Nodes[lastNodeIdx].Leaves[lastLeafIdx]
 		if text := lastSlateLeaf.Text; text != "" {
-			if !endsWithPunctuation(text) {
-				lastSlateLeaf.Text += _sentenceSeparator
+			trimmed := strings.TrimRight(text, " ")
+			if !endsWithPunctuation(trimmed) {
+				lastSlateLeaf.Text = trimmed + _sentenceSeparator
+			} else {
+				lastSlateLeaf.Text = trimmed
 			}
 		}
-		node.Nodes[len(node.Nodes)-1].Leaves[len(node.Nodes[len(node.Nodes)-1].Leaves)-1] = lastSlateLeaf
+		node.Nodes[lastNodeIdx].Leaves[lastLeafIdx] = lastSlateLeaf
 	}
 }
 
