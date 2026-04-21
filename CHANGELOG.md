@@ -1,9 +1,15 @@
 # go-utils
 
+<a name="v1.46.0"></a>
+## [v1.46.0] - 2026-04-21
+### New Features
+- prevent duplicate punctuation on paragraph ending
+
+
 <a name="v1.45.0"></a>
 ## [v1.45.0] - 2026-03-25
 ### Other Improvements
-- upgrade go & dependencies
+- upgrade go 1.26 & deps ([#77](https://github.com/kumparan/go-utils/issues/77))
 
 
 <a name="v1.44.1"></a>
@@ -411,7 +417,8 @@
 - init go-utils
 
 
-[Unreleased]: https://github.com/kumparan/go-utils/compare/v1.45.0...HEAD
+[Unreleased]: https://github.com/kumparan/go-utils/compare/v1.46.0...HEAD
+[v1.46.0]: https://github.com/kumparan/go-utils/compare/v1.45.0...v1.46.0
 [v1.45.0]: https://github.com/kumparan/go-utils/compare/v1.44.1...v1.45.0
 [v1.44.1]: https://github.com/kumparan/go-utils/compare/v1.44.0...v1.44.1
 [v1.44.0]: https://github.com/kumparan/go-utils/compare/v1.43.0...v1.44.0
