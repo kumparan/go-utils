@@ -72,3 +72,138 @@ func Test_ToPlainText_Link(t *testing.T) {
 		assert.Equal(t, expected, result)
 	})
 }
+
+func Test_ToMarkdown(t *testing.T) {
+	t.Run("basic markdown", func(t *testing.T) {
+		inputJSON := `{
+			"document": {
+				"nodes": [
+					{
+						"object": "block",
+						"type": "heading-large",
+						"nodes": [
+							{
+								"object": "text",
+								"leaves": [{"object": "leaf", "text": "Large Title", "marks": []}]
+							}
+						]
+					},
+					{
+						"object": "block",
+						"type": "paragraph",
+						"nodes": [
+							{
+								"object": "text",
+								"leaves": [
+									{"object": "leaf", "text": "This is a paragraph with ", "marks": []},
+									{"object": "leaf", "text": "bold text", "marks": [{"type": "bold"}]},
+									{"object": "leaf", "text": " and ", "marks": []},
+									{"object": "leaf", "text": "italic text", "marks": [{"type": "italic"}]},
+									{"object": "leaf", "text": ".", "marks": []}
+								]
+							}
+						]
+					},
+					{
+						"object": "block",
+						"type": "bulleted-list",
+						"nodes": [
+							{
+								"object": "block",
+								"type": "list-item",
+								"nodes": [{"object": "text", "leaves": [{"object": "leaf", "text": "Item 1", "marks": []}]}]
+							},
+							{
+								"object": "block",
+								"type": "list-item",
+								"nodes": [{"object": "text", "leaves": [{"object": "leaf", "text": "Item 2", "marks": []}]}]
+							}
+						]
+					},
+					{
+						"object": "inline",
+						"type": "link",
+						"data": {"href": "https://example.com"},
+						"nodes": [
+							{
+								"object": "text",
+								"leaves": [{"object": "leaf", "text": "Click here", "marks": []}]
+							}
+						]
+					}
+				]
+			}
+		}`
+		expected := "# Large Title\n\nThis is a paragraph with **bold text** and *italic text*.\n\n* Item 1\n* Item 2\n\n[Click here](https://example.com)"
+
+		input, err := ParseSlateDocument(inputJSON)
+		assert.NoError(t, err)
+
+		result, err := input.ToMarkdown()
+		assert.NoError(t, err)
+		assert.Equal(t, expected, result)
+	})
+
+	t.Run("complex nesting and marks", func(t *testing.T) {
+		inputJSON := `{
+			"document": {
+				"nodes": [
+					{
+						"object": "block",
+						"type": "paragraph",
+						"nodes": [
+							{
+								"object": "text",
+								"leaves": [
+									{"object": "leaf", "text": "Bold and Italic", "marks": [{"type": "bold"}, {"type": "italic"}]}
+								]
+							}
+						]
+					}
+				]
+			}
+		}`
+		// Order of marks might matter, currently it's bold then italic
+		expected := "***Bold and Italic***"
+
+		input, err := ParseSlateDocument(inputJSON)
+		assert.NoError(t, err)
+
+		result, err := input.ToMarkdown()
+		assert.NoError(t, err)
+		assert.Equal(t, expected, result)
+	})
+
+	t.Run("numbered list", func(t *testing.T) {
+		inputJSON := `{
+			"document": {
+				"nodes": [
+					{
+						"object": "block",
+						"type": "numbered-list",
+						"nodes": [
+							{
+								"object": "block",
+								"type": "list-item",
+								"nodes": [{"object": "text", "leaves": [{"object": "leaf", "text": "First", "marks": []}]}]
+							},
+							{
+								"object": "block",
+								"type": "list-item",
+								"nodes": [{"object": "text", "leaves": [{"object": "leaf", "text": "Second", "marks": []}]}]
+							}
+						]
+					}
+				]
+			}
+		}`
+		expected := "1. First\n2. Second"
+
+		input, err := ParseSlateDocument(inputJSON)
+		assert.NoError(t, err)
+
+		result, err := input.ToMarkdown()
+		assert.NoError(t, err)
+		assert.Equal(t, expected, result)
+	})
+}

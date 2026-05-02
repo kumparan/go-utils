@@ -2,6 +2,7 @@ package utils
 
 import (
 	"encoding/json"
+	"fmt"
 	"regexp"
 	"strings"
 
@@ -33,19 +34,25 @@ const (
 	_nodeTypeLink          = "link"
 )
 
+// SlateMark represents a text decoration.
+type SlateMark struct {
+	Type string `json:"type"`
+}
+
 // SlateLeaf represents a text element with optional formatting.
 type SlateLeaf struct {
-	Object string `json:"object"`
-	Text   string `json:"text"`
-	Marks  []any  `json:"marks"`
+	Object string      `json:"object"`
+	Text   string      `json:"text"`
+	Marks  []SlateMark `json:"marks"`
 }
 
 // SlateNode represents a hierarchical document structure.
 type SlateNode struct {
-	Object string      `json:"object"`
-	Type   string      `json:"type"`
-	Nodes  []SlateNode `json:"nodes,omitempty"`
-	Leaves []SlateLeaf `json:"leaves,omitempty"`
+	Object string         `json:"object"`
+	Type   string         `json:"type"`
+	Data   map[string]any `json:"data,omitempty"`
+	Nodes  []SlateNode    `json:"nodes,omitempty"`
+	Leaves []SlateLeaf    `json:"leaves,omitempty"`
 
 	isLastInList bool
 }
@@ -74,6 +81,95 @@ func (slateDocument SlateDocument) ToPlainText() (string, error) {
 	text = regexp.MustCompile(`\n+`).ReplaceAllString(text, _newline)
 
 	return strings.TrimSpace(text), nil
+}
+
+// ToMarkdown converts a Slate document into a markdown format.
+func (slateDocument SlateDocument) ToMarkdown() (string, error) {
+	text := serializeSlateNodesMarkdown(slateDocument.Document.Nodes)
+	// Replace excessive newlines
+	text = regexp.MustCompile(`\n{3,}`).ReplaceAllString(text, "\n\n")
+
+	return strings.TrimSpace(text), nil
+}
+
+// serializeSlateNodesMarkdown recursively processes nodes into a markdown format.
+func serializeSlateNodesMarkdown(nodes []SlateNode) string {
+	var result strings.Builder
+	for _, node := range nodes {
+		switch node.Type {
+		case _nodeTypeHeadingLarge:
+			result.WriteString("# " + serializeSlateNodesMarkdown(node.Nodes) + serializeSlateLeavesMarkdown(node.Leaves) + "\n\n")
+		case _nodeTypeHeadingMedium:
+			result.WriteString("## " + serializeSlateNodesMarkdown(node.Nodes) + serializeSlateLeavesMarkdown(node.Leaves) + "\n\n")
+		case _nodeTypeParagraph:
+			result.WriteString(serializeSlateNodesMarkdown(node.Nodes) + serializeSlateLeavesMarkdown(node.Leaves) + "\n\n")
+		case _nodeTypeBulletedList:
+			for _, item := range node.Nodes {
+				if item.Type == _nodeTypeListItem {
+					result.WriteString("* " + serializeSlateNodesMarkdown(item.Nodes) + serializeSlateLeavesMarkdown(item.Leaves) + "\n")
+				}
+			}
+			result.WriteString("\n")
+		case _nodeTypeNumberedList:
+			for i, item := range node.Nodes {
+				if item.Type == _nodeTypeListItem {
+					fmt.Fprintf(&result, "%d. %s\n", i+1, serializeSlateNodesMarkdown(item.Nodes)+serializeSlateLeavesMarkdown(item.Leaves))
+				}
+			}
+			result.WriteString("\n")
+		case _nodeTypeLink:
+			href := ""
+			if node.Data != nil {
+				if h, ok := node.Data["href"].(string); ok {
+					href = h
+				}
+			}
+			content := serializeSlateNodesMarkdown(node.Nodes) + serializeSlateLeavesMarkdown(node.Leaves)
+			result.WriteString("[" + content + "](" + href + ")")
+		case _nodeTypeInline:
+			result.WriteString(serializeSlateNodesMarkdown(node.Nodes) + serializeSlateLeavesMarkdown(node.Leaves))
+		default:
+			// For other types or when it's just a container
+			if node.Object == "text" {
+				result.WriteString(serializeSlateLeavesMarkdown(node.Leaves))
+			} else {
+				content := serializeSlateNodesMarkdown(node.Nodes) + serializeSlateLeavesMarkdown(node.Leaves)
+				if content != "" {
+					result.WriteString(content)
+				}
+			}
+		}
+	}
+	return result.String()
+}
+
+// serializeSlateLeavesMarkdown joins leaf texts with markdown marks.
+func serializeSlateLeavesMarkdown(leaves []SlateLeaf) string {
+	var result strings.Builder
+	for _, leaf := range leaves {
+		text := leaf.Text
+		if text == "" {
+			continue
+		}
+
+		// Apply marks in a specific order to ensure consistent nesting
+		for _, mark := range leaf.Marks {
+			switch mark.Type {
+			case "bold":
+				text = "**" + text + "**"
+			case "italic":
+				text = "*" + text + "*"
+			case "code":
+				text = "`" + text + "`"
+			case "underlined":
+				text = "<u>" + text + "</u>"
+			case "strikethrough":
+				text = "~~" + text + "~~"
+			}
+		}
+		result.WriteString(text)
+	}
+	return result.String()
 }
 
 // serializeSlateNodes recursively processes nodes and its content into a plain-text format.
