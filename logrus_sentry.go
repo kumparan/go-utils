@@ -73,9 +73,11 @@ func (hook *Hook) Fire(entry *logrus.Entry) error {
 	}
 
 	event := sentry.Event{
-		Level:       levelsMap[entry.Level],
-		Message:     hook.prefix + entry.Message,
-		Extra:       map[string]interface{}(entry.Data),
+		Level:   levelsMap[entry.Level],
+		Message: hook.prefix + entry.Message,
+		Contexts: map[string]sentry.Context{
+			"Fields": map[string]interface{}(entry.Data),
+		},
 		Tags:        hook.tags,
 		Environment: hook.environment,
 		Release:     hook.release,
