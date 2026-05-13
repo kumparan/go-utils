@@ -1,9 +1,15 @@
 # go-utils
 
+<a name="v1.46.0"></a>
+## [v1.46.0] - 2026-05-13
+### Other Improvements
+- upgrade deps
+
+
 <a name="v1.45.0"></a>
 ## [v1.45.0] - 2026-03-25
 ### Other Improvements
-- upgrade go & dependencies
+- upgrade go 1.26 & deps ([#77](https://github.com/kumparan/go-utils/issues/77))
 
 
 <a name="v1.44.1"></a>
@@ -243,6 +249,9 @@
 - fix marshal issue on gorm.DeletedAt empty value ([#32](https://github.com/kumparan/go-utils/issues/32))
 
 
+<a name="v.1.20.0"></a>
+## [v.1.20.0] - 2022-03-11
+
 <a name="v1.20.0"></a>
 ## [v1.20.0] - 2022-03-11
 ### New Features
@@ -411,7 +420,8 @@
 - init go-utils
 
 
-[Unreleased]: https://github.com/kumparan/go-utils/compare/v1.45.0...HEAD
+[Unreleased]: https://github.com/kumparan/go-utils/compare/v1.46.0...HEAD
+[v1.46.0]: https://github.com/kumparan/go-utils/compare/v1.45.0...v1.46.0
 [v1.45.0]: https://github.com/kumparan/go-utils/compare/v1.44.1...v1.45.0
 [v1.44.1]: https://github.com/kumparan/go-utils/compare/v1.44.0...v1.44.1
 [v1.44.0]: https://github.com/kumparan/go-utils/compare/v1.43.0...v1.44.0
@@ -450,7 +460,8 @@
 [v1.23.0]: https://github.com/kumparan/go-utils/compare/v1.22.0...v1.23.0
 [v1.22.0]: https://github.com/kumparan/go-utils/compare/v1.21.0...v1.22.0
 [v1.21.0]: https://github.com/kumparan/go-utils/compare/v1.20.1...v1.21.0
-[v1.20.1]: https://github.com/kumparan/go-utils/compare/v1.20.0...v1.20.1
+[v1.20.1]: https://github.com/kumparan/go-utils/compare/v.1.20.0...v1.20.1
+[v.1.20.0]: https://github.com/kumparan/go-utils/compare/v1.20.0...v.1.20.0
 [v1.20.0]: https://github.com/kumparan/go-utils/compare/v1.19.3...v1.20.0
 [v1.19.3]: https://github.com/kumparan/go-utils/compare/v1.19.2...v1.19.3
 [v1.19.2]: https://github.com/kumparan/go-utils/compare/v1.19.1...v1.19.2
