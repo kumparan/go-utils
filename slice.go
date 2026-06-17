@@ -2,6 +2,7 @@ package utils
 
 import (
 	"strconv"
+	"strings"
 )
 
 // ContainsInt64 tells whether a slice contains x.
@@ -27,7 +28,7 @@ func ContainsString(a []string, x string) bool {
 // ContainsPrefix tells whether a slice of string contains prefix of in.
 func ContainsPrefix(prefixes []string, in string) bool {
 	for _, pref := range prefixes {
-		if len(in) >= len(pref) && in[:len(pref)] == pref {
+		if strings.HasPrefix(in, pref) {
 			return true
 		}
 	}
