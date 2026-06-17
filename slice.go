@@ -24,6 +24,16 @@ func ContainsString(a []string, x string) bool {
 	return false
 }
 
+// ContainsPrefix tells whether a slice of string contains prefix of in.
+func ContainsPrefix(prefixes []string, in string) bool {
+	for _, pref := range prefixes {
+		if len(in) >= len(pref) && in[:len(pref)] == pref {
+			return true
+		}
+	}
+	return false
+}
+
 // SliceAtoi -> convert array of string to array of integer
 func SliceAtoi(s []string) ([]int, error) {
 	var arr []int
