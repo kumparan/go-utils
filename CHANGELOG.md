@@ -1,5 +1,11 @@
 # go-utils
 
+<a name="v1.48.0"></a>
+## [v1.48.0] - 2026-06-22
+### New Features
+- contains prefix
+
+
 <a name="v1.47.0"></a>
 ## [v1.47.0] - 2026-05-13
 ### New Features
@@ -354,11 +360,11 @@
 - add money formatter for multiple currencies ([#13](https://github.com/kumparan/go-utils/issues/13))
 
 
-<a name="v1.8.0"></a>
-## [v1.8.0] - 2020-12-10
-
 <a name="v1.7.1"></a>
 ## [v1.7.1] - 2020-12-10
+
+<a name="v1.8.0"></a>
+## [v1.8.0] - 2020-12-10
 ### New Features
 - add formatter for indonesian money and date
 
@@ -423,7 +429,8 @@
 - init go-utils
 
 
-[Unreleased]: https://github.com/kumparan/go-utils/compare/v1.47.0...HEAD
+[Unreleased]: https://github.com/kumparan/go-utils/compare/v1.48.0...HEAD
+[v1.48.0]: https://github.com/kumparan/go-utils/compare/v1.47.0...v1.48.0
 [v1.47.0]: https://github.com/kumparan/go-utils/compare/v1.46.0...v1.47.0
 [v1.46.0]: https://github.com/kumparan/go-utils/compare/v1.45.0...v1.46.0
 [v1.45.0]: https://github.com/kumparan/go-utils/compare/v1.44.1...v1.45.0
@@ -481,9 +488,9 @@
 [v1.12.0]: https://github.com/kumparan/go-utils/compare/v1.11.0...v1.12.0
 [v1.11.0]: https://github.com/kumparan/go-utils/compare/v1.10.0...v1.11.0
 [v1.10.0]: https://github.com/kumparan/go-utils/compare/v1.9.0...v1.10.0
-[v1.9.0]: https://github.com/kumparan/go-utils/compare/v1.8.0...v1.9.0
-[v1.8.0]: https://github.com/kumparan/go-utils/compare/v1.7.1...v1.8.0
-[v1.7.1]: https://github.com/kumparan/go-utils/compare/v1.7.0...v1.7.1
+[v1.9.0]: https://github.com/kumparan/go-utils/compare/v1.7.1...v1.9.0
+[v1.7.1]: https://github.com/kumparan/go-utils/compare/v1.8.0...v1.7.1
+[v1.8.0]: https://github.com/kumparan/go-utils/compare/v1.7.0...v1.8.0
 [v1.7.0]: https://github.com/kumparan/go-utils/compare/v1.6.0...v1.7.0
 [v1.6.0]: https://github.com/kumparan/go-utils/compare/v1.5.0...v1.6.0
 [v1.5.0]: https://github.com/kumparan/go-utils/compare/v1.4.0...v1.5.0
