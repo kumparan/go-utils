@@ -25,7 +25,7 @@ func ContainsString(a []string, x string) bool {
 	return false
 }
 
-// ContainsPrefix tells whether a slice of string contains prefix of in.
+// ContainsPrefix tells whether a slice of string contains prefix of in, case-sensitive.
 func ContainsPrefix(prefixes []string, in string) bool {
 	for _, pref := range prefixes {
 		if strings.HasPrefix(in, pref) {

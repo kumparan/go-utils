@@ -291,6 +291,11 @@ func Test_ContainsPrefix(t *testing.T) {
 			input:    "worldstartbegin",
 			result:   false,
 		},
+		{
+			prefixes: []string{"Word", "wOrd", "WOrd"},
+			input:    "word",
+			result:   false,
+		},
 	}
 
 	for _, tc := range testCases {
