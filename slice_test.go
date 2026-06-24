@@ -257,3 +257,48 @@ func Test_ReverseSlice(t *testing.T) {
 		assert.Equal(t, dest, ReverseSlice(source))
 	})
 }
+
+func Test_ContainsPrefix(t *testing.T) {
+	type tc struct {
+		prefixes []string
+		input    string
+		result   bool
+	}
+
+	testCases := []tc{
+		{
+			prefixes: []string{"pre", "start", "begin"},
+			input:    "prefix",
+			result:   true,
+		},
+		{
+			prefixes: []string{"pre", "start", "begin"},
+			input:    "startle",
+			result:   true,
+		},
+		{
+			prefixes: []string{"pre", "start", "begin"},
+			input:    "beginning",
+			result:   true,
+		},
+		{
+			prefixes: []string{"pre", "start", "begin"},
+			input:    "hello",
+			result:   false,
+		},
+		{
+			prefixes: []string{"worldle", "start", "begin"},
+			input:    "worldstartbegin",
+			result:   false,
+		},
+		{
+			prefixes: []string{"Word", "wOrd", "WOrd"},
+			input:    "word",
+			result:   false,
+		},
+	}
+
+	for _, tc := range testCases {
+		assert.Equal(t, tc.result, ContainsPrefix(tc.prefixes, tc.input))
+	}
+}
