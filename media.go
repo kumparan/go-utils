@@ -15,7 +15,7 @@ const (
 
 // GeneratePushNotificationMediaURL Generates manipulated media URL for push notification purpose
 // e.g. GeneratePushNotificationMediaURL("http://mycdn.com", "http://my.image.com/image/upload/v123/image.jpg", LargeIcon) => http://mycdn.com/image/upload/v123/image.jpg
-func GeneratePushNotificationMediaURL(cdnURL, mediaSrcURL, imageType string) string {
+func GeneratePushNotificationMediaURL(cdnURL, mediaSrcURL, imageType string, additionalParam string) string {
 	if mediaSrcURL == "" || cdnURL == "" {
 		return ""
 	}
@@ -36,7 +36,7 @@ func GeneratePushNotificationMediaURL(cdnURL, mediaSrcURL, imageType string) str
 		param = "image/upload/fl_progressive,fl_lossy,c_fill,g_face,q_auto:best,w_1024,h_1024,f_jpeg"
 	}
 
-	mediaURL := cdnURL + "/" + param + "/" + coverMediaFile
+	mediaURL := cdnURL + "/" + param + "/" + coverMediaFile + additionalParam
 
-	return mediaURL
+	return mediaURL + ""
 }
