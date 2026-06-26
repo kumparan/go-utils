@@ -1,14 +1,21 @@
 # go-utils
 
-<a name="v1.48.0"></a>
-## [v1.48.0] - 2026-06-22
+<a name="v1.49.0"></a>
+## [v1.49.0] - 2026-06-26
 ### New Features
-- contains prefix
+- add media param on generate push notif url
+
+
+<a name="v1.48.0"></a>
+## [v1.48.0] - 2026-06-24
+### New Features
+- contains prefix ([#80](https://github.com/kumparan/go-utils/issues/80))
 
 
 <a name="v1.47.0"></a>
 ## [v1.47.0] - 2026-05-13
 ### New Features
+- prevent duplicate punctuation on paragraph ending
 - prevent duplicate punctuation on paragraph ending
 
 
@@ -429,7 +436,8 @@
 - init go-utils
 
 
-[Unreleased]: https://github.com/kumparan/go-utils/compare/v1.48.0...HEAD
+[Unreleased]: https://github.com/kumparan/go-utils/compare/v1.49.0...HEAD
+[v1.49.0]: https://github.com/kumparan/go-utils/compare/v1.48.0...v1.49.0
 [v1.48.0]: https://github.com/kumparan/go-utils/compare/v1.47.0...v1.48.0
 [v1.47.0]: https://github.com/kumparan/go-utils/compare/v1.46.0...v1.47.0
 [v1.46.0]: https://github.com/kumparan/go-utils/compare/v1.45.0...v1.46.0
