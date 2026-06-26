@@ -15,7 +15,7 @@ const (
 
 // GeneratePushNotificationMediaURL Generates manipulated media URL for push notification purpose
 // e.g. GeneratePushNotificationMediaURL("http://mycdn.com", "http://my.image.com/image/upload/v123/image.jpg", LargeIcon) => http://mycdn.com/image/upload/v123/image.jpg
-func GeneratePushNotificationMediaURL(cdnURL, mediaSrcURL, imageType string, additionalParam string) string {
+func GeneratePushNotificationMediaURL(cdnURL, mediaSrcURL, imageType, additionalParam string) string {
 	if mediaSrcURL == "" || cdnURL == "" {
 		return ""
 	}
