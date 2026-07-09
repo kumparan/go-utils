@@ -101,6 +101,22 @@ func TestIsQuestion(t *testing.T) {
 		// --- tricky “vs” that is not comparison (product name)
 		{"vs code extensions", false}, // treat 'vs' here as product word, not comparison
 
+		// --- implicit measurement (no explicit "berapa")
+		{"tinggi badan A", true},
+		{"berat badan normal wanita dewasa", true},
+
+		// --- existence yes/no questions
+		{"kantor ada tidak", true},
+		{"promo masih ada gak", true},
+		{"fitur ini ada ga", true},
+		{"layanan ada nggak", true},
+
+		// --- colloquial end particles without explicit question word
+		{"tinggi badan A sih", true},
+		{"ini bisa dong", true},
+		{"kapan rilis deh", true},
+		{"ini siapa nih", true},
+
 		// --- obvious non-questions
 		{"toyota", false},
 		{"jakarta", false},

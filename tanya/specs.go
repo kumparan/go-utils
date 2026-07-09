@@ -28,6 +28,8 @@ const (
 	MatchTypeTokenSuffix MatchType = "token_suffix" // nolint:gosec
 )
 
+const defaultMinTokenLen = 4
+
 type (
 	// Rule is a rule for matching a query to intent
 	Rule struct {
@@ -108,6 +110,12 @@ var intentTable = []IntentSpec{
 		{terms("ya ga sih", "ya gak sih", "ya nggak sih", "ya kan", "apa sih", "gimana sih", "kenapa sih"), 2, MatchTypeContains, 0},
 		{terms(" kok "), 2, MatchTypeContains, 0},
 		{terms("?"), 3, MatchTypeContains, 0},
+		// implicit measurement: query asks for a number without the word "berapa"
+		{terms("tinggi badan", "berat badan"), 2, MatchTypeContains, 0},
+		// existence yes/no questions
+		{terms("ada tidak", "ada gak", "ada ga", "ada nggak"), 2, MatchTypeContains, 0},
+		// colloquial end particles that mark interrogative tone
+		{terms(" sih", " dong", " deh", " nih"), 1, MatchTypeEnds, 0},
 	}},
 }
 
