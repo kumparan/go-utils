@@ -104,6 +104,16 @@ func TestIsQuestion(t *testing.T) {
 		// --- implicit measurement (no explicit "berapa")
 		{"tinggi badan A", true},
 		{"berat badan normal wanita dewasa", true},
+		{"tinggi monas", true},
+		{"tinggi gunung everest", true},
+		{"luas wilayah indonesia", true},
+		{"jumlah penduduk jakarta", true},
+		{"kedalaman laut jawa", true},
+		{"usia presiden sekarang", true},
+		{"tinggi badan A sih", true}, // prefix rule, not the particle
+
+		// attribute not in leading position => not a question
+		{"gedung tinggi di jakarta", false},
 
 		// --- existence yes/no questions
 		{"kantor ada tidak", true},
@@ -111,11 +121,14 @@ func TestIsQuestion(t *testing.T) {
 		{"fitur ini ada ga", true},
 		{"layanan ada nggak", true},
 
-		// --- colloquial end particles without explicit question word
-		{"tinggi badan A sih", true},
-		{"ini bisa dong", true},
-		{"kapan rilis deh", true},
-		{"ini siapa nih", true},
+		// --- colloquial particles alone are tone, not interrogation
+		{"ini bisa dong", false},
+		{"mahal banget sih", false},
+		{"beli yang ini nih", false},
+
+		// --- but particles alongside a real question word still count
+		{"kapan rilis deh", true}, // "kapan"
+		{"ini siapa nih", true},   // "siapa"
 
 		// --- obvious non-questions
 		{"toyota", false},

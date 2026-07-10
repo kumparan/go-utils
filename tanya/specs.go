@@ -110,12 +110,14 @@ var intentTable = []IntentSpec{
 		{terms("ya ga sih", "ya gak sih", "ya nggak sih", "ya kan", "apa sih", "gimana sih", "kenapa sih"), 2, MatchTypeContains, 0},
 		{terms(" kok "), 2, MatchTypeContains, 0},
 		{terms("?"), 3, MatchTypeContains, 0},
-		// implicit measurement: query asks for a number without the word "berapa"
+		// implicit measurement: query leads with a measurable attribute,
+		// asking for a number without the word "berapa"
+		{terms("tinggi ", "ketinggian ", "berat ", "panjang ", "lebar ", "luas ",
+			"kedalaman ", "jarak ", "usia ", "umur ", "jumlah ", "kecepatan ",
+			"suhu ", "populasi ", "kapasitas ", "durasi "), 2, MatchTypeStarts, 0},
 		{terms("tinggi badan", "berat badan"), 2, MatchTypeContains, 0},
 		// existence yes/no questions
 		{terms("ada tidak", "ada gak", "ada ga", "ada nggak"), 2, MatchTypeContains, 0},
-		// colloquial end particles that mark interrogative tone
-		{terms(" sih", " dong", " deh", " nih"), 1, MatchTypeEnds, 0},
 	}},
 }
 
