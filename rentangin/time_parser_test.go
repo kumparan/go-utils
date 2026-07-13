@@ -390,13 +390,31 @@ func TestParse_AwalAkhirPekan(t *testing.T) {
 	})
 }
 
-func TestParse_TerkiniTerbaru_NoRange(t *testing.T) {
+func TestParse_Terakhir_Standalone_NoRange(t *testing.T) {
 	loc := wibLoc()
 	now := time.Date(2026, 2, 4, 10, 0, 0, 0, loc)
 
-	mustNoRange(t, "update terbaru", now)
-	mustNoRange(t, "update terkini", now)
+	// standalone "terakhir" without a number is not a range
 	mustNoRange(t, "hasil terakhir mu", now)
+}
+
+func TestParse_Recency(t *testing.T) {
+	loc := wibLoc()
+	now := time.Date(2026, 2, 4, 10, 0, 0, 0, loc)
+	// lastN("hari", 7, now): start = Feb 4 - 6 days = Jan 29; end = Feb 5
+	want := Range{
+		Start: time.Date(2026, 1, 29, 0, 0, 0, 0, loc),
+		End:   time.Date(2026, 2, 5, 0, 0, 0, 0, loc),
+	}
+
+	r := mustRange(t, "update terbaru", now)
+	assertRangeEq(t, r, want)
+
+	r = mustRange(t, "berita terkini", now)
+	assertRangeEq(t, r, want)
+
+	r = mustRange(t, "terbaru", now)
+	assertRangeEq(t, r, want)
 }
 
 func TestParse_BestMatchWins(t *testing.T) {

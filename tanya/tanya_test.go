@@ -101,6 +101,35 @@ func TestIsQuestion(t *testing.T) {
 		// --- tricky “vs” that is not comparison (product name)
 		{"vs code extensions", false}, // treat 'vs' here as product word, not comparison
 
+		// --- implicit measurement (no explicit "berapa")
+		{"tinggi badan A", true},
+		{"berat badan normal wanita dewasa", true},
+		{"tinggi monas", true},
+		{"tinggi gunung everest", true},
+		{"luas wilayah indonesia", true},
+		{"jumlah penduduk jakarta", true},
+		{"kedalaman laut jawa", true},
+		{"usia presiden sekarang", true},
+		{"tinggi badan A sih", true}, // prefix rule, not the particle
+
+		// attribute not in leading position => not a question
+		{"gedung tinggi di jakarta", false},
+
+		// --- existence yes/no questions
+		{"kantor ada tidak", true},
+		{"promo masih ada gak", true},
+		{"fitur ini ada ga", true},
+		{"layanan ada nggak", true},
+
+		// --- colloquial particles alone are tone, not interrogation
+		{"ini bisa dong", false},
+		{"mahal banget sih", false},
+		{"beli yang ini nih", false},
+
+		// --- but particles alongside a real question word still count
+		{"kapan rilis deh", true}, // "kapan"
+		{"ini siapa nih", true},   // "siapa"
+
 		// --- obvious non-questions
 		{"toyota", false},
 		{"jakarta", false},

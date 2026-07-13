@@ -77,7 +77,7 @@ func matchByType(q string, r Rule) bool {
 	case MatchTypeTokenSuffix:
 		minLen := r.MinTokenLen
 		if minLen <= 0 {
-			minLen = 4
+			minLen = defaultMinTokenLen
 		}
 		for _, tok := range tokenize(q) {
 			if len(tok) < minLen {
@@ -95,30 +95,10 @@ func matchByType(q string, r Rule) bool {
 }
 
 func normalize(s string) string {
-	s = strings.ToLower(strings.TrimSpace(collapseSpaces(s)))
-	s = " " + s + " "
-	s = expandAbbreviations(s)
-	return strings.TrimSpace(collapseSpaces(s))
+	s = strings.ToLower(strings.Join(strings.Fields(s), " "))
+	return expandAbbreviations(" " + s + " ")
 }
 
-func collapseSpaces(s string) string {
-	var b strings.Builder
-	sp := false
-	for _, r := range s {
-		if unicode.IsSpace(r) {
-			if !sp {
-				b.WriteByte(' ')
-				sp = true
-			}
-		} else {
-			b.WriteRune(r)
-			sp = false
-		}
-	}
-	return strings.TrimSpace(b.String())
-}
-
-// normalize abbreviations anywhere (start/mid/end)
 func expandAbbreviations(s string) string {
 	words := strings.Fields(s)
 	for i, w := range words {

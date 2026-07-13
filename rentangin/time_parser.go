@@ -207,23 +207,20 @@ func prevToken(s string, start int) string {
    Normalization
 --------------------------*/
 
+// normReplacements collapses multi-token phrases and connector variants into
+// single tokens. Order matters: "dari hariini" must run after "hari ini".
+var normReplacements = [][2]string{
+	{"s.d.", "sd"}, {"s.d", "sd"}, {"s / d", "sd"}, {"s/d", "sd"},
+	{"hari ini", "hariini"}, {"yang lalu", "yanglalu"}, {"ke depan", "kedepan"},
+	{"dari sekarang", "darisekarang"}, {"dari hariini", "darihariini"},
+}
+
 func normalizeID(s string) string {
 	ls := strings.ToLower(s)
 
-	// connectors
-	ls = strings.ReplaceAll(ls, "s.d.", "sd")
-	ls = strings.ReplaceAll(ls, "s.d", "sd")
-	ls = strings.ReplaceAll(ls, "s / d", "sd")
-	ls = strings.ReplaceAll(ls, "s/d", "sd")
-
-	// multi-token phrases
-	ls = strings.ReplaceAll(ls, "hari ini", "hariini")
-	ls = strings.ReplaceAll(ls, "yang lalu", "yanglalu")
-	ls = strings.ReplaceAll(ls, "ke depan", "kedepan")
-
-	// relative anchors
-	ls = strings.ReplaceAll(ls, "dari sekarang", "darisekarang")
-	ls = strings.ReplaceAll(ls, "dari hariini", "darihariini")
+	for _, p := range normReplacements {
+		ls = strings.ReplaceAll(ls, p[0], p[1])
+	}
 
 	// punctuation -> space (so "ini?" becomes "ini")
 	ls = strings.Map(func(r rune) rune {
@@ -278,6 +275,13 @@ func parseOneExprFromStart(s string, now time.Time, prev string, hasEventHint bo
 		n, _ := strconv.Atoi(s[m[2]:m[3]])
 		unit := s[m[4]:m[5]]
 		if r, ok := lastN(unit, n, now); ok {
+			return r, scoreLastNRange, true
+		}
+	}
+
+	// 1.5) "terbaru" / "terkini" => last 7 days
+	if m := rxRecency.FindStringSubmatchIndex(s); m != nil && m[0] == 0 {
+		if r, ok := lastN("hari", 7, now); ok {
 			return r, scoreLastNRange, true
 		}
 	}
@@ -733,35 +737,24 @@ func isEndConnector(prev string) bool {
 func okYear(y int) bool { return 1000 <= y && y <= 9999 }
 func okDay(d int) bool  { return 1 <= d && d <= 31 }
 
+var monthNames = map[string]time.Month{
+	"jan": time.January, "januari": time.January,
+	"feb": time.February, "februari": time.February,
+	"mar": time.March, "maret": time.March,
+	"apr": time.April, "april": time.April,
+	"mei": time.May,
+	"jun": time.June, "juni": time.June,
+	"jul": time.July, "juli": time.July,
+	"agu": time.August, "agt": time.August, "agustus": time.August,
+	"sep": time.September, "september": time.September,
+	"okt": time.October, "oktober": time.October,
+	"nov": time.November, "november": time.November,
+	"des": time.December, "desember": time.December,
+}
+
 func monthID(s string) (time.Month, bool) {
-	switch s {
-	case "jan", "januari":
-		return time.January, true
-	case "feb", "februari":
-		return time.February, true
-	case "mar", "maret":
-		return time.March, true
-	case "apr", "april":
-		return time.April, true
-	case "mei":
-		return time.May, true
-	case "jun", "juni":
-		return time.June, true
-	case "jul", "juli":
-		return time.July, true
-	case "agu", "agt", "agustus":
-		return time.August, true
-	case "sep", "september":
-		return time.September, true
-	case "okt", "oktober":
-		return time.October, true
-	case "nov", "november":
-		return time.November, true
-	case "des", "desember":
-		return time.December, true
-	default:
-		return 0, false
-	}
+	m, ok := monthNames[s]
+	return m, ok
 }
 
 /* -------------------------
@@ -781,6 +774,7 @@ var (
 	rxEdgeMonthThis = regexp.MustCompile(`^(awal|akhir)\s+bulan\s+ini(?:\s|$)`)
 
 	rxLastNUnit = regexp.MustCompile(`^(\d+)\s+(hari|minggu|pekan|bulan|tahun)\s+(terakhir|belakangan)(?:\s|$)`)
+	rxRecency   = regexp.MustCompile(`^(terbaru|terkini)(?:\s|$)`)
 
 	rxOneWord      = regexp.MustCompile(`^(sekarang|hariini|kemarin|besok)(?:\s|$)`)
 	rxUnitModifier = regexp.MustCompile(`^(minggu|pekan|bulan|tahun)\s+(ini|lalu|depan)(?:\s|$)`)
