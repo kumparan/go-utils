@@ -1,9 +1,15 @@
 # go-utils
 
+<a name="v1.50.0"></a>
+## [v1.50.0] - 2026-07-10
+### New Features
+- add support for terbaru/terkini for rentangin, and also add more intent for tanya
+
+
 <a name="v1.49.0"></a>
 ## [v1.49.0] - 2026-06-26
 ### New Features
-- add media param on generate push notif url
+- add media param on generate push notif url ([#81](https://github.com/kumparan/go-utils/issues/81))
 
 
 <a name="v1.48.0"></a>
@@ -270,6 +276,9 @@
 
 <a name="v1.20.0"></a>
 ## [v1.20.0] - 2022-03-11
+
+<a name="v.1.20.0"></a>
+## [v.1.20.0] - 2022-03-11
 ### New Features
 - add constraint size gql directive ([#30](https://github.com/kumparan/go-utils/issues/30))
 
@@ -436,7 +445,8 @@
 - init go-utils
 
 
-[Unreleased]: https://github.com/kumparan/go-utils/compare/v1.49.0...HEAD
+[Unreleased]: https://github.com/kumparan/go-utils/compare/v1.50.0...HEAD
+[v1.50.0]: https://github.com/kumparan/go-utils/compare/v1.49.0...v1.50.0
 [v1.49.0]: https://github.com/kumparan/go-utils/compare/v1.48.0...v1.49.0
 [v1.48.0]: https://github.com/kumparan/go-utils/compare/v1.47.0...v1.48.0
 [v1.47.0]: https://github.com/kumparan/go-utils/compare/v1.46.0...v1.47.0
@@ -480,7 +490,8 @@
 [v1.22.0]: https://github.com/kumparan/go-utils/compare/v1.21.0...v1.22.0
 [v1.21.0]: https://github.com/kumparan/go-utils/compare/v1.20.1...v1.21.0
 [v1.20.1]: https://github.com/kumparan/go-utils/compare/v1.20.0...v1.20.1
-[v1.20.0]: https://github.com/kumparan/go-utils/compare/v1.19.3...v1.20.0
+[v1.20.0]: https://github.com/kumparan/go-utils/compare/v.1.20.0...v1.20.0
+[v.1.20.0]: https://github.com/kumparan/go-utils/compare/v1.19.3...v.1.20.0
 [v1.19.3]: https://github.com/kumparan/go-utils/compare/v1.19.2...v1.19.3
 [v1.19.2]: https://github.com/kumparan/go-utils/compare/v1.19.1...v1.19.2
 [v1.19.1]: https://github.com/kumparan/go-utils/compare/v1.19.0...v1.19.1
