@@ -1,12 +1,9 @@
 # go-utils
 
-<a name="v1.51.0"></a>
-## [v1.51.0] - 2026-09-02
-
 <a name="v1.50.0"></a>
-## [v1.50.0] - 2026-07-13
+## [v1.50.0] - 2026-07-10
 ### New Features
-- add support for terbaru/terkini for rentangin, and also add more intent for tanya ([#82](https://github.com/kumparan/go-utils/issues/82))
+- add support for terbaru/terkini for rentangin, and also add more intent for tanya
 
 
 <a name="v1.49.0"></a>
@@ -448,8 +445,7 @@
 - init go-utils
 
 
-[Unreleased]: https://github.com/kumparan/go-utils/compare/v1.51.0...HEAD
-[v1.51.0]: https://github.com/kumparan/go-utils/compare/v1.50.0...v1.51.0
+[Unreleased]: https://github.com/kumparan/go-utils/compare/v1.50.0...HEAD
 [v1.50.0]: https://github.com/kumparan/go-utils/compare/v1.49.0...v1.50.0
 [v1.49.0]: https://github.com/kumparan/go-utils/compare/v1.48.0...v1.49.0
 [v1.48.0]: https://github.com/kumparan/go-utils/compare/v1.47.0...v1.48.0
